@@ -53,6 +53,13 @@ mongoProductReco = MongoClient('localhost', 27017)['ProductRecommendation']['all
 mongoProductCompareReco = MongoClient('localhost', 27017)['ProductRecommendation']['allComp']
 #Admin DB
 mongoAdminDB = MongoClient('localhost', 27017)['interstellerDB']
+
+#User Variables
+mongoUserVariables = MongoClient('localhost', 27017)['userVariables']
+try:
+	mongoUserVariables['listing_products'].ensure_index("date", expireAfterSeconds=3600) 
+except:
+	pass
 '''
 various modules
 '''
