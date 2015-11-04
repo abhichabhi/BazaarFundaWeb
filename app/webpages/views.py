@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for
 from flask import jsonify
 from app import app
-from app import mongoCategoryDetails, categoryListingFilter
+from app import mongoCategoryDetails, categoryListingFilter, mongoUserVariables
 from app.products.products import *
 from app.cart.views import *
 from app.util import getArgAsList
@@ -12,8 +12,10 @@ from whoosh.qparser import QueryParser
 from whoosh.index import open_dir
 import os, thread
 import json
+import uuid
 from app import mongoCategoryDetails
 from flask.ext.social import Social
+import datetime
 
 mod = Blueprint('webpage', __name__, url_prefix='')
 
@@ -100,8 +102,10 @@ def productDetail(product_id, slug=None):
 		productDetails=productDetails, allKeyWordsIcon=allKeyWordsIcon, pdp_fileds=pdp_fileds, cartDetails=g.cartDetails,
 		category=category, all_cat_details = g.all_cat_details, title = title)
 
-@mod.route('/browse/<category>', methods=['GET'], strict_slashes=False)
+@mod.route('/browse/<category>/', methods=['GET'], strict_slashes=False)
 def browse(category):
+	
+	category_product_list = category
 	filterFlag = 0	
 	categoryFilterCheckedStatus = getCategoryFilterCheckedStatus()
 	listingStatic = getListingStatic(category)
@@ -114,7 +118,9 @@ def browse(category):
 		start = None 
 		scoreSortedProductList = []
 
-	if not start:
+	if not start:		
+		session['product_list'] = None
+		
 		start = 0	
 		specProductIdList = getFilteredProductSpecification(request.args, category)
 		try:
@@ -125,20 +131,37 @@ def browse(category):
 		weights = []
 		if 'keywords' in urlDict:
 			keywords = urlDict['keywords']
-		if 'weights' in urlDict:
-			
+		if 'weights' in urlDict:			
 			weights = urlDict['weights']
 		if 'reco' in urlDict:
 			reco_bool = 1
 		priceProductIdList = getFilteredProductPriceRange(priceRange, category)		
 		finalProductList = list(set(priceProductIdList) & set(specProductIdList))		
 		scoreSortedProductList = getScoreSortedProductID(finalProductList,category, keywords, weights)
-		session['product_list'] = scoreSortedProductList	
-		# print session['product_list'], "without start"
-		scoreSortedProductList =  session['product_list'][:20]
+		session['product_list'] = scoreSortedProductList
+		utc_timestamp = datetime.datetime.utcnow()
+		
+		_sid = session['_sid']
+
+		if _sid is not None:			
+			mongoUserVariables['listing_products'].save({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
+		else:
+			uid = uuid.uuid4()
+			_sid = uid.hex
+			mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
+			
+		
+		# mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
+		
+		session['_sid'] = _sid
+			
+		
+		scoreSortedProductList =  mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"][:20]
 	else:
-		print session['product_list'], "with start"
-		scoreSortedProductList = session['product_list'][0:start+20]
+		# print session[category_product_list], "with start"
+		_sid = session['_sid']
+		
+		scoreSortedProductList = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"][0:start+20]
 	productList = []
 	for prod in scoreSortedProductList:
 		prodDetail = {}
@@ -188,16 +211,16 @@ def search():
 		category = request.args.get('category')
 		if category:
 			productList = [prod for prod in productList if getProductMasterInfo(prod)['category'] == category]
-		session['product_list'] = productList
-		totalProducts = len(session['product_list'])
-		productList =  session['product_list'][:20]
+		session[category_product_list] = productList
+		totalProducts = len(session[category_product_list])
+		productList =  session[category_product_list][:20]
 	else:
-		totalProducts = len(session['product_list'])
-		productList = session['product_list']
+		totalProducts = len(session[category_product_list])
+		productList = session[category_product_list]
 		category = request.args.get('category')
 		if category:
 			productList = [prod for prod in productList if getProductMasterInfo(prod)['category'] == category]		
-		productList = session['product_list'][0:start+20]
+		productList = session[category_product_list][0:start+20]
 	productList = [getProductDetail(prod) for prod in productList]
 	title = "Bazaarfunda: Searching for " + queryText
 	if category:
