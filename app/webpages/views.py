@@ -190,6 +190,7 @@ def search():
 	allCategories = [cat['type'] for cat in allCategories]
 	category = "all"
 	queryText = request.args.get('q')
+	category_product_list = 'product_list'
 	try:
 		start = int(request.args.get('start'))
 	except:
