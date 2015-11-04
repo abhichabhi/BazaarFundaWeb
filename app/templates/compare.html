@@ -1,0 +1,527 @@
+    {% extends "header.html" %}
+    {% block content %}    
+    <!--CONTENT-->
+     <meta id="category" data-name="{{category}}" />
+    <section id="content">
+      <div class="container top">
+
+        <!-- Bottom CompareList PopUp-->
+        <div class="row bottomMenu">
+          <div class="span12" style="margin-left:0px">
+          <div style="top:-400px; margin-left:13.5%; margin-right:2%;">
+              <div class="product-listing product-grid " style=" ">
+                <div class="row big_with_description  ">
+                  {%for i in range(4)%}
+
+                  {%if cartDetails[i] is defined %}
+                  <!-- {#Compare Prices PoUp #} -->
+              <div class="modal fade price" id="compare_price_{{cartDetails[i].master.product_id}}">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><center>Compare Prices for {{cartDetails[i].master.product_name[:40]}}...</center></h4>
+                      </div>
+                      <div class="modal-body">
+            <table class="table">
+            <colgroup>
+            <col class="colfixw25">
+            <col class="colfixw25">
+            <col class="colfixw20">
+            <col class="colfixw10">
+            <col class="colfixw20">
+            </colgroup>
+                  <thead>
+                    <tr>                      
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Seller</td>
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Discount</td>
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Price</td>
+              <td scope="col" class="aligncenter backgrey font_table_fix">Buy Option</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for price in cartDetails[i].priceList.priceList %}
+                      {%if price["price"] !=  0%}
+                          <tr>
+                              <!-- {#<td class="aligncenter 0_margin"><h5>Xiaomi</td>#} -->
+                              <td class="aligncenter 0_margin"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/{{price['website']}}.jpg"  alt="filpkart" height="25px" width="100px"> </td>
+                             
+                                  <td class="aligncenter 0_margin"><h5>{{price['discount']}} %</h5></td>
+                              
+                              <td class="aligncenter 0_margin"><h5>{{price["price"]}}</h5></td>
+                              <td class="aligncenter 0_margin"><a href={{price['productUrl']}} target="_blank" class="btn btn-mini">BUY</a></td>
+                          </tr>
+                           {%endif%} 
+                       {%endfor%} 
+
+
+                  </tbody>
+                </table>
+              </div>
+              {# Price Alert #}
+              {# <div class="modal-body"> #}
+                <h3 class="register-title">Set Price Alert</h3>
+                  <form class="register" onsubmit="emailMeWhenAvailable('{{cartDetails[i].master.product_id}}');">
+                    
+                    <input type="text" class="register-input" placeholder="Your Desired Price" id= "{{cartDetails[i].master.product_id}}_price">
+                    <input type="email" class="register-input" placeholder="Your Email Address" id= "{{cartDetails[i].master.product_id}}_email">
+                    <input type="submit" value="Submit" class="register-button">
+                  </form>
+                
+              {# </div> #}
+              {# Price Alert #}
+                    </div>
+                  </div>
+          </div>
+          <!-- {# Compare Prices #} -->
+                  <!-- One Product Block Starts-->
+                  
+                    <div class="span3 product" style = "border-radius: 0px; width:25%; min-width:200px; margin-left:0px; box-shadow: 0 0 1px; min-height:80px ">
+                      <div class="product{{i+ 1}} wrapper-hover">
+                        <div class="item">
+                          <a href="/pdp/{{cartDetails[i].master.product_id}}" class="product-image">
+                            <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{cartDetails[i].master["product_id"]}}.jpg" alt="" >
+                            <a href="/pdp/{{cartDetails[i].master.product_id}}" class="product-name">{{cartDetails[i].master["product_name"][:20]}}...</a>
+                          </a>
+                        <div class="product-detailes"> 
+                        {%if cartDetails[i]['min_priceDict'] is not defined and cartDetails[i]['min_priceDict']['price'] != 0 and cartDetails[i]['min_priceDict']['price'] != '' %}                    
+                                <div class="price-not-available">Price Not Available</div>                            
+                        {%else%}
+                                <div class="product-price">₹&nbsp;{{cartDetails[i]['min_priceDict']['price']}}</div>
+                        {%endif%}
+                        </div>
+
+                      </div>
+                       
+                    </div>
+                    <div class="inner-wrapper">
+                </div>
+                  </div>
+              {%else%}
+
+              <!-- One Product Block Starts-->
+              <div class="span3 product" style = "border-radius: 0px; width:25%; min-width:200px; margin-left: 0px; box-shadow: 0px 0px 1px ; position:relative; min-height:80px">
+                
+                </div>
+              {%endif%}
+              {%endfor%}  
+
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>          
+          <!-- Bottom CpareList PopUp-->
+        <div class="row">
+          <div class="span12" style="margin-left:0px">
+              <div class="product-listing product-grid" style="margin-left:13.5%; margin-right:2%">
+                <div class="row big_with_description   ">
+                  {%for i in range(4)%}
+
+                      {%if cartDetails[i] is defined %}
+                    <div class="span3 product" style = "border-radius: 0px; width:25%; min-width:200px; margin-left:0px; box-shadow: 0 0 1px; min-height:370px">
+                      <div class="product{{i + 1}} closefix closewrapper" onclick="remove_product_from_compare(this, '{{cartDetails[i].master.product_id}}')"><i class="icon-cancel"></i>
+                      </div>
+
+                      <div class="product-image-wrapper compare_page">
+                        <a href='../pdp/{{cartDetails[i].master["product_id"]}}'>
+                          <img class="product{{i + 1}}" src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{cartDetails[i].master["product_id"]}}.jpg" alt="">
+                        </a>
+                        <a data-toggle="modal" href="#myModal" onclick="location.href='#';">
+                          <img class="hide{{i + 1}}" src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/addnew{{category}}.png" alt="">
+                        </a> 
+                      </div>
+
+                      <div class="product{{i+ 1}} wrapper-hover">
+                       <div class="product-name namealign"><a href='../pdp/{{cartDetails[i].master["product_id"]}}'><h4 style="color:#383838; ">{{cartDetails[i].master["product_name"][:20]}}...</h4></a></div>
+                       <div class="wrapper"><span class="sort-rating hidden">4</span>
+
+                        {%if cartDetails[i]['min_priceDict'] is not defined  %}
+                        <div class="product-price aligncenter"><div style="color: #B40404"><span class="aligncenter">{{"Price Not Available"}}</span></div></span></a></div>
+                        {% else %}
+                        <div class="product-price aligncenter" ><a href="{{cartDetails[i]['min_priceDict']['productUrl']}}" class="aligncenter">₹&nbsp{{cartDetails[i]['min_priceDict']['price']}}</a> &nbsp&nbsp</div>
+                        {%endif%}
+
+                        
+                      </div>
+                      <div class="skillbar clearfix " data-percent={{cartDetails[i]['finalrating']}}%>
+                        <div class="skillbar-title" style=" width:{{cartDetails[i]['finalrating']}}%;"><span style="color: #FFFFFF">{{cartDetails[i]['finalrating']}} / 100</span></div>
+                        <div class="skillbar-bar" style="background: #8b9dc3;"></div>
+                        <div class="skill-bar-percent"></div>
+                      </div>
+                    </div>
+                    <div class="product{{i+ 1}} wrapper-hover aligncenter compare_page">
+                      <button onclick="location.href='#';" class="btn-mini border aligncenter product-name" style="padding-left: 10%;" data-toggle="modal" onclick="location.href='#';" href="#compare_price_{{cartDetails[i].master.product_id}}">Compare Prices</button>
+                    </div>
+                    
+                  </div>
+              <!--OneProduct Block Ends-->
+              {%else%}
+              <!-- One Product Block Starts-->
+              <div class="span3 product" style = "border-radius: 0px; width:25%; min-width:200px; margin-left:0px; box-shadow: 0 0 1px; position:relative; min-height:370px">
+                <div class="product-image-wrapper compare_page">                  
+                  <a data-toggle="modal" href="#myModal" onclick="location.href='#';">
+                    <img class="hide {{i+1}}" src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/addnew{{category}}.png" alt="" style="display: inline;">
+                  </a> 
+                </div>
+              </div>
+                <!--OneProduct Block Ends-->
+
+              <!--I dont know what this div does -->
+                <div class="preview hidden-tablet hidden-phone" style="display: none;">
+                  <div class="wrapper">
+                    <div class="col-2">
+                      <div class="phone{{i}} closefix hoverclosewrapper" onclick="click1(this)"><i class="icon-cancel"></i></div>
+                      <div class="big_image"><a href="product.html"><img class="phone{{i}}" src="static/img/product_page_img_big1.jpg"  alt="" /></a><a href="#myModal" onclick="location.href='#';"><img class="hide{{i}}" src="static/img/addnew1.png" alt=""></a></div> 
+                      <div class="phone{{i}} wrapper-hover">
+                       <div class="product-name namealign"><a href="product.html">XIAOMI</a></div>
+                       <div class="wrapper"><span class="sort-rating hidden">2</span>
+                        <!-- <div class="product-tocart"> <a href="shopping-cart.html"><i class="icon-basket" title = "Compare Prices"></i></a> </div> -->
+                        <div class="product-price"><a href="https://www.flipkart.com/">Lowest Price&nbsp;₹<span class="sort-price"><b>8000.00</b></span></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+             
+              {%endif%}
+              {%endfor%}  
+
+            </div>
+          </div>
+          <!--what the fuck-->
+
+          <div class="horizontalTab">
+            <ul class="nav-tabs contentTab">
+              <li ><a href="#SpecificationTab">Specification</a></li>
+              <li class="active"><a href="#UserExperienceTab">User Experience</a></li>
+              <li><a href="#ProsConsTab">Pros and Cons</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane " id="SpecificationTab">
+               <!--inside_tab-->
+               {%for spec in categoryDetails["specification"]%}
+                  
+                   <table class="table table-bordered" style="background:#FFEFE7;">
+                     <thead>
+                      <tr>
+                        <th scope="col" class="aligncenter">{% filter upper %} {{spec}} {% endfilter %}</th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <table class="table table-bordered" style="background:#FFFFFF;">
+                    <colgroup>
+                    <col class="colfixw1">
+                    <col class="colfixw2">
+                    <col class="colfixw2">
+                    <col class="colfixw2">
+                    <col class="colfixw2">
+                  </colgroup>
+                  
+                  {% for kFet, vFet in categoryDetails["specification"][spec].iteritems() %}
+                  
+                  <tbody>
+                    <tr>
+                      <th scope="col" class="aligncenter" style="color:#000000; width:9.31%">{% filter upper %} {{kFet}} {% endfilter %}</th>                      
+                      {%for i in range(4)%}
+                        
+                        {%if cartDetails[i] is defined %}
+                                  {%if cartDetails[i]["specification"]["specification"]%}                
+                                    {%if cartDetails[i]["specification"]["specification"][spec]%}                      
+                                        {%if cartDetails[i]["specification"]["specification"][spec][kFet] is defined%}
+                                            <td scope="col" class="aligncenter" style = "width:22.67%">
+                                              <div class="product{{i+1}}">
+                                                {{cartDetails[i]["specification"]["specification"][spec][kFet]}}
+                                            </div></td>
+                                        {%else%}                                            
+                                    {%endif%}
+                                    {%else%}
+                                            <td scope="col" class="aligncenter price-not-available" style = "width:22.67%">
+                                              <div class="product{{i+1}}" style = ""> Details not Available </div>
+                                            </td>
+                                    {%endif%}
+                                    {%else%}
+                                            <td scope="col" class="aligncenter price-not-available" style = "width:22.67%">
+                                              <div class="product{{i+1}}" style = ""> Details not Available </div>
+                                            </td>
+                                    {%endif%}
+                        {%else%}
+
+                            <td scope="col" class="aligncenter">
+                              <div class="product{{i + 1}}">-</div>&nbsp</td>
+                              
+                        {%endif%}
+                        
+                      {%endfor%}
+                      
+                    </tr>
+                    </tbody>
+                  {%endfor%}
+                </table>
+          {%endfor%}
+       
+      </div>
+      <div class="tab-pane active" id="UserExperienceTab">
+        <!--inside_table-->
+
+        <!--<h4 class="upper">BORDRED TABLE</h4>-->
+        <table class="table table-bordered" style="background:#FFFFFF;">
+          <colgroup>
+          <col class="colfixw1">
+          <col class="colfixw2">
+          <col class="colfixw2">
+          <col class="colfixw2">
+          <col class="colfixw2">
+        </colgroup>
+        {%for keywords in categoryDetails["keywords"]%}
+
+        <tbody >
+          <tr>
+            <th class="aligncenter" style="color:#000000; width:9.31%">{% filter upper %}{{keywords}}{%endfilter%}</th>
+            {%for i in range(4)%}
+                {%set keywordFlag = []%}
+                {%if cartDetails[i] is defined %}
+                   
+                  {%for pKey in cartDetails[i]["rating"]%}
+                        {%if pKey["keyword"] == keywords%}
+                            {%set _ = keywordFlag.append(1)%}
+                            <td class="aligncenter " style = "width:22.67%"><div class="product{{i+1}} rate">
+                               <div class="skillbar clearfix " data-percent={{pKey["rating"]|float|round*20}}%>
+                                <div class="skillbar-title" style=" width:{{pKey["rating"]|float|round*20}}%;">
+                                  <span style="color: #FFFFFF">{{pKey["rating"]|float|round*20}}%</span></div>
+                                <div class="skillbar-bar" style="background: #8b9dc3;"></div>
+                                <!-- <div class="skill-bar-percent"></div> -->
+                              </div>
+                            </div></td>
+                        {%endif%}
+                  {%endfor%}
+                  {%if keywordFlag[0] != 1%}
+                     <!-- <td class="aligncenter" ><div class="product{{i+1}} rate"></div></td> -->
+                  {%endif%}
+                {%else%}
+                    <td class="aligncenter"><div class="product{{i+1}} rate" style="color:red"></div></td>
+                {%endif%}
+            {%endfor%}
+              
+            
+          </tr>
+        </tbody>
+        {%endfor%} 
+
+      </table>
+    </div>
+    <div class="tab-pane" id="ProsConsTab">
+     <!--inside_table-->
+    <!--<h4 class="upper">BORDRED TABLE</h4>-->
+        <table class="table table-bordered" style="background:#FFFFFF;">
+          <colgroup>
+          <col class="colfixw1">
+          <col class="colfixw2">
+          <col class="colfixw2">
+          <col class="colfixw2">
+          <col class="colfixw2">
+        </colgroup>
+        {%for keywords in categoryDetails["keywords"]%}
+
+        <tbody>
+          <tr>
+            <th  class= "aligncenter" style="color:#000000; background:#f8f8f8; width:9.31%">{% filter upper %}{{keywords}}{%endfilter%}</th>
+
+            {%for i in range(4)%}
+                {%set keywordFlag = []%}
+                {%if cartDetails[i] is defined %}
+                   
+                  {%for pKey in cartDetails[i]["review"]["Reviews"]%}
+                        {%if pKey["About"] == keywords%}
+                            {%set _ = keywordFlag.append(1)%}
+                            <td style = "width:22.67%">
+                              <div class="dropdown product{{i+1}}" style="width:100%">
+                                {% if pKey["Positive"]|length != 0 %}
+                                <h5 style="margin:10px; font-family: Arial;" class="aligncenter"><b>Pros</b></h5>
+                                <ul class="fa-ul dropdown_content product{{i+1}}" style="z-index: 8; width:100%; align-items:left;">
+                                              {%for pros in pKey["Positive"]%}
+                                                <li  class = "product{{i+1}}" style="width:90%;font-size:110%;"><i class="fa-li fa fa-thumbs-o-up" style="color:#044D03"></i>{{pros["Review"]}} ({{pros["Users"]}})</li>
+                                              {%endfor%}
+                                </ul>
+                                 
+                                    {%endif%}
+                                    {% if pKey["Negative"]|length != 0 %}
+                                    <h5 style="margin:10px;font-family: Arial;" class="aligncenter"><b>Cons</b></h5>
+                                    <ul class="fa-ul dropdown_content product{{i+1}}" style="z-index: 8; width:100%; align-items:left; ">
+                                              {%for pros in pKey["Negative"]%}
+                                                <li class = "product{{i+1}}" style="width:90%; font-size:110%; "><i class="fa-li fa fa-thumbs-down" style="color:#dd4b39"></i>{{pros["Review"]}} ({{pros["Users"]}})</li>
+                                              {%endfor%}
+                                    </ul>
+                                      </div>
+                                      {%endif%}
+                                  
+                                </div>
+                              
+                              
+                            </td>
+                        {%endif%}
+                  {%endfor%}
+                  {%if keywordFlag[0] != 1%}
+                     <td class="aligncenter" ><div class="product{{i+1}} rate"></div></td>
+                  {%endif%}
+                {%else%}
+                    <td class="aligncenter" ><div class="product{{i+1}} rate" style="color:red"></div></td>
+                {%endif%}
+            {%endfor%}
+              
+            
+          </tr>
+        </tbody>
+        {%endfor%} 
+
+      </table>
+   
+    
+    </div>
+    </div>
+    </div>
+    <!--tabends-->
+    </div>
+    <!--Left Row-->
+    <div class="span2">
+      <div class="banners_outer">
+        <div class="flexslider banners">
+          <ul>
+              <li>
+              <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- bf_compare_up_vertical -->
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:120px;height:240px"
+                     data-ad-client="ca-pub-5277836163297591"
+                     data-ad-slot="9169739062"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+            </li>
+          </ul>
+          <!-- <ul class="slides">
+            <li> <a href="product.html"><img src="/static/img/banner1.jpg" alt="" ></a> </li>
+            <li> <a href="product.html"><img src="/static/img/banner2.jpg" alt="" ></a> </li>
+            <li> <a href="product.html"><img src="/static/img/banner3.jpg" alt="" ></a> </li>
+          </ul> -->
+        </div>
+      </div>
+
+      <div class="banners_outer" style="margin-top:120px;">
+        <div class="flexslider banners">
+          <ul>
+              <li>
+              <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+              <!-- bf_compare_down_vertical -->
+              <ins class="adsbygoogle"
+                   style="display:inline-block;width:120px;height:600px"
+                   data-ad-client="ca-pub-5277836163297591"
+                   data-ad-slot="6076671861"></ins>
+              <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+            </li>
+          </ul>
+          <!-- <ul class="slides">
+            <li> <a href="product.html"><img src="/static/img/banner1.jpg" alt="" ></a> </li>
+            <li> <a href="product.html"><img src="/static/img/banner2.jpg" alt="" ></a> </li>
+            <li> <a href="product.html"><img src="/static/img/banner3.jpg" alt="" ></a> </li>
+          </ul> -->
+        </div>
+      </div>
+    </div>
+
+
+    </div>
+    </div>
+    </section>
+    <div id="push"></div>
+    </div>
+
+    <div class="modal fade" id="myModal" style="position: absolute; z-index: 3">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4 class="modal-title"><center>ADD {{ category|upper if category else 'PRODUCT' }}  TO COMPARE</center></h4>
+                </div>
+                <div class="modal-body compare_choose_products">
+          {%if category == None %}
+          <h4>Category</h4>
+          <div class="select_wrapper fullwidth the_category">
+            <input name="the_category" id="the_category" type="text" class="comapre_page" value="Select Category..." onload="this.value != 'Select Category...';"  onblur="if (this.value == '') {this.value = 'Select Category...';}; " onfocus="if(this.value == 'Select Category...') {this.value = '';}"  />
+          </div>
+          {%endif%}
+          <h4>BRAND</h4>
+          <div class="select_wrapper fullwidth">
+            <input name="the_brand" id="the_brand" type="text" class="comapre_page" value="Select Brand..." onload="this.value != 'Select Brand...';"  onblur="if (this.value == '') {this.value = 'Select Brand...';} else if( this.value != '' && this.value != 'Select Brand...') { loadModels();} " onfocus="if(this.value == 'Select Brand...') {this.value = ''; }"  />
+          </div>
+              
+          <h4>MODEL</h4>
+          <div class="select_wrapper fullwidth">
+            <input name="the_model" id="the_model" type="text" class="comapre_page" value="Select Model..." onblur="if (this.value == '') {this.value = 'Select Model...';} " onfocus="if(this.value == 'Select Brand...') {this.value = ''; }"/>
+          </div>
+            
+          
+                  
+                </div>
+                <div class="modal-footer" > <a href="#" data-dismiss="modal" class="btn" id="chooseproduct">CHOOSE</a> </div>
+              </div>
+            </div>
+          </div>
+
+
+      {%for i in range(4)%}
+      {%if cartDetails[i] is defined %}
+    <!--Compare prices Pop Up -->
+     <div class="modal fade" id="compare_price{{i}}" >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4 class="modal-title" style="color:#AAAAAA"><center>Compare Prices for {{cartDetails[i]['Brand']}} {{cartDetails[i]['Model Name']}}</center></h4>
+                </div>
+                <div class="modal-body">
+      <table class="table">
+      <colgroup>
+      <col class="colfixw25">
+      <col class="colfixw25">
+      <col class="colfixw20">
+      <col class="colfixw10">
+      <col class="colfixw20">
+      </colgroup>
+            <thead>
+              <tr>
+                <!--<td scope="col" class="aligncenter backgrey font_table_fix ">Product Name </td>-->
+                <td scope="col" class="aligncenter backgrey font_table_fix">Seller</td>
+                <td scope="col" class="aligncenter backgrey font_table_fix">Availability</td>
+                <td scope="col" class="aligncenter backgrey font_table_fix">Price</td>
+        <td scope="col" class="aligncenter backgrey font_table_fix">Buy Option</td>
+              </tr>
+            </thead>
+            <tbody>
+                {% for price in cartDetails[i]["Prices"] %}
+                {%if price["stock status"]|int !=  0%}
+                    <tr>
+                        <!--<td class="aligncenter 0_margin"><h5>Xiaomi</td>-->
+                        <td class="aligncenter 0_margin"><img src="static/img/{{price['website']}}.jpg"  alt={{price['website']}} height="25px" width="100px"> </td>
+                        {%if price["stock status"]|int ==  1%}
+                        <td class="aligncenter 0_margin"><h5>Yes</h5></td>
+                        {%else%}
+                        <td class="aligncenter 0_margin"><h5>No</h5></td>
+                        {%endif%}
+                        <td class="aligncenter 0_margin"><h5>{{price["price"]}}</h5></td>
+                        <td class="aligncenter 0_margin"><a target="_blank" href={{price['productUrl']}}  class="btn btn-mini">BUY</a></td>
+                    </tr>
+                    {%endif%}
+                {%endfor%}
+            </tbody>
+          </table>
+        </div>
+              </div>
+            </div>
+          </div>
+          <!--Compare prices Pop Up -->
+          {%endif%}
+          {%endfor%}
+    {% endblock %}

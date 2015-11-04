@@ -1,0 +1,459 @@
+
+  {% extends "header.html" %}
+  {% block content %}
+  {# Parallex Slide rwith Search #}
+  <section>
+    <div class="fullwidth-block">
+      <div class="parallax-block parallax-block-1 parallax">
+        <div class="container">
+          <div class="row">
+            <div class="span9 offset2">
+              <form class="form-wrapper-search cf">
+                  <input id="allProductSearch" type="text" placeholder="Search entire store and ..." required>
+                  <button type="submit">Search</button>
+              </form>
+              {#Inser A Search#}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- {# Parallex Slide rwith Search #} -->
+  
+  
+  <!-- {#CONTENT#} -->
+  <section>   
+    <div class="container">
+      <h3 class="padding">Categories</h3>
+      <ul class="grid cs-style-4">
+        {%for cat in allCategories%}
+        <li>
+          
+          <figure>
+            <div><a href="/browse/{{cat}}"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_{{cat}}.png" alt="img05"></a></div>
+            <figcaption>              
+              <a class="navigation" data-toggle="modal" href="#{{cat}}_Modal">Recommend</a>           
+            </figcaption>
+          </figure>
+
+        </li>
+        {%endfor%}
+      </ul>
+    </div>
+  </section>
+   <div class="line"></div>
+<section>
+    
+    <div class="container">
+      <h3 class="padding">NEW PRODUCTS</h3>
+      <div class="carousel es-carousel-wrapper style0">
+        <div class="es-carousel">
+          <div class="row">
+            <div class="product_outer carousel_items">
+               
+          <!-- All new Products -->
+          {%for newProd in allRecentProducts%}
+           <!-- {#Compare Prices PoUp #} -->
+              <div class="modal fade price" id="compare_price_{{newProd.master.product_id}}">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><center>Compare Prices for {{newProd.master.product_name[:40]}}...</center></h4>
+                      </div>
+                      <div class="modal-body">
+            <table class="table">
+            <colgroup>
+            <col class="colfixw25">
+            <col class="colfixw25">
+            <col class="colfixw20">
+            <col class="colfixw10">
+            <col class="colfixw20">
+            </colgroup>
+                  <thead>
+                    <tr>                      
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Seller</td>
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Discount</td>
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Price</td>
+              <td scope="col" class="aligncenter backgrey font_table_fix">Buy Option</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for price in newProd.priceList.priceList %}
+                      {%if price["price"] !=  0%}
+                          <tr>
+                              <!-- {#<td class="aligncenter 0_margin"><h5>Xiaomi</td>#} -->
+                              <td class="aligncenter 0_margin"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/{{price['website']}}.jpg"  alt="filpkart" height="25px" width="100px"> </td>
+                             
+                                  <td class="aligncenter 0_margin"><h5>{{price['discount']}} %</h5></td>
+                              
+                              <td class="aligncenter 0_margin"><h5>{{price["price"]}}</h5></td>
+                              <td class="aligncenter 0_margin"><a href={{price['productUrl']}} target="_blank" class="btn btn-mini">BUY</a></td>
+                          </tr>
+                           {%endif%} 
+                       {%endfor%} 
+
+
+                  </tbody>
+                </table>
+              </div>
+              {# Price Alert #}
+              {# <div class="modal-body"> #}
+                <h3 class="register-title">Set Price Alert</h3>
+                  <form class="register" onsubmit="emailMeWhenAvailable('{{newProd.master.product_id}}');">
+                    
+                    <input type="text" class="register-input" placeholder="Your Desired Price" id= "{{newProd.master.product_id}}_price">
+                    <input type="email" class="register-input" placeholder="Your Email Address" id= "{{newProd.master.product_id}}_email">
+                    <input type="submit" value="Submit" class="register-button">
+                  </form>
+                
+              {# </div> #}
+              {# Price Alert #}
+                    </div>
+                  </div>
+          </div>
+          <!-- {# Compare Prices #} -->
+              <div class="span3 product hover carousel_item">               
+                <div class="product-image-wrapper" >
+                  <a href='/pdp/{{newProd['specification']['product_id']}}' >
+                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{newProd['specification']['product_id']}}.jpg">
+                </a> 
+                </div>
+                <div class="wrapper-hover">
+                  <div class="product-name aligncenter" style="height:33px"><a href='/pdp/{{newProd['specification']['product_id']}}'>{{newProd['master']['product_name'][:30]}}...</a></div>
+                  <div class="wrapper"><span class="sort-rating hidden">4</span>
+                    <!-- {#<div class="product-tocart"> <a href="shopping-cart.html"><i class="icon-basket"></i></a> </div>#} -->
+                        <div class="product-price aligncenter" style = "padding-bottom:10px">
+                          
+                             {%if newProd.min_priceDict is not defined or newProd.min_priceDict['price'] is not defined  %}
+                                <a class="aligncenter"  href="#" style="color: #B40404">{{"Price Not Available"}}</a>
+                                {% else %}
+                                <a class="aligncenter"  href="lowest website link">Lowest Price&nbsp;₹&nbsp{{newProd.min_priceDict['price']}}</a>
+                            {%endif%} 
+                        </div>
+                    
+                  </div>
+                  <div class="skillbar clearfix " data-percent=80.5%>
+                    <div class="skillbar-title" style="width:80.5%"><span style="color: #FFFFFF">80.5/100</span></div>
+                    <div class="skillbar-bar" style="background: #8b9dc3;"></div>
+                    <div class="skill-bar-percent"></div>
+                  </div>
+                    <div class="add-to-links">
+                      <ul>
+                        <li style = "padding-bottom:10px;"><a href="#compare_price{{i}}_all" class="small_icon_color" data-toggle="modal"><i class="icon-shop"></i></a><a class="small_icon_color" data-toggle="modal" onclick="location.href='#';" href="#compare_price_{{newProd.master.product_id}}">Compare Prices</a></li>
+                        <li> <a href="#" class="small_icon_color" onclick=addToCompare("{{newProd['specification']['product_id']}}");><i class="icon-chart-bar"></i>Add to Compare</a> </li>
+                      </ul>
+                    </div>
+                </div>
+
+              </div>
+              {%endfor%}
+              <!-- All new Products -->
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+   <div class="line"></div>
+  <section>
+    <div class="container">
+          <div class="row">
+            <div class="span12 home">
+
+              <ul class="ch-grid">
+              <li>
+                <div class="ch-item ch-img-1">
+                  <div class="ch-info">
+                    <a data-toggle="modal" href="#RecoModal"> <h3></h3></a>
+                    
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="ch-item ch-img-2">
+                  <div class="ch-info">
+                    <a href = "#top"> <h3></h3></a>
+                    
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="ch-item ch-img-3">
+                  <div class="ch-info">
+                    <a href = "/compare"> <h3></h3></a>
+                  </div>
+                </div>
+              </li>
+        </ul>
+
+      </div>
+    </div>
+    </div>
+  
+  <div class="fullwidth-block">
+      <div class="parallax-block parallax-block-2 parallax">
+        <div class="container">
+          <div class="row">
+            <div class="span8 offset2">
+              <h1 class="aligncenter" style="color:#424242">Testimonials</h1>
+              <div class="carousel-testimonials">
+                <div class="quotes">&#8220;</div>
+                <div class="flexslider">
+                  <ul class="slides">
+                    <li>
+                      <p>We at IIM, Bangalore did a dry testing on Bazaarfunda recommendations. The results were fabulous. The features rating based on user experience is near to perfection.</p>
+                      <p><span>Ashish Shetty, IIMB</span></p>
+                    </li>
+                    <li>
+                      <p>Etiam vel odio a urna sagittis pharetra in nec orci. Phasellus volutpat eu lorem non rhoncus. Aenean elementum turpis ac justo posuere ultricies. Donec in orci erat. Duis bibendum euismod tortor quis placerat.</p>
+                      <p><span>John Smith, Director of Marketing </span></p>
+                    </li>
+                    <li>
+                      <p>Morbi pharetra ac tellus sed blandit. Sed consequat felis nec nulla euismod imperdiet. Sed id feugiat diam. Aenean purus dui, imperdiet vitae sollicitudin at, vehicula ut quam. Quisque sodales diam nec pellentesque faucibus. Donec volutpat rutrum metus, vel ullamcorper urna rhoncus laoreet.</p>
+                      <p><span>Jodie Smith, Designer and Developer</span></p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+    
+
+  <section>
+  <div class="line"></div>
+    <div class="container">
+      <div class="row">
+        <div class="span12 home">
+          <h3 class="padding">Media&Publication</h3>
+          <div class="brands_block" id="brands0">
+            <ul class="jcarousel-skin-brands">
+              {%for media in allMediaPublication%}
+              <li><a href="{{media['link']}}"><img src="{{media['location']}}" alt="3docean" title="3docean" /></a></li>
+              {%endfor%}              
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+    
+    <div class="bottom_block">
+      <div class="container">
+
+        <div class="row animate-delay-outer">
+        <div class="span6">
+          <div class="row">
+            <div class="span3 animate-delay fadeUp">
+              <h3><i class="icon-vcard"></i>ABOUT <span class="custom_color">Bazaar</span>Funda</h3>
+              <div class="cleancode" style= "text-align: justify;">
+                <p><strong>We believe that human life has too many decisions to make and consumer's purchase decision is an everyday affair.</strong></p>
+                <p>We thought of alleviating it by use of text analytics technology.<br>
+                  We extract what people are speaking about various products and present it to consumers in a simplistic manner so that you have an elegant shopping experience. Now forget about browsing multiple review websites and calling various friends because everything is available to you in minutes.</p>
+              </div>
+            </div>
+            <div class="span3 animate-delay fadeUp">
+              <h3><i class="icon-facebook"></i>FACEBOOK</h3>
+              <div class="fb-page" data-href="https://www.facebook.com/bazaarfunda" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false">
+                <div class="fb-xfbml-parse-ignore">
+                  <blockquote cite="https://www.facebook.com/bazaarfunda">
+                    <a href="https://www.facebook.com/facebook">Facebook</a>
+                </blockquote>
+              </div>
+            </div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="span6">
+          <div class="row">
+            <div class="span3 animate-delay fadeUp">
+              <h3><i class="icon-twitter-bird" height="300"></i>TWITTER FEEDS</h3>
+              <a class="twitter-timeline" height="300" href="https://twitter.com/bazaarfunda" data-widget-id="610375028115402752">Tweets by @bazaarfunda</a>
+
+            </div>
+            <div class="span3 animate-delay fadeUp">
+              <h3><i class="icon-mail"></i>CONTACT US</h3>
+              <div class="cleancode">
+                <ul class="icons">
+                  <li><i class="icon-call"></i><strong>CONTACT PHONE:</strong><br>
+                    9831227903, 9963640033 </li>
+                  <li><i class="icon-mail-1"></i><strong>E-MAIL ADDRESSES:</strong><br>
+                    <a href="mailto:sales@mydomain.com">bazaarfunda@gmail.com</a> <br>
+                    <a href="mailto:info@mydomain.com">krish@stratdecider.com</a> </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      </div>
+    </div>
+  </section>
+  <div id="push"></div>
+</div>
+{#FOOTER#}
+<!-- <div  id="footer">
+  <div id="footer_line">
+    <div id="footer_popup" class="footer_bg allowHover">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <div class="row">
+              <div class="span3">
+                <h3>Information</h3>
+                <p> <a href="About_us.html">About</a> </p>
+                <p> <a href="delivery.html">Delivery</a> </p>
+                <p> <a href="our_store.html">Privacy Policy</a> </p>
+                <p> <a href="our_store.html">Terms &amp; Conditions</a> </p>
+              </div>
+              <div class="span3">
+                <h3>Customer Service</h3>
+                <p> <a href="contact.html">Contact Us </a> </p>
+                <p> <a href="our_services.html"> Returns</a> </p>
+                <p> <a href="sitemap.html"> Site Map </a> </p>
+              </div>
+            </div>
+          </div>
+          <div class="span6">
+            <div class="row">
+              <div class="span3">
+                <h3>My Account</h3>
+                <p> <a href="account.html">My Account </a> </p>
+                <p> <a href="shopping-cart.html"> Order History</a> </p>
+                <p> <a href="wishlist.html"> Wish List</a> </p>
+                <p> <a href="contact.html"> Newsletter</a> </p>
+              </div>
+              <div class="span3">
+                <h3>Newsletter Signup</h3>
+                <form class="form-mail">
+                  <input type="text" class="input-medium" value="enter your e-mail..." onblur="if (this.value == '') {this.value = 'enter your e-mail...';}" onfocus="if(this.value == 'enter your e-mail...') {this.value = '';}">
+                  <button type="submit" class="btn"><i class="icon-email"></i></button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer_button"><i class="icon-up"></i></div>
+    <div class="container" id="footer_bottom">
+      <div class="row">
+        <div class="span12">
+          <div class="pull-left noHover"><span class="hidden-phone payment_icons"><img src="/static/img/payment1.png" alt=""><img src="/static/img/payment2.png" alt="" height="26"><img src="/static/img/payment3.png" alt=""><img src="/static/img/payment4.png" alt=""><img src="/static/img/payment5.png" alt=""></span><span class="text">&copy; 2014 <a href="#"><span class="custom_color">SPORTAEGE</span></a>. All Rights Reserved. </span></div>
+          <div class="pull-right noHover"><a href="#"><i class="icon-facebook"></i></a> &nbsp; <a href="#"><i class="icon-twitter-bird"></i></a> &nbsp;&nbsp;&nbsp; <a href="#"><i class="icon-linkedin"></i></a> &nbsp; <a href="#"><i class="icon-pinterest"></i></a> &nbsp; <a href="#"><i class="icon-gplus"></i></a> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+
+
+{#[if lt IE 9]>
+		<script type="text/javascript" src="/static/js/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]#} 
+{# SLIDER REVOLUTION 4.x SCRIPTS  #} 
+<script type="text/javascript" src="rs-plugin/js/jquery.themepunch.plugins.min.js"></script> 
+<script type="text/javascript" src="rs-plugin/js/jquery.themepunch.revolution.min.js"></script> 
+<script src="/static/js/revolution_ini.js"></script>
+<script type="text/javascript">
+
+				jQuery(document).ready(function() {
+				
+					
+								
+					jQuery('.tp-banner').show().revolution(
+					{
+						dottedOverlay:"none",
+						delay:16000,
+						startwidth:1600,
+						startheight:500,
+						hideThumbs:200,
+						
+						thumbWidth:100,
+						thumbHeight:50,
+						thumbAmount:5,
+						
+						navigationType:"none",
+						navigationArrows:"solo",
+						navigationStyle:"preview3",
+						
+						touchenabled:"on",
+						onHoverStop:"on",
+						
+						swipe_velocity: 0.7,
+						swipe_min_touches: 1,
+						swipe_max_touches: 1,
+						drag_block_vertical: false,
+												
+												parallax:"mouse",
+						parallaxBgFreeze:"on",
+						parallaxLevels:[7,4,3,2,5,4,3,2,1,0],
+												
+						keyboardNavigation:"off",
+						
+						navigationHAlign:"center",
+						navigationVAlign:"bottom",
+						navigationHOffset:0,
+						navigationVOffset:20,
+
+						soloArrowLeftHalign:"left",
+						soloArrowLeftValign:"center",
+						soloArrowLeftHOffset:20,
+						soloArrowLeftVOffset:0,
+
+						soloArrowRightHalign:"right",
+						soloArrowRightValign:"center",
+						soloArrowRightHOffset:20,
+						soloArrowRightVOffset:0,
+								
+						shadow:0,
+						fullWidth:"on",
+						fullScreen:"off",
+
+						spinner:"none",
+						
+						stopLoop:"off",
+						stopAfterLoops:-1,
+						stopAtSlide:-1,
+
+						shuffle:"off",
+						
+						autoHeight:"off",						
+						forceFullWidth:"off",						
+												
+						hideTimerBar:"on",												
+						hideThumbsOnMobile:"off",
+						hideNavDelayOnMobile:1500,						
+						hideBulletsOnMobile:"off",
+						hideArrowsOnMobile:"off",
+						hideThumbsUnderResolution:0,
+						
+						hideSliderAtLimit:0,
+						hideCaptionAtLimit:0,
+						hideAllCaptionAtLilmit:0,
+						startWithSlide:0,
+						videoJsPath:"rs-plugin/videojs/",
+						fullScreenOffsetContainer: ""	
+					});
+					
+					
+					
+									
+				});	//ready
+				
+			</script>
+{% endblock %}

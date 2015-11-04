@@ -1,0 +1,128 @@
+{% extends "header.html" %}
+    {% block content %}
+  {#CONTENT#}
+  <meta id="category" data-name="{{category}}" />
+  <section id="content">
+    <div class="container top listing">
+      <div class="row">
+        <div class="span3 listing" id="column_left">
+          <div class="row">
+            
+            <div class="span3 listing">
+              <ul class="nav sidenav">
+                {%for cat in allCategories%}
+                  <li><a href="#" onclick="searchFilter('{{cat}}', 0);">{{cat}} </a></li>
+                  {%endfor%}
+              </ul>
+              <div class="banners_outer">
+                <div class="flexslider banners">
+                  <ul class="slides">
+                    <li> <a href="product.html"><img src="/static/img/banner1.jpg" alt="" ></a> </li>
+                    <li> <a href="product.html"><img src="/static/img/banner2.jpg" alt="" ></a> </li>
+                    <li> <a href="product.html"><img src="/static/img/banner3.jpg" alt="" ></a> </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- {# Big search Block #} -->
+        <div class="span9 listing" id="column_right">
+          
+        <div class="content_top">
+        <div class="wrapper_w">
+          <div class="pull-left">
+            <div class="breadcrumbs"><a href="/">Home</a><span>&#8250;</span>
+              <a href="#">Searching</a> <span>&#8250;</span>
+              {%if category%}
+                <a href="#">{{category|title}}</a> <span>&#8250;</span>
+              {%endif%}
+              <a href="#">{{query|title}}</a> <span>&#8250;</span></div>
+          </div><!-- 
+          <div class="pull-right">
+            
+          </div> -->
+        </div>
+      </div>
+          <div class="span9 product-listing product-grid">
+            <div class="row small_with_description isotope-outer">
+              {# One ProductBlock #}
+              {%for product in productList%}
+              <div class="span2 product hover carousel_item">               
+                <div class="product-image-wrapper" style="150px" >
+                  
+                  <a href='/pdp/{{product.master["product_id"]}}' >
+                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{product.master["product_id"]}}.jpg">
+                </a> 
+                </div>
+                <div class="wrapper-hover">
+                  <div class="product-name aligncenter" style="height:33px"><a href="/pdp/{{product.master['product_id']}}">{{product.master['product_name'][:30]}}...</a></div>
+                  <div class="wrapper"><span class="sort-rating hidden">4</span>
+                    {#<div class="product-tocart"> <a href="shopping-cart.html"><i class="icon-basket"></i></a> </div>#}
+                        <div class="product-price aligncenter" style = "padding-bottom:10px">
+                          <!-- <a class="aligncenter"  href="lowest websiteurl">₹&nbsp{{product.min_priceDict['price']}}</a> -->
+                             {%if product.min_priceDict['price'] is not defined or product.min_priceDict['price'] == 0%}
+                              <a class="aligncenter price-not-available"  href="#">{{"Price Not Available"}}</a>
+                              {% else %}
+                              <a class="aligncenter price-available"  href="{{product.min_priceDict['productUrl']}}">₹&nbsp{{product.min_priceDict['price']}}</a>
+                            {%endif%} 
+                        </div>
+                    
+                  </div>
+                  <div class="skillbar clearfix " data-percent={{product['finalrating']}}%>
+                    <div class="skillbar-title" style=" width:{{product['finalrating']}}%;"><span style="color: #FFFFFF">{{product['finalrating']}}</span></div>
+                    <div class="skillbar-bar" style="background: #8b9dc3;"></div>
+                    <div class="skill-bar-percent"></div>
+                  </div>
+                    <div class="add-to-links">
+                      <ul>
+                        <li style = "padding-bottom:10px;"><a href="#compare_price{{i}}_all" class="small_icon_color" data-toggle="modal"><i class="icon-shop"></i></a><a class="small_icon_color" data-toggle="modal" onclick="location.href='#';" href="#compare_price">Compare Prices</a></li>
+                        <li> <a href="#" class="small_icon_color" onclick="addToCompare('{{product.master['product_id']}}');"><i class="icon-chart-bar"></i>Add to Compare</a> </li>
+                      </ul>
+                    </div>
+                </div>
+
+              </div>
+              {%endfor%}
+              {# One ProductBlock #}
+            </div>
+            <div class="listing_header_row1">
+            
+        <div class=" aligncenter hidden-phone">
+          {%if totalProducts < start%}
+          <button class="btn-middle aligncenter" onclick="searchFilter('', {{start+20}});"><i class="icon-th-list"></i> Load More</button>
+          {%else%} 
+          <button class="btn-middle aligncenter"><i class="icon-th-list"></i>Thats all we have got !! </button>
+          {%endif%}
+        </div>
+               
+      </div>
+          </div>          
+        </div>
+      <div class="span2 listing">
+      <div class="color-box aligncenter">
+            <div class="animate scale animated"><a href="#" class="icon-vcard icon-5x btn rounded"></a></div>
+            <h6 >BazaarFunda Recommendation</h6>
+            <!-- <p>Mauris et ligula quis erat dignissim impe rdiet. Integer ligula magna, dictum et, pul vinar non, ultricies ac, nibh. </p> -->
+
+             <button class="btn-middle" onclick="location.href='#';"><i class="icon-basket-1"></i> RECOMMEND ME</button>
+          </div>      
+      </div>        
+      </div>
+
+
+      <!-- {# Big Search Block #} -->
+
+    
+           
+    </div>
+  </section>
+  <div id="push"></div>
+</div>
+<script>
+$(window).load(function() {
+  window.scrollTo(0, {{start*90}});
+});
+</script>
+
+{% endblock %}

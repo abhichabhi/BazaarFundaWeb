@@ -1,0 +1,503 @@
+{% extends "header.html" %}
+    {% block content %}
+  {#CONTENT#}
+  <meta id="category" data-name="{{category}}" />
+  <section id="content">
+    <div class="container top listing">
+      <div class="row">
+        <div class="span3 listing" id="column_left">
+          <div class="row">
+            <div class="span3 listing">
+              {%for filter in categoryFilter%}
+              <div class="block-title "><strong><span>{{filter.key}}</span></strong>
+              </div>
+                  {%if filter.key == 'price'%}
+                  <div class="listing-height {{filter.key}}" >
+                    <ul id="filter_model" class="list-group">
+                      {%for price in range(filter.value[0], filter.value[1], filter.interval)%}
+                      <li>
+                        {%if categoryFilterCheckedStatus['price'] is defined and categoryFilterCheckedStatus['price'][1] is defined%}
+                          {%if (price + filter.interval/2) >  categoryFilterCheckedStatus['price'][0] and (price + filter.interval/2) <  categoryFilterCheckedStatus['price'][1]%}
+                              <input checked type="checkbox" id = "price_{{loop.index}}" name = "price" class="{{filter.key}}_checkbox" onclick = "filterOptions(this)" valuei= {{price}} valuej={{price+filter.interval}} />
+                                  <label for=price_{{loop.index}}> &nbsp;&nbsp;RS. {{price}} - RS. {{price+filter.interval}}</label>
+                          {%else%}
+                              <input type="checkbox" id = "price_{{loop.index}}" name = "price" class="{{filter.key}}_checkbox" onclick = "filterOptions(this)" valuei= {{price}} valuej={{price+filter.interval}} />
+                                      <label for=price_{{loop.index}}> &nbsp;&nbsp;RS. {{price}} - RS. {{price+filter.interval}}</label>
+                          {%endif%}
+                          {%else%}
+                              <input type="checkbox" id = "price_{{loop.index}}" name = "price" class="{{filter.key}}_checkbox" onclick = "filterOptions(this)" valuei= {{price}} valuej={{price+filter.interval}} />
+                                      <label for=price_{{loop.index}}> &nbsp;&nbsp;RS. {{price}} - RS. {{price+filter.interval}}</label>
+                          {%endif%}
+                      </li>
+                      {%endfor%}
+                    </ul>
+                  </div>
+                  {%else%}
+                    <div class="block-content">
+                      <div class="inner-addon right-addon">
+                          <i class="glyphicon icon-search-2 icon-small"></i>
+                          <input  name="{{filter.key|sjoin}}" type="text" id="{{filter.key|sjoin}}" class="widthf" value="Search by Model" onblur="if (this.value == '') {this.value = 'Search by Model';}" onfocus="if(this.value == 'Search by Model') {this.value = '';}" />
+                      </div>
+                      <div class="listing-height {{filter.key}}">
+                        <ul id="{{filter.key|sjoin}}_list" class="list-group">
+                          {%for item in filter.value%}
+                              <li>
+                                {%if categoryFilterCheckedStatus[filter.key] is defined%}
+                                  {%if categoryFilterCheckedStatus[filter.key][item]%}
+                                      <input checked name="{{filter.key}}" type="checkbox" id ="{{filter.key|sjoin}}_{{loop.index}}" class ="{{filter.key|sjoin}}_checkbox"  onclick = "filterOptions(this)" value="{{item}}"/>
+                                      <label for="{{filter.key|sjoin}}_{{loop.index}}"> &nbsp;&nbsp;{{item}}</label>
+                                  {%else%}
+                                      <input  name="{{filter.key}}" type="checkbox" id ="{{filter.key|sjoin}}_{{loop.index}}" class ="{{filter.key|sjoin}}_checkbox"  onclick = "filterOptions(this)" value="{{item}}"/>
+                                      <label for="{{filter.key|sjoin}}_{{loop.index}}"> &nbsp;&nbsp;{{item}}</label>
+                                  {%endif%}
+                                {%else%}
+                                      <input  name="{{filter.key}}" type="checkbox" id ="{{filter.key|sjoin}}_{{loop.index}}" class ="{{filter.key|sjoin}}_checkbox"  onclick = "filterOptions(this)" value="{{item}}"/>
+                                      <label for="{{filter.key|sjoin}}_{{loop.index}}"> &nbsp;&nbsp;{{item}}</label>
+                                {%endif%}
+                              </li>
+                          {%endfor%}
+                        </ul>
+                      </div>
+
+
+                    </div>
+                    <script>
+                      $(function() {
+                          $('#{{filter.key|sjoin}}').fastLiveFilter('#{{filter.key|sjoin}}_list');
+                          // console.log("{{filter.key}}");
+                          
+                          });
+                    </script>
+              {%endif%}
+              <hr>
+              {%endfor%}
+              <!-- {# PriceFilter #} -->
+              
+     
+                    
+          
+            </div>
+
+            <div class="span3 listing">
+              <div class="banners_outer">
+                <div class="flexslider banners">
+                  <ul>
+                      <li>
+                      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- bf_listing_vertical_left -->                    
+                        
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:300px;height:1050px"
+                             data-ad-client="ca-pub-5277836163297591"
+                             data-ad-slot="8347310669"></ins>
+                        <script>
+                        google_adtest = “on”;
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                      </script>
+                    </li>
+                  </ul>
+                  <!-- <ul class="slides">
+                    <li> <a href="product.html"><img src="/static/img/banner1.jpg" alt="" ></a> </li>
+                    <li> <a href="product.html"><img src="/static/img/banner2.jpg" alt="" ></a> </li>
+                    <li> <a href="product.html"><img src="/static/img/banner3.jpg" alt="" ></a> </li>
+                  </ul> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- {# Big search Block #} -->
+        <div class="span9 listing" id="column_right">
+          {%if filterFlag == 1 and reco_bool !=1%}
+          <section class="slider">
+            <div class="flexslider small">
+              <ul class="slides">
+                {%for banners in listingStatic.topbanner%}
+                <li> <a href={{banners.location}}><img src={{banners.link}} alt="" /></a> </li>
+                {%endfor%}
+               
+              </ul>
+            </div>
+          </section>
+
+            <!-- {# <div class="container"> #} -->
+      <div class="row">
+        <div class="span9">
+
+          <div class="line"></div>
+           {# Economical Crousel #}
+           {# Most Discounted Products #}
+           <h3 class="padding">Killer Deals</h3>
+          <div class="carousel es-carousel-wrapper style1">
+            <div class="es-carousel">
+              <div class="row small_with_description">
+                {%for deal_product in listingStatic['killer']%}
+                <div class="product_outer carousel_items">
+                  {# Compare Prices #}
+              <div class="span2 product carousel_item">               
+                <div class="product-image-wrapper listing" style="color:red; height:180px">
+                  <div class="label_sale_top_right">Sale {{deal_product['discount']}}%</div>
+                  {# <div class="sale_discount img-rounded">-20%</div> #}
+                  <a href='/pdp/{{deal_product['product']['master']['product_id']}}' >
+                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{deal_product['product']['master']['product_id']}}.jpg">
+                </a> 
+                </div>
+                <div class="wrapper-hover">
+                  <div class="product-name aligncenter" style="height:33px"><a href='/pdp/{{deal_product['product']['master']['product_id']}}'>{{deal_product['product']['master']['product_name'][:20]}}...</a></div>
+                  <div class="wrapper"><span class="sort-rating hidden">4</span>
+                    
+                        <div class="product-price aligncenter" style = "padding-bottom:10px">
+                          
+                             {%if deal_product['product'].min_priceDict['price'] is not defined or deal_product['product'].min_priceDict['price'] == 0%}
+                              <a class="aligncenter price-not-available"  href="#">{{"Price Not Available"}}</a>
+                              {% else %}
+                              <a class="aligncenter price-available"  href="{{deal_product['product'].min_priceDict['productUrl']}}">₹&nbsp{{deal_product['product'].min_priceDict['price']}}</a>
+                            {%endif%} 
+                        </div>
+                    
+                  </div>
+                  <div class="skillbar clearfix " data-percent={{deal_product['product']['finalrating']}}%>
+                    <div class="skillbar-title" style="width:{{deal_product['product']['finalrating']}}%;"><span style="color: #FFFFFF">{{deal_product['product']['finalrating']}}/100</span></div>
+                    <div class="skillbar-bar" style="background: #8b9dc3;"></div>
+                    <div class="skill-bar-percent"></div>
+                  </div>
+                    <div class="add-to-links">
+                      <ul>
+                        <li> <a href="#" class="small_icon_color" onclick="addToCompareFromListing('{{deal_product['product']['master']['product_id']}}');"><i class="icon-chart-bar"></i>Add to Compare</a> </li>
+                      </ul>
+                    </div>
+                </div>
+
+              </div>
+                  
+                  
+              </div>
+              {%endfor%}
+            </div>
+          </div>
+          {# Most Discounted products #}
+        </div>
+        <!-- {# HotBrand Crousel #} -->    
+        <div class="line"></div>      
+          <h3 class="padding">Shop By Brands</h3>
+          <div class="brands_block" id="brands0">
+            <ul class="jcarousel-skin-brands">
+              {%for banners in listingStatic.hotbrands%}
+              <li><a href="{{banners.location}}"><img src={{banners.link}} alt="3docean" title="3docean" /></a></li>  
+              {%endfor%}            
+              
+            </ul>
+          </div>
+        <!-- MOst Reviewd Products -->
+        <div class="line"></div>
+           {# Economical Crousel #}
+           {# Most Discounted Products #}
+           <h3 class="padding">Most Reviewed {{category|title}}</h3>
+          <div class="carousel es-carousel-wrapper style1">
+            <div class="es-carousel">
+              <div class="row small_with_description">
+                {%for most_reviewed in listingStatic['most_reviewed']%}
+                <div class="product_outer carousel_items">
+                  {# Compare Prices #}
+              <div class="span2 product carousel_item">               
+                <div class="product-image-wrapper listing" style="color:red">
+                  
+                  
+                  <a href='/pdp/{{most_reviewed['master']['product_id']}}' >
+                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{most_reviewed['master']['product_id']}}.jpg">
+                </a> 
+                </div>
+                <div class="wrapper-hover">
+                  <div class="product-name aligncenter" style="height:33px"><a href='/pdp/{{most_reviewed['master']['product_id']}}'>{{most_reviewed['master']['product_name'][:20]}}...</a></div>
+                  <div class="wrapper"><span class="sort-rating hidden">4</span>
+                    
+                        <div class="product-price aligncenter" style = "padding-bottom:10px">
+                          
+                             {%if most_reviewed.min_priceDict['price'] is not defined or most_reviewed.min_priceDict['price'] == 0%}
+                              <a class="aligncenter price-not-available"  href="#">{{"Price Not Available"}}</a>
+                              {% else %}
+                              <a class="aligncenter price-available"  href="{{most_reviewed.min_priceDict['productUrl']}}">₹&nbsp{{most_reviewed.min_priceDict['price']}}</a>
+                            {%endif%} 
+                        </div>
+                    
+                  </div>
+                  <div class="skillbar clearfix " data-percent={{most_reviewed['finalrating']}}%>
+                    <div class="skillbar-title" style="width:{{most_reviewed['finalrating']}}%;"><span style="color: #FFFFFF">{{most_reviewed['finalrating']}}/100</span></div>
+                    <div class="skillbar-bar" style="background: #8b9dc3;"></div>
+                    <div class="skill-bar-percent"></div>
+                  </div>
+                    <div class="add-to-links">
+                      <ul>
+                        <li> <a href="#" class="small_icon_color" onclick="addToCompareFromListing('{{most_reviewed['master']['product_id']}}');"><i class="icon-chart-bar"></i>Add to Compare</a> </li>
+                      </ul>
+                    </div>
+                </div>
+
+              </div>
+                  
+                  
+              </div>
+              {%endfor%}
+            </div>
+          </div>
+          {# Most Discounted products #}
+        </div>
+        <!-- Most Reviewed -->
+      </div>
+    </div>
+        {%endif%}
+
+      <div class="content_top">
+        <div class="wrapper_w">
+          <div class="pull-left">
+            <div class="breadcrumbs"><a href="/">Home</a> <span>&#8250;</span> <a href="/browse/{{category}}">{{category|title}}</a> <span>&#8250;</span></div>
+          </div>
+        </div>
+      </div>
+          
+          <div class="listing_header_row2">
+            <div class="pull-left">Items <strong>1</strong> to <strong>{{ start+20 if start+20 < totalProducts else totalProducts }}</strong> of <strong>{{totalProducts}}</strong> {{category|title}} </div>
+            <div class="pull-right">
+              <!-- <div class="num"><a href="#">1</a> <a href="#">2</a> <a href="#" class="small_icon"><i class="icon-right-thin"></i></a></div> -->
+            </div>
+          </div>
+          
+          {%if reco_bool == 1%}
+          <!-- Reco Alert -->
+          <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h3>Recommendation Result</h3>
+            We are providing you the best {{category|title}} based on your input
+          </div>
+            <!-- Reco Alert -->
+            {%endif%}
+          <div class="span9 product-listing product-grid">
+            <div class="row small_with_description isotope-outer">
+              {# One ProductBlock #}
+
+              {%for product in productList%}
+              {%if product.master%}
+               <!-- {#Compare Prices PoUp #} -->
+              <div class="modal fade price" id="compare_price_{{product.master.product_id}}">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><center>Compare Prices for {{product.master.product_name[:40]}}...</center></h4>
+                      </div>
+                      <div class="modal-body">
+            <table class="table">
+            <colgroup>
+            <col class="colfixw25">
+            <col class="colfixw25">
+            <col class="colfixw20">
+            <col class="colfixw10">
+            <col class="colfixw20">
+            </colgroup>
+                  <thead>
+                    <tr>                      
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Seller</td>
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Discount</td>
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Price</td>
+              <td scope="col" class="aligncenter backgrey font_table_fix">Buy Option</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for price in product.priceList.priceList %}
+                      {%if price["price"] !=  0%}
+                          <tr>
+                              <!-- {#<td class="aligncenter 0_margin"><h5>Xiaomi</td>#} -->
+                              <td class="aligncenter 0_margin"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/{{price['website']}}.jpg"  alt="filpkart" height="25px" width="100px"> </td>
+                             
+                                  <td class="aligncenter 0_margin"><h5>{{price['discount']}} %</h5></td>
+                              
+                              <td class="aligncenter 0_margin"><h5>{{price["price"]}}</h5></td>
+                              <td class="aligncenter 0_margin"><a href={{price['productUrl']}} target="_blank" class="btn btn-mini">BUY</a></td>
+                          </tr>
+                           {%endif%} 
+                       {%endfor%} 
+
+
+                  </tbody>
+                </table>
+              </div>
+              {# Price Alert #}
+              {# <div class="modal-body"> #}
+                <h3 class="register-title">Set Price Alert</h3>
+                  <form class="register" onsubmit="emailMeWhenAvailable('{{product.master.product_id}}');">
+                    
+                    <input type="text" class="register-input" placeholder="Your Desired Price" id= "{{product.master.product_id}}_price">
+                    <input type="email" class="register-input" placeholder="Your Email Address" id= "{{product.master.product_id}}_email">
+                    <input type="submit" value="Submit" class="register-button">
+                  </form>
+                
+              {# </div> #}
+              {# Price Alert #}
+                    </div>
+                  </div>
+          </div>
+          <!-- {# Compare Prices #} -->
+
+
+              <div class="span2 product hover carousel_item">               
+                <div class="product-image-wrapper listing" style="150px" >
+                  
+                  <a href='/pdp/{{product.master["product_id"]}}' >
+                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{product.master["product_id"]}}.jpg">
+                </a> 
+                </div>
+                <div class="wrapper-hover">
+                  <div class="product-name aligncenter" style="height:33px"><a href="/pdp/{{product.master['product_id']}}">{{product.master['product_name'][:30]}}...</a></div>
+                  <div class="wrapper"><span class="sort-rating hidden">4</span>
+                    {#<div class="product-tocart"> <a href="shopping-cart.html"><i class="icon-basket"></i></a> </div>#}
+                        <div class="product-price aligncenter" style = "padding-bottom:10px">
+                          <!-- <a class="aligncenter"  href="lowest websiteurl">₹&nbsp{{product.min_priceDict['price']}}</a> -->
+                             {%if product.min_priceDict['price'] is not defined or product.min_priceDict['price'] == 0%}
+                              <a class="aligncenter price-not-available"  href="#">{{"Price Not Available"}}</a>
+                              {% else %}
+                              <a class="aligncenter price-available"  href="{{product.min_priceDict['productUrl']}}">₹&nbsp{{product.min_priceDict['price']}}</a>
+                            {%endif%} 
+                        </div>
+                    
+                  </div>
+                  <div class="skillbar clearfix " data-percent={{product['finalrating']}}%>
+                    <div class="skillbar-title" style=" width:{{product['finalrating']}}%;"><span style="color: #FFFFFF">{{product['finalrating']}}</span></div>
+                    <div class="skillbar-bar" style="background: #8b9dc3;"></div>
+                    <div class="skill-bar-percent"></div>
+                  </div>
+                    <div class="add-to-links">
+                      <ul>
+                        <li style = "padding-bottom:10px;"><a href="#compare_price{{i}}_all" class="small_icon_color" data-toggle="modal"><i class="icon-shop"></i></a><a class="small_icon_color" data-toggle="modal" onclick="location.href='#';" href="#compare_price_{{product.master.product_id}}">Compare Prices</a></li>
+                        <li> <a href="#" class="small_icon_color" onclick="addToCompare('{{product.master['product_id']}}');"><i class="icon-chart-bar"></i>Add to Compare</a> </li>
+                      </ul>
+                    </div>
+                </div>
+
+              </div>
+              {%endif%}
+              {%endfor%}
+              {# One ProductBlock #}
+            </div>
+          </div>
+
+          <div class="span9 listing_header_row1">
+            <div class=" aligncenter hidden-phone">
+              {%if totalProducts > start + 20%}
+              <button class="btn-middle aligncenter" onclick="listingLoadMore({{start}});"><i class="icon-th-list"></i> Load More</button>
+              {%else%} 
+              <button class="btn-middle aligncenter"><i class="icon-th-list"></i>Thats all we have got !! </button>
+              {%endif%}
+            </div>
+          </div>
+          <div class="line1"></div>
+          <div class="listing_header_row2">
+            <div class="pull-left">Items <strong>1</strong> to <strong>{{ start+20 if start+20 < totalProducts else totalProducts }}</strong> of <strong>{{totalProducts}}</strong> {{category|title}}</div>
+            <div class="pull-right">
+              <!-- <div class="num"><a href="#">1</a> <a href="#">2</a> <a href="#" class="small_icon"><i class="icon-right-thin"></i></a></div> -->
+            </div>
+          </div>
+        </div>
+        <div class="span2 listing">
+          <div class="color-box aligncenter">
+            <div class="animate scale animated"><a href="#" class="icon-vcard icon-5x btn rounded"></a></div>
+            <h6 >BazaarFunda Recommendation</h6>
+            <button class="btn-middle" data-toggle="modal" href="#{{category}}_Modal"><i class="icon-basket-1"></i> RECOMMEND ME</button>
+          </div>
+      <!-- {# Compare Widget #} -->
+    {%for comItem in listingStatic.compareitems%}
+        <div class="product carousel_item prod-hover">
+                    
+          <div class="wrapper-hover">
+            <div class="comp-prod onhover animate scale">
+              <div class="comp-prod-img">
+                <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{comItem.link}}.jpg">
+              </div>
+              <div class="comp-prod-name">
+                <a href="/pdp/{{comItem.link}}"><span><h6>{{comItem.linkName[:20]}}...</h6></span></a>
+              </div>
+            </div>
+            
+            <div class="comapre-vs">
+            <h5>VS</h5>
+            </div>
+            
+            <div class="comp-prod onhover animate scale">
+              <div class="comp-prod-img">
+                <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{comItem.location}}.jpg">
+              </div>
+              <div class="comp-prod-name">
+                <a href="/pdp/{{comItem.loncation}}"><span><h6>{{comItem.locationName[:20]}}...</h6></span></a>
+              </div>
+            </div>
+            <div class="comp-prod-foot">
+            <a href="/compare?ids={{comItem.loncatio}},{{comItem.link}}" class="btn">compare</a>
+            </div>
+          </div> 
+          </div>
+      {%endfor%}
+      <!-- {# Compare Widget #} -->
+    </div>
+    <!-- Google Ad Right
+     -->
+     <div class="span2 listing">
+              <div class="banners_outer">
+                <div class="flexslider banners">
+                  <ul>
+                      <li>
+                      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- bf_listing_vertical_left -->                    
+                        
+                        <ins class="adsbygoogle"
+                             style="display:inline-block;width:200px;height:1050px"
+                             data-ad-client="ca-pub-5277836163297591"
+                             data-ad-slot="8347310669"></ins>
+                        <script>
+                        google_adtest = “on”;
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                      </script>
+                    </li>
+                  </ul>
+                  <!-- <ul class="slides">
+                    <li> <a href="product.html"><img src="/static/img/banner1.jpg" alt="" ></a> </li>
+                    <li> <a href="product.html"><img src="/static/img/banner2.jpg" alt="" ></a> </li>
+                    <li> <a href="product.html"><img src="/static/img/banner3.jpg" alt="" ></a> </li>
+                  </ul> -->
+                </div>
+              </div>
+            </div>
+            <!-- Google Ad Right
+     -->
+     <!-- Affiliate Vertical Right Banner -->
+            <div class="span2 listing">
+              <div class="banners_outer">
+                <div class="flexslider banners">                  
+                  <ul class="slides">
+                    {%for right_vertical_banner in listingStatic['right_vertical_aff']%}
+                    <li> <a href="{{right_vertical_banner['location']}}"><img src="{{right_vertical_banner['link']}}" alt="" ></a> </li>
+                    {%endfor%}
+                    <!-- <li>
+                      <a target="_blank" rel="nofollow" href="http://www.amazon.in/b?_encoding=UTF8&camp=3626&creative=24790&linkCode=ur2&node=3561110031&site-redirect=&tag=bazaarfunda-21">mobiles</a><img src="http://ir-in.amazon-adsystem.com/e/ir?t=bazaarfunda-21&l=ur2&o=31" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+                    </li> -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+      <!-- Affiliate Vertical Right Banner -->
+      </div>
+
+      
+    
+
+      <!-- {# Big Search Block #} -->   
+           
+    </div>
+  </section>
+  <div id="push"></div>
+</div>
+
+<script>
+$(window).load(function() {
+  window.scrollTo(0, {{start*90}});
+});
+</script>
+{% endblock %}

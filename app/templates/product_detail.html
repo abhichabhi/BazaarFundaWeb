@@ -1,0 +1,539 @@
+{% extends "header.html" %}
+  {% block content %}
+  <!-- Meta Tags -->
+  <meta itemprop="name" content="{{productMasterDetails["product_name"]}}">
+  <meta itemprop="price" content='{{productDetails['min_priceDict']['price']}}'>
+  <meta itemprop="priceCurrency" content="INR">
+  {%if productDetails['min_priceDict']['rating'] is defined%}
+    <meta itemprop="ratingValue" content="{{productDetails['min_priceDict']['rating']}}">
+  {%elif productDetails['rating'][0] is defined%}
+    <meta itemprop="ratingValue" content="{{productDetails['rating'][0]['rating']}}">
+  {%endif%}
+  <!-- Meta Tags -->
+<link href="{{ url_for('static', filename='css/jquery.circliful.css')}}" rel="stylesheet" type="text/css">
+<!-- <meta id="category" data-name="{{productMasterDetails['category']}}" /> -->
+  <div class = "phone details" style="display: none;"><div class="PhoneObjectID">{{productMasterDetails["product_id"]}}</div></div>
+  <section id="content">
+    <div class="container top">
+      <div class="content_top">
+        <div class="wrapper_w">
+          <div class="pull-left">
+            <div class="breadcrumbs">
+              <a href="/">Home</a> <span>&#8250;</span><a href="/browse/{{category}}">{{productMasterDetails['category']|title}}</a> <span>&#8250;</span> <a href="/browse/{{category}}?Brand={{productMasterDetails.brand}}">{{productMasterDetails.brand}}</a> <span>&#8250;</span> <a href="#">{{productMasterDetails.product_name}}</a></div>
+          </div><!-- 
+          <div class="pull-right">
+            
+          </div> -->
+        </div>
+      </div>
+      <div class="product-box" itemscope itemtype="http://schema.org/Product">
+        <div class="row">
+          <div class="span2">
+            <div class="product-img-box noselect">
+              <div class="row">
+                <div class="span2">
+                  <div id="zoom-big-image" > <img  src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{productMasterDetails["product_id"]}}.jpg"  alt="" /></div>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="span7">
+            <div class="product-CSS">
+              <div class="product_info">
+                <div class="product-name" style="margin-left:30px">
+                  <h3>
+                    <div itemprop="name" style="color:#2E2E2E">{{productMasterDetails.product_name}} </span></h3>
+                  <div class="star-ratings-css" style="unicode-bidi: bidi-override; color: #c5c5c5; font-size: 25px; height: 5px; width: 100px; margin: 0 auto; position: absolute; padding: 0; text-shadow: 0px 1px 0 #a2a2a2;">
+                  {%if productDetails['min_priceDict'] is defined %}
+                  {%if productDetails['min_priceDict']['rating']%}
+                  <!-- {{productDetails['min_priceDict']}} -->
+                  <div title = "{{productDetails['min_priceDict']['rating']}} rating" class="star-ratings-css-top" style="width: {{productDetails['min_priceDict']['rating']*20}}% ; color: #e7711b; padding: 0; text-shadow: 0px 1px 0 #ab5414; position: absolute; z-index: 1; display:block; left: 0px; overflow: hidden;">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+
+                  <div class="star-ratings-css-bottom" style="z-index: 0"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                  {%endif%}
+                  {%endif%}
+                    
+
+                  </div>
+                
+              </div>
+                <div class="short-description">
+                <span class="row">
+                <div class="span3"><p>
+                  <ul class="styled-list circle">
+                    {%for leftSpec in pdp_fileds['left']%} 
+                    
+                          {%if productDetails['specification']['specification'] [pdp_fileds['left'][leftSpec][0]] is defined %}
+                              {%if productDetails['specification']['specification'] [pdp_fileds['left'][leftSpec][0]] [pdp_fileds['left'][leftSpec][1]] is defined%}
+                          <li style="color:#585858"><b>{{leftSpec}}</b>: {{productDetails['specification']['specification'] [pdp_fileds['left'][leftSpec][0]] [pdp_fileds['left'][leftSpec][1]]}}</li>
+                              {%endif%}
+                          {%endif%}
+                          
+                      {%endfor%}
+
+                  </ul>
+               </p></div>
+               <div class="span3"><p>
+                  <ul class="styled-list circle">
+               
+                    {%for rSpec in pdp_fileds['right']%} 
+                    
+                          {%if productDetails['specification']['specification'] [pdp_fileds['right'][rSpec][0]] is defined and productDetails['specification']['specification'] [pdp_fileds['right'][rSpec][0]] [pdp_fileds['right'][rSpec][1]] is defined%}
+                          <li style="color:#585858"><b>{{rSpec}}</b>: {{productDetails['specification']['specification'] [pdp_fileds['right'][rSpec][0]] [pdp_fileds['right'][rSpec][1]]}}</li>
+                          {%endif%}
+                          
+                      {%endfor%}
+               
+             </ul>
+           </p></div>
+         </span>
+                  
+                    <div class="row" style="margin-left:10px;">
+                      <div class="span3">
+                  {%if productDetails[min_priceDict] == "Out of Stock"  %}
+                    <h4><div style="color: #B40404">{{"Not Available in our search"}}</div></h4>
+                      {% else %}
+                    <h4  itemprop="price"> Lowest Price: ₹&nbsp {{productDetails['min_priceDict']['price']}} &nbsp&nbsp 
+                      <a href={{productDetails['min_priceDict']['productUrl']}} target="_blank"><button class="btn-mini border" type="hidden">Buy Now  </button></a>
+                    </h4> 
+                  {%endif%}
+                </div>
+                <div class="span3">
+                  <button class="btn-mini border" style="background-color: ;" onclick="addToCompare('{{productDetails.master.product_id}}');"><i class="icon-chart-bar"></i>{{" "}}Add to Compare</button>
+                  </div>
+                </div>
+                
+                
+                <div class="add-to-links" style="margin-left:7%;">
+                  <ul>
+                    <li><a href="#" class="small_icon_color"><i class=" icon-mail-1"></i></a><a class= "md-trigger" onclick="location.href='#';" data-toggle="modal" href="#compare_price_{{productDetails.master.product_id}}">Email me when price drops</a></li>
+                  </ul>
+                </div>
+                <!-- <p class="no-rating"> <a href="#">Be the first to review this product</a> </p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="span4">
+          <div class="priority low"><span>Best Online Prices</span></div>          
+            <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" class="aligncenter">Website </th>
+                <th scope="col" class="aligncenter">Discount</th>
+                <th scope="col" class="aligncenter">Shipping Fee</th>
+                <th scope="col" class="aligncenter">Price</th>
+              </tr>
+            </thead>
+            <tbody>             
+              
+            
+            {% for price in productDetails["priceList"]["priceList"] %}
+                {%if price["price"] != 0%}
+                <tr class="websites">
+                    <td class="aligncenter"><img style="margin-left:4px; margin-right:10px; margin-top:10px; margin-bottom:10px" src="http://c223968.r68.cf1.rackcdn.com/{{price['website']}}_store.png"  alt={{price['website']}} ></img></td>
+                    <td class="aligncenter">{{price['discount']}} %</td>
+                    <td class="aligncenter">Rs. {{ 0 if price['shipping'] == "" else price['shipping'] }}</td>
+                    <td class="aligncenter"><a target="_blank" href={{price['productUrl']}}> <button class="btn-mini border ">{{price["price"]}}</button></a></td>                
+              </tr>
+                    {%endif%}
+                {%endfor%}
+                </tbody>
+          </table>
+         
+          
+        </div>  
+      </div>
+    </div>
+      <hr>
+
+      <div class="span12 userExperience ">
+          <h4 class="padding aligncenter" style="color:#fff; width:92%; border:0px solid;background-color:#3b5998; border-radius:5px;">User Experience Details</h4>
+          
+          <div class="carousel es-carousel-wrapper style1">
+            <div class="es-carousel">
+              <div class="row small_with_description">
+                <div class="product_outer carousel_items">
+                  <!-- KeywordBlock -->
+                  {%for keywords in productDetails["rating"]%}
+                  
+                  {%if keywords["rating"]|int >= 2 and keywords["rating"]|int < 3%}
+                  <div class="span2 product carousel_item">
+                    <div class="product-image-wrapper circleful" > 
+
+                      <div id="myStat4" data-startdegree="80" data-dimension="135" data-text="{{'%0.2f' % keywords["rating"]|float|round(2, 'floor')}}/5" data-info="" data-width="10" data-fontsize="22" data-percent="{{keywords["rating"]|int*20|round|int}}" data-fgcolor="#DBA901" data-bgcolor="#eee"></div>
+                      </div>
+                    
+                    <div class="wrapper-hover">
+                      <div class="product-name">
+                        <a href="#" style="color:#DBA901;"><b><i>{{keywords["positive"]|int + keywords["negative"]|int + keywords["neutral"]|int + 10}}</b></i> reviews analyzed</a>
+                      </div>
+                      <div class="wrapper"><span class="sort-rating hidden">10</span>
+                        <div class="product-tocart"> <a href="#tab3"><i style="color: #DBA901;" class="{{allKeyWordsIcon[keywords.Keyword]}}"></i></a> </div>
+                        <div class="product-price"><span class="sort-price"><h4>{{keywords["keyword"]}}</h4></span></div>
+                      </div>
+                    </div>
+                  </div>
+                  {%elif keywords["rating"]|int <2 %} 
+                  <div class="span2 product carousel_item">
+                    <div class="product-image-wrapper circleful"> 
+
+                      <div id="myStat4" data-startdegree="180" data-dimension="135" data-text="{{keywords["rating"]|float|round(2, 'floor')}}/5" data-info="" data-width="10" data-fontsize="22" data-percent="{{keywords["rating"]|int*20|round|int}}" data-fgcolor="#8A0808" data-bgcolor="#eee"></div>
+                      </div>
+                    
+                    <div class="wrapper-hover">
+                      <div class="product-name">
+                          <a href="#" style="color:#8A0808;"><b><i>{{keywords["positive"]|int + keywords["negative"]|int + keywords["neutral"]|int + 10}}</b></i> reviews analyzed</a>
+                      </div>
+                      <div class="wrapper"><span class="sort-rating hidden">10</span>
+                        <div class="product-tocart"> <a href="#tab3"><i style="color: #8A0808;" class="{{allKeyWordsIcon[keywords.Keyword]}}"></i></a> </div>
+                        <div class="product-price"><span class="sort-price"><h4>{{keywords["Keyword"]}}</h4></span></div>
+                      </div>
+                    </div>
+                  </div>
+                  {%elif keywords["rating"]|int >= 3 and keywords["rating"]|int < 5%}
+                  <div class="span2 product carousel_item">
+                    <div class="product-image-wrapper circleful"> 
+
+                      <div id="myStat4" data-startdegree="180" data-dimension="135" data-text="{{keywords["rating"]|float|round(2, 'floor')}}/5" data-info="" data-width="10" data-fontsize="22" data-percent="{{keywords["rating"]|int*20|round|int}}" data-fgcolor="#0B3B0B" data-bgcolor="#eee"></div>
+                      </div>
+                    
+                    <div class="wrapper-hover">
+                      <div class="product-name ">
+                        <a href="#" style="color:#0B3B0B;"><b><i>{{keywords["positive"]|int + keywords["negative"]|int + keywords["neutral"]|int + 10}}</b></i> reviews analyzed</a>
+                      </div>
+                      <div class="wrapper"><span class="sort-rating hidden">10</span>
+                        <div class="product-tocart"> <a href="#tab3"><i style="color: #0B3B0B;" class="{{allKeyWordsIcon[keywords.Keyword]}}"></i></a> </div>
+                        <div class="product-price"><span class="sort-price"><h4>{{keywords["keyword"]}}</h4></span></div>
+                      </div>
+                    </div>
+                  </div>
+                  {%else%}
+                  <div class="span2 product carousel_item">
+                    <div class="product-image-wrapper circleful"> 
+
+                      <div id="myStat4" data-startdegree="180" data-dimension="135" data-text="{{keywords["rating"]|int|float|round(2, 'floor')}}/5" data-info="" data-width="10" data-fontsize="22" data-percent="{{keywords["rating"]|int*20|int}}" data-fgcolor="#298A08" data-bgcolor="#eee"></div>
+                      </div>
+                    
+                    <div class="wrapper-hover">
+                      <div class="product-name">
+                          <a href="#" style="color:#298A08;"><b><i>{{keywords["positive"]|int + keywords["negative"]|int + keywords["neutral"]|int + 10}}</b></i> reviews analyzed</a>
+
+                      </div>
+                      <div class="wrapper"><span class="sort-rating hidden">10</span>
+                        <div class="product-tocart"> <a href="#tab3"><i style="color: #298A08;" class="{{allKeyWordsIcon[keywords.keyword]}}"></i></a> </div>
+                        <div class="product-price"><span class="sort-price"><h4>{{keywords["keyword"]}}</h4></span></div>
+                      </div>
+                    </div>
+                  </div>
+                  {%endif%}
+
+                  {%endfor%}
+                  <!-- KeywordBlock -->
+
+                  
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- sentiment chart list -->
+
+      <hr>
+      <div class="row">
+        <div class="span9 chart">
+          <ul class="nav-tabs contentTab">
+            <li ><a href="#tab1" >Specification</a></li>
+            <!-- <li class="active"><a href="#tab2">User Experience</a></li> -->
+            <li class="active"><a href="#tab3">Pros and Cons</a></li>
+          </ul>
+          <div class="tab-content" style="height:relative">
+            <div class="tab-pane" id="tab1">
+              <div class="box-collateral box-description">
+           <!--      <h3  style="color:#585858">Details</h3> -->
+                
+                  {%for specs in productDetails["specification"]["specification"]%}
+                  <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+
+                      <th class="aligncenter" scope="col" style="background-color: #FFEFE7">{{specs}}</th>
+                    </tr>
+                  </thead>
+                  </table>
+                  <table class="table table-striped table-hover">
+                     <colgroup>
+                        <col class="colfixw1">
+                        <col class="colfixw2">
+                  </colgroup>
+
+                  {%for kFet in productDetails["specification"]["specification"][specs]%}
+                  <tr>
+                  <th class="" width="30%">{{kFet}}</td>
+                  <td  width="70%">{{productDetails["specification"]["specification"][specs][kFet]}}</td>
+                  </tr>
+
+                  {% endfor %}
+                  </table>
+                
+                  {% endfor %}
+
+                
+
+              </div>
+            </div>
+
+           
+            <div class="tab-pane active" id="tab3">
+              <div class="box-collateral box-description">
+                <!-- <h3 style="color:#585858">Details</h3> -->
+                
+                  {%for reviews in productDetails["review"]['Reviews']%}
+                  {%if reviews["Positive"]|length + reviews["Positive"]|length > 0 %}
+                  <!--Pros And Cons  -->
+                  <table class="table table-bordered table-striped ">
+                  <thead>
+                    <tr>
+                      <th class="aligncenter" scope="col" style="background-color: #FFEFE7">{% filter upper %}
+                                {{reviews["About"]}}
+                                {% endfilter %}
+                      </th>
+                    </tr>
+                  </thead>
+                  </table>
+
+                  
+                  <div class="span5 chart" >
+
+                  <div class="toggle" id="toggle">
+                      <div class="accordion-group">
+                      <div class="accordion-heading">
+                         <a class="accordion-toggle" href="#collapseOnePros{{reviews["About"].split()[0]}}" data-parent="#accordion" data-toggle="collapse">
+                          <span class="open">
+                          <i class="icon-minus"></i>
+                          </span>
+                          <span class="closed">
+                          <i class="icon-plus"></i>
+                          </span>PROS
+                          </a>
+                      </div>
+                      <div id="collapseOnePros{{reviews["About"].split()[0]}}" class="accordion-body in collapse" style="height: auto">
+                      <div class="accordion-inner">
+                       <ul class="fa-ul dropdown_content phone1" style="z-index: 8; width:100%; align-items:left;">
+                        
+                        {%for pros in reviews["Positive"]%}
+                           <li  class = "phone" style="width:90%;font-size:110%;"><i class="fa-li fa fa-thumbs-o-up" style="color:#044D03"></i>{{pros["Review"]}} ({{pros["Users"]}})</li>
+                           {%endfor%}
+                        </ul>
+                        
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+
+                 
+                  <div  class="span5 chart"  >
+
+                  <div class="toggle" id="toggle">
+                      <div class="accordion-group">
+                      <div class="accordion-heading">
+                        <a class="accordion-toggle-Cons " href="#collapseOneCons{{reviews["About"].split()[0]}}" data-parent="#accordion" data-toggle="collapse">
+                          <span class="open">
+                          <i class="icon-minus"></i>
+                          </span>
+                          <span class="closed">
+                          <i class="icon-plus"></i>
+                          </span>CONS
+                          </a>
+                      </div>
+                      <div id="collapseOneCons{{reviews["About"].split()[0]}}" class="accordion-body in collapse" style="height: auto">
+                      <div class="accordion-inner"> 
+                        <ul class="fa-ul dropdown_content phone1" style="z-index: 8; width:100%; align-items:left;">
+
+                        {%for cons in reviews["Negative"]%} 
+                           <li  class = "phone1" style="width:90%;font-size:110%;"><i class="fa-li fa fa-thumbs-down" style="color:#dd4b39"></i>
+                            {{cons["Review"]}} ({{cons["Users"]}}) </li>
+                        {%endfor%}
+                        </ul>
+                       </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                 
+                  <!--Pros And Cons  -->
+                  {%endif%}
+                  {% endfor %}
+
+                
+
+              </div>
+          </div>
+            
+          </div>
+        </div>
+        <!-- Span for right colum start -->
+        <div class="span4">
+          <!-- For Ad slot  -->
+          <div class="border ad_slot" alt="">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+              <!-- bf_pdp_right_box -->
+              <ins class="adsbygoogle"
+                   style="display:inline-block;width:300px;height:250px"
+                   data-ad-client="ca-pub-5277836163297591"
+                   data-ad-slot="2102300660"></ins>
+              <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+
+          <!-- For Ad slot  -->
+          <!-- Compare Widget -->
+          {%for comProd in productDetails["reco"]['allComp'][:5]%}
+          <div class="product carousel_item prod-hover">
+                
+            <div class="wrapper-hover">
+              <div class="comp-prod onhover animate scale animated">
+                <div class="comp-prod-img">
+                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{comProd.product_id}}.jpg">
+                </div>
+                <div class="comp-prod-name">
+                  <a href="/pdp/{{comProd['product_id']}}"><span><h5>{{comProd['product_name'][:25]}}..</h5></span></a>
+                </div>
+              </div>
+              
+              <div class="comapre-vs">
+              <h4>VS</h4>
+              </div>
+              
+              <div class="comp-prod onhover animate scale animated">
+                <div class="comp-prod-img">
+                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{productMasterDetails.product_id}}.jpg">
+                </div>
+                <div class="comp-prod-name">
+                  <a href="/pdp/{{productMasterDetails.product_id}}"><span><h5>{{productMasterDetails.product_name[:20]}}..</h5></span></a>
+                </div>
+              </div>
+              <div class="comp-prod-foot">
+              <a href="#" onclick= "coupleCompare('{{productMasterDetails.product_id}}','{{comProd['product_id']}}');" class="btn">compare</a>
+              </div>
+            </div> 
+           </div>
+          {%endfor%}
+          <!-- compare Widget -->
+        </div>
+        <!-- Span for right colum End -->
+      </div>
+    </div>
+  </section>
+  <div class="container">
+      <h3 class="padding">Recommended PRODUCTS</h3>
+      <div class="carousel es-carousel-wrapper style0">
+        <div class="es-carousel">
+          <div class="row">
+            <div class="product_outer carousel_items">
+              {%for allProd in productDetails["reco"]['allReco'][:10]%}
+              <div class="span3 product hover carousel_item">               
+                <div class="product-image-wrapper" >
+                  <a href='/pdp/{{allProd.master.product_id}}' >
+                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{allProd.master.product_id}}.jpg">
+                </a> 
+                </div>
+                <div class="wrapper-hover">
+                  <div class="product-name aligncenter" style="height:33px"><a href='/pdp/{{allProd.master.product_id}}'>{{allProd.master.product_name[:20]}}...</a></div>
+                  <div class="wrapper"><span class="sort-rating hidden">4</span>
+                    {#<div class="product-tocart"> <a href="shopping-cart.html"><i class="icon-basket"></i></a> </div>#}
+                        <div class="product-price aligncenter" style = "padding-bottom:10px">
+                          <a class="aligncenter"  href="lowest website link">Lowest Price&nbsp;₹&nbsp {{allProd.min_price['price']}}</a>
+                            {# {%if lowestWebsite[0] == "Out of Stock"  %}
+                            <a class="aligncenter"  href="#" style="color: #B40404">{{"Price Not Available"}}</a>
+                            {% else %}
+                            <a class="aligncenter"  href="lowest website link">Lowest Price&nbsp;₹&nbsp{{lowestPrice[0]}}</a>
+                            {%endif%} #}
+                        </div>
+                    
+                  </div>
+                    
+                </div>
+
+              </div>
+              {%endfor%}
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div id="push"></div>
+</div>
+
+
+    <!-- {#Compare Prices PoUp #} -->
+              <div class="modal fade price" id="compare_price_{{productDetails.master.product_id}}">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title"><center>Compare Prices for {{productDetails.master.product_name[:40]}}...</center></h4>
+                      </div>
+                      <div class="modal-body">
+            <table class="table">
+            <colgroup>
+            <col class="colfixw25">
+            <col class="colfixw25">
+            <col class="colfixw20">
+            <col class="colfixw10">
+            <col class="colfixw20">
+            </colgroup>
+                  <thead>
+                    <tr>                      
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Seller</td>
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Discount</td>
+                      <td scope="col" class="aligncenter backgrey font_table_fix">Price</td>
+              <td scope="col" class="aligncenter backgrey font_table_fix">Buy Option</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for price in productDetails.priceList.priceList %}
+                      {%if price["price"] !=  0%}
+                          <tr>
+                              <!-- {#<td class="aligncenter 0_margin"><h5>Xiaomi</td>#} -->
+                              <td class="aligncenter 0_margin"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/{{price['website']}}.jpg"  alt="filpkart" height="25px" width="100px"> </td>
+                             
+                                  <td class="aligncenter 0_margin"><h5>{{price['discount']}} %</h5></td>
+                              
+                              <td class="aligncenter 0_margin"><h5>{{price["price"]}}</h5></td>
+                              <td class="aligncenter 0_margin"><a href={{price['productUrl']}} target="_blank" class="btn btn-mini">BUY</a></td>
+                          </tr>
+                           {%endif%} 
+                       {%endfor%} 
+
+
+                  </tbody>
+                </table>
+              </div>
+              {# Price Alert #}
+              {# <div class="modal-body"> #}
+                <h3 class="register-title">Set Price Alert</h3>
+                  <form class="register" onsubmit="emailMeWhenAvailable('{{productDetails.master.product_id}}');">
+                    
+                    <input type="text" class="register-input" placeholder="Your Desired Price" id= "{{productDetails.master.product_id}}_price">
+                    <input type="email" class="register-input" placeholder="Your Email Address" id= "{{productDetails.master.product_id}}_email">
+                    <input type="submit" value="Submit" class="register-button">
+                  </form>
+                
+              {# </div> #}
+              {# Price Alert #}
+                    </div>
+                  </div>
+          </div>
+          <!-- {# Compare Prices #} -->
+    
+
+{% endblock %}

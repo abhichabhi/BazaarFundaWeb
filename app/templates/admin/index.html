@@ -1,0 +1,32 @@
+{% extends "header.html" %}
+
+{% block content %}
+<section id="content">
+    <div class="container top">
+      <div class="row isotope-outer">
+        
+  {% for entry in object_list %}
+    {% if search %}
+      {% set entry = entry.entry %}
+    {% endif %}
+    <div class="post-preview-small span4 webdesign">
+          <div class="image"><a href="{% if entry.published %}{{ url_for('.detail', slug=entry.slug) }}{% else %}{{ url_for('.edit', slug=entry.slug) }}{% endif %}"><img src="{{entry.thumbnail}}"  alt="{{ entry.title }}" class="img-rounded  animate flip"></a></div>
+          <div class="inside">
+            <h3><a href="{% if entry.published %}{{ url_for('.detail', slug=entry.slug) }}{% else %}{{ url_for('.edit', slug=entry.slug) }}{% endif %}">{{ entry.title }}</a></h3>
+            <div class="post-meta"> <span class="meta-date"><i class="icon-clock-alt"></i>{{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</span> </div>
+            <div class="text">
+              <p>{{ entry.description }}</p>
+            </div>
+          </div>
+        </div>
+
+    
+    <!-- <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p> -->
+  {% else %}
+    <p>No entries have been created yet.</p> -->
+  {% endfor %}
+  {% include "blog/includes/pagination.html" %}
+</div>
+</div>
+</sction>
+{% endblock %}

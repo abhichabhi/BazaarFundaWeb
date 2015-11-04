@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{title}}</title>
+<link rel="apple-touch-icon" sizes="57x57" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/favicons/favicon-16x16.png">
+<meta name="msvalidate.01" content="7F958AD77D4728D75DC775395374A389" />
+<meta charset="utf-8">
+<meta name="google-site-verification" content="QVTtehp75ZsUYhMS5eEjNJyh2zQrmFqDC1bua0mTs5M" />
+<meta property="og:url" content="{{request.url }}" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="BazaarFunda.com" />
+<meta property="og:title" content="BazaarFunda.com - {{title}}" />
+{%if entry is defined%}
+  <meta property="og:description" content="BazaarFunda.com - {{entry.description}}"  />
+  <meta property="og:image" content="{{entry.thumbnail}}" />
+{%else%}
+  <meta property="og:image" content="hhttps://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/websitelogo.png" />
+  
+  <meta property="og:description" content="BazaarFunda.com - Discover Products and prices across different websites, Specification and User Experience comparison of Products"  />
+{%endif%}
+<meta content="933720486706873" property="fb:page_id">
+<meta content="Online Shopping, India, Price compare, Mobile Review, bazaarfunda" name="Keywords">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+<link href="/static/css/reset.css" rel="stylesheet">
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+<link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="/static/css/flexslider.css" rel="stylesheet"  />
+<link href="/static/css/andepict.css" rel="stylesheet">
+<link href="/static/css/product-slider.css" rel="stylesheet">
+<link href="/static/css/jquery.selectbox.css" rel="stylesheet" />
+<link href="/static/css/nouislider.css" rel="stylesheet">
+<link href="/static/css/fb_style.css" rel="stylesheet">
+<link href="/static/css/isotope.css" rel="stylesheet">
+<link href="/static/css/cloudzoom.css" rel="stylesheet">
+<link href="/static/css/style.css" rel="stylesheet">
+<link href="/static/css/animate.css" rel="stylesheet">
+<link href="/static/css/HomePageBazaarfunda.css" rel="stylesheet">
+<link href="/static/css/Bazaarfunda.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/static/css/demo.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/style2.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/easy-autocomplete.min.css">
+<link href="/static/css/style-sport.css" rel="stylesheet">
+<link href="/static/css/revolution.css" />
+<link rel="stylesheet"  href="/static/css/Reco.css" />
+<link rel="stylesheet" type="text/css" href="/static/rs-plugin/css/settings.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/static/rs-plugin/css/extralayers-sport.css" media="screen" />
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900,100italic,300italic,700italic,500italic,400italic,900italic,500' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Alegreya:700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Changa+One:400,400italic' rel='stylesheet' type='text/css'>
+<script src="/static/js/modernizr-2.6.2.min.js"></script>
+
+<!-- {#[if IE 9 ]><link href="/static/css/styleie9.css" rel="stylesheet"> <![endif]#}
+
+{#[if lte IE 8 ]> <link href="/static/css/styleie8.css" rel="stylesheet"> <script src="/static/js//html5.js"></script><![endif]#} -->
+
+<script src="/static/js//modernizr-2.6.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+<script src="/static/js/jquery-ui.min.js"></script> 
+
+<!-- JS file -->
+
+<script src="/static/js/bootstrap.js"></script> 
+<script src="/static/js//jquery.easing.js"></script> 
+<script src="/static/js//jquery.flexslider.js"></script> 
+<script src="/static/js//jquery.elastislide.js"></script> 
+<script src="/static/js//jquery.selectbox-0.2.js"></script> 
+<script src="/static/js//jquery.nouislider.js"></script> 
+<script src="/static/js//jquery.isotope.min.js"></script> 
+<script src="/static/js//cloudzoom.js"></script>
+<script src="/static/js/jquery.parallax.js"></script> 
+<script src="/static/js//jquery.inview.js"></script> 
+<script src="/static/js//jquery.jcarousel.min.js"></script> 
+<script src="{{ url_for('static', filename='js/jquery.circliful.js')}}"></script>
+<script src="{{ url_for('static', filename='js/jquery.circliful.min.js')}}"></script>
+<script src="/static/js/Reco.js"></script> 
+
+<script>
+$( document ).ready(function() {
+
+        $('div[id^=myStat]').circliful();
+        
+    });
+</script>
+
+<script src="/static/js//scripts.js"></script>
+<script src="/static/js//doubletaptogo.js"></script>
+<script src="/static/js//navigation.js"></script> 
+<script src="/static/js//jquery.fastLiveFilter.js"></script>
+</head>
+
+<body class="shop">
+<div id="wrap">
+  <!-- Reco PopUp -->
+  {%for catType in all_cat_details%}
+    <div class="modal modal-lg fade" id="{{catType}}_Modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                  <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body no_scroll" >
+                  <div id="{{catType}}reco_slide_2" class="pos_relative align_center">
+                    
+                      <br><br><br><br>
+                      <h1>Find the right Product for you</h1>
+                      <font face="">
+                      <h5>With many Product to choose from it must be very hectic to make a decision,<br> Answer few questions and we will recommend a Product for you</h5>
+                      </font>
+                      
+                      <a id = "{{catType}}slide_2_next" class="btn" onclick="start_recommendationSlider('{{catType}}', this, '{{catType}}');">Get Started</a>
+                      <br><br><br><br>
+                  </div>
+
+          <div id="{{catType}}reco_slide_3" class="hide pos_relative align_center">
+            <h1>Reco SLIDE 3</h1>
+            <span id="{{catType}}slide_3_back" class= "btn back" onclick="reco_slider_prev(this, '{{catType}}')">BACK</span>
+            
+            <span id="{{catType}}slide_3_next" class= "btn forward" onclick="reco_slider_next(this, '{{catType}}')">NEXT</span>
+          </div>
+
+          <div id="{{catType}}reco_slide_4" class="hide pos_relative align_center">
+            <h1>Reco SLIDE 4</h1>
+            <span id="{{catType}}slide_4_back" class="btn back" onclick="reco_slider_prev(this, '{{catType}}')">BACK</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span id="{{catType}}slide_4_next" class="btn forward" onclick="reco_slider_next(this)">Next</span>
+          </div>
+        </div>
+               
+        </div>
+      </div>
+    </div>
+  {%endfor%}
+   <div class="modal modal-lg fade" id="RecoModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body no_scroll" style="background-color:#ecf0f1;">
+                  <div id="reco_slide_1" class="pos_relative align_center">
+                    
+                      <br><br><br><br>
+                      <h1>Find the right Product for you</h1>
+                      <font face="">
+                      <h5>With many Product to choose from it must be very hectic to make a decision,<br> Answer few questions and we will recommend a Product for you</h5>
+                      </font>
+                      
+                      <a id = "slide_1_next" class="btn" onclick="reco_slider_next(this)">Get Started</a>
+                      <br><br><br><br>
+                  </div>
+
+          <div id="reco_slide_2" class="hide pos_relative align_center">
+              <br><br>
+              <h1>Choose Product Categories</h1>
+              {%for cat_type in all_cat_details%}
+              <div id="reco_{{cat_type}}" class="pop_box" onclick="start_recommendationSlider('{{cat_type}}', this,'');"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_{{cat_type}}.png" alt="img05"></i></div>&nbsp;&nbsp;
+              {%endfor%}
+              <br><br>
+            <span id="slide_2_back" class="btn back" onclick="reco_slider_prev(this)">BACK</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            
+          </div>
+
+          <div id="reco_slide_3" class="hide pos_relative align_center">
+            <h1>Reco SLIDE 3</h1>
+            <span id="slide_3_back" class="btn back" onclick="reco_slider_prev(this)">BACK</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span id="slide_3_next" onclick="reco_slider_next(this)">NEXT</span>
+          </div>
+
+          <div id="reco_slide_4" class="hide pos_relative align_center">
+            <h1>Reco SLIDE 4</h1>
+            <span id="slide_4_back" class="btn back" onclick="reco_slider_prev(this)">BACK</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span id="slide_4_next" onclick="reco_slider_next(this)">Next</span>
+          </div>
+        </div>
+               <!-- <div class="modal-footer"> <a href="#" class="btn">CHOOSE</a> </div>-->
+        </div>
+      </div>
+    </div>
+  <!-- Reco PopUp -->
+  {#HEADER#}
+  <div id="header">
+    <meta id="category" data-name="{{category}}"/>
+    <div id="spy" class="visible-desktop fix">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <nav></nav>
+          </div>
+          <div class="spy-left">
+            <div class="spy_logo"> <a href="/" class="logo_inner"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/websitelogo.png" alt=""></a></div>
+          </div>
+          <div class="spy-right">
+            <div class="spyshop_search">
+              <form class="form-search" id="form-search-spy" style="" action="javascript:search();">
+                <input type="text" id = "form-search-spy-text" class="" value="search entire store..." onblur="if (this.value == '') {this.value = 'search entire store...';}" onfocus="if(this.value == 'search entire store...') {this.value = '';}" style="visibility:visible; width:370px">
+                <button type="submit" class="btn" onclick="search();"><i class="icon-search icon-large"></i></button>
+              </form>
+            </div>
+
+            <div class="spyshop">
+            <div class="pull-right padding-1" id="cart">
+          <div class="shoppingcart">
+            <div class="fadelink"><span class="pull-right"> <a href="/compare" class="btn hidden-comp" onmouseover="cartMouseHover()"onmouseout="cartMouseOut()"><i class="icon-basket icon-large"></i></a> </span><span class="badge badge-inverse">{{cartDetails|length}}</span>
+              <div class="shopping_cart_mini hidden-phone hidden-tablet" onmouseover="cartMouseHover()"onmouseout="cartMouseOut()">
+                <div class="inner-wrapper"><b>{{'Products in Compare Bucket' if cartDetails|length > 0 else 'No Products in Compare Bucket'}}</b>
+                  {%for items in cartDetails%}
+                  <div class="item" id="item_{{items['specification']['product_id']}}"> <a href="/pdp/{{items['specification']['product_id']}}" class="product-image"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{items['specification']['product_id']}}.jpg" alt="" style="width:17px; height:30px"></a>
+                    <div class="product-detailes"> <a href="/pdp/{{items['specification']['product_id']}}" class="product-name">{{items['master']['product_name'][:30]}}...</a>
+                      {%if items.min_priceDict is not defined or items.min_priceDict['price'] is not defined  or items.min_priceDict['price'] == 0%}
+                                <a class="aligncenter"  href="#" style="color: #B40404">{{"Price Not Available"}}</a>
+                                {% else %}
+                                <div class="product-price">₹&nbsp{{items.min_priceDict['price']}}</div>
+
+                            {%endif%} 
+                      
+                    </div>
+                    <!-- <div class="alignright"> <a href="#"><i class="icon-edit-1"></i></a> <a href="#"><i class="icon-trash-3"></i></a> </div> -->
+                  </div>
+                  {%endfor%}
+                  <div class="wrapper">  <a href="/compare" class="button">Proceed to Compare</a> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    {# Header Container #}
+    <div class="container" style="display:none">
+      <div class="wrapper_w">
+        <div id="logo"> <a href="index.html" class="logo_inner"><img src="/static/img/logo-1.png" alt=""></a> </div>
+        <div class="pull-right padding-1" id="cart">
+          <div class="shoppingcart">
+            <div class="fadelink"><span class="pull-right"> <a href="shopping-cart.html" class="btn"><i class="icon-basket icon-large"></i></a> </span><span class="badge">3</span>
+              <div class="shopping_cart_mini hidden-phone hidden-tablet">
+                <div class="inner-wrapper">Products in Compare Bucket
+                  <div class="item"> <a href="#" class="product-image"><img src="/static/img/sport/product-image-minicart.jpg" alt=""></a>
+                    <div class="product-detailes"> <a href="#" class="product-name">Mauris et ligula quis </a>
+                      <div class="product-price">1 x $400.00</div>
+                    </div>
+                    <div class="alignright"> <a href="#"><i class="icon-edit-1"></i></a> <a href="#"><i class="icon-trash-3"></i></a> </div>
+                  </div>
+                  <div class="item"> <a href="#" class="product-image"><img src="/static/img/sport/product-image-minicart.jpg" alt=""></a>
+                    <div class="product-detailes"> <a href="#" class="product-name">Mauris et ligula quis </a>
+                      <div class="product-price">1 x $400.00</div>
+                    </div>
+                    <div class="alignright"> <a href="#"><i class="icon-edit-1"></i></a> <a href="#"><i class="icon-trash-3"></i></a> </div>
+                  </div>
+                  <div class="wrapper"> <a href="shopping-cart.html" class="button">View shopping cart</a> <a href="checkout.html" class="button">Proceed to Checkout</a> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pull-right padding-1">
+          <div class="form-search-wrapper">
+            <div id="search">
+              <form class="form-search" id="form-search">
+                <input type="text" class="search-query" value="search entire store here..." onblur="if (this.value == '') {this.value = 'search entire store here...';}" onfocus="if(this.value == 'search entire store here...') {this.value = '';}">
+                <button type="submit" class="btn" onClick="document.getElementById('form-search').submit()"><i class="icon-search icon-large"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span12">
+          <nav>
+            <ul class="nav nav-list">
+              <li class="nav-header"> <a href="#level0" title="" data-toggle="collapse" class="collapsed"><i class="icon-th"></i>&nbsp;&nbsp;MENU<i class="icon-up pull-right"></i><i class="icon-down pull-right"></i> </a>
+                <ul class="collapse in" id="level0" >
+                  <li> <a href="index.html">HOME </a></li>
+                  <li> <a href="#">CATEGORY </a> <a class="icon-collapse collapsed" href="#level1" title="" data-toggle="collapse" ><i class="icon-up pull-right"></i><i class="icon-down pull-right"></i></a>
+                    <ul class="collapse in" id="level1">
+                      {%for catType in all_cat_details%}
+                      <li class="level1"> <a href="index.html"> <span>{{catType}}</span> </a> </li>
+                      {%endfor%}
+                      </ul>
+                  </li>
+                  <li> <a href="/compare"> Comparisions </a> <a class="icon-collapse collapsed" href="#level2" title="" data-toggle="collapse" ><i class="icon-up pull-right"></i><i class="icon-down pull-right"></i></a>
+                    
+                  </li>
+                 
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <nav> 
+            
+            <ul class="menu" id="nav">
+              <li class="menu_home_link"><a href="index.html"><i class="icon-home"></i></a></li>
+              <li class="dropdown"> <a href="index.html">Category</a>
+                <ul class="level0 one-column">
+                  <li>
+                    <ul class="shadow">
+                      <li class="list_column">
+                        <ul class="list_in_column">
+                          {%for catType in all_cat_details%}
+                            <li class="level1"> <a href="/browse/{{catType}}"> <span>{{catType|title}}</span> </a> </li>
+                            {%endfor%}
+                          </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown"> <a href="/compare">Comparisions</a>
+               
+              </li>
+              
+              </ul>
+             
+             
+          </nav>
+        </div>
+      </div>
+    </div>
+    {# Header Container #}
+  </div>
+
+{% block content %}{% endblock %}
+
+
+
+<script src="/static/js/jquery.easy-autocomplete.min.js"></script>
+<script src="/static/js/Bazaarfunda.js"></script>
+<script src="/static/js/toucheffects.js"></script>
+<script src="/static/js/jquery.easing.js"></script>
+<!-- <script src="/static/js/overrides.js"></script> -->
+</body>
+</html>

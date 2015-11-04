@@ -1,0 +1,31 @@
+<table style="border: 1px solid black;">
+	<tr>
+		<th>Page</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><a href="banner/home">Home Page Banner</a></td>
+		<td>Set Home-Page Banners and logos of MediapUblications</td>
+	</tr>
+
+	<tr>
+		<td><a href="banner/listing">Listing Page Banner</a></td>
+		<td>Set Listing-Page Banners Compare Items etc.</td>
+	</tr>
+
+	<tr>
+		<td><a href="priceoverride/M00001">Price Override</a></td>
+		<td>Override the prices of various products. Replace M00001 with the product_id you want to override</td>
+	</tr>
+
+</table>
+
+<p>Click the button below to log out of the site.</p>
+  <form action="{{ url_for('.logout') }}" class="form-horizontal" method="post">
+    <button class="btn btn-primary" type="submit">Log out</button>
+  </form>
+<style>
+table, th, td {
+   border: 1px solid black;
+}
+</style>

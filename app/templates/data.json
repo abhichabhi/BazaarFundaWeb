@@ -1,0 +1,88 @@
+{
+    "mobile":[
+			"Xiaomi",
+			"Samsung",
+			"Nokia",
+			"Apple",
+			"Nexus",
+			"Aqua",
+			"Intex",
+			"Motorola",
+			"Micromax",
+			"Lava",
+			"Sigmatel"
+			],
+	
+	"id":[
+		"mob_key_01",
+		"mob_key_02",
+		"mob_key_03",
+		"mob_key_04",
+		"mob_key_05",
+		"mob_key_06",
+		"mob_key_07",
+		"mob_key_08",
+		"mob_key_09",
+		"mob_key_10"
+	],
+	
+	"id_name":[
+		"Graphics",
+		"Music",
+		"Operating System",
+		"Screen",
+		"Resolution",
+		"Charger",
+		"Battery",
+		"Design",
+		"Price",
+		"Otg"
+	],
+	
+	"imagepath": [
+				"img/1.png",
+				"img/1.png",
+				"img/1.png",
+				"img/1.png",
+				"img/1.png",
+				"img/1.png",
+				"img/1.png",
+				"img/1.png",
+				"img/1.png",
+				"img/1.png"
+	],
+	"name": "Pratyush Raj",
+    "title": "Select2",
+    "description": "Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.",
+    "keywords": [
+        "select",
+        "autocomplete",
+        "typeahead",
+        "dropdown",
+        "multiselect",
+        "tag",
+        "tagging"
+    ],
+    "version": "3.4.2",
+    "author": {
+        "name": "Prats",
+        "url": "https://github.com/ivaynberg"
+    },
+    "licenses": [
+        {
+            "type": "Apache",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        },
+        {
+            "type": "GPL v2",
+            "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+        }
+    ],
+    "bugs": "https://github.com/ivaynberg/select2/issues",
+    "homepage": "http://ivaynberg.github.com/select2",
+    "docs": "http://ivaynberg.github.com/select2/",
+    "download": "https://github.com/ivaynberg/select2/tags",
+    "dependencies": {
+        "jquery": ">=1.7.1"
+    }
+}

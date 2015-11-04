@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{{title}}</title>
+<link rel="stylesheet" type="text/css" href="/static/css/view.css" media="all">
+<script type="text/javascript" src="/static/js/view.js"></script>
+<script type="text/javascript" src="/static/js/AdminPanelJS.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body id="main_body" >
+
+	<img id="bottom" src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{product_id}}.jpg" alt="">
+	<form id="form_1044370" name="PriceForm" class="appnitro"  method="post" action="">
+		<p><b>Enter Override Prices</b></p>
+		
+		<p>Amazon_price:&nbsp;&nbsp; &nbsp; &nbsp; <input type="text" name="amazon" id="amazon" class="fullwidth" value=""></p>
+		<p>Flipkart_price:&nbsp;&nbsp; &nbsp; &nbsp; <input type="text" name="flipkart" id="flipkart" class="fullwidth" value=""></p>
+		<p>Snapdeal_price:&nbsp;&nbsp; &nbsp; &nbsp; <input type="text" name="snapdeal" id="snapdeal" class="fullwidth" value=""></p>
+	<input type="button" href="#" class="button button-2x" onClick="return priceOverride(this.form, '{{product_id}}')" value="Submit"></input>
+<p>Before changing the price, check <h1><a color="red" target="_blank" href="/restfull/price/{{product_id}}">here</a></h1> which website price should be updated</p>
+	<p>Click the button below to log out of the site.</p>
+  		<a href = "/admin/logout">
+    Log out</a>
+  </form>
+</body>
+</html>

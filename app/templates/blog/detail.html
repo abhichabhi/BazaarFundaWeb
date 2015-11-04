@@ -1,0 +1,70 @@
+{% extends "header.html" %}
+<!-- Multiple Social Network Js -->
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=1435721096655907";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!--Twitter Script-->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+{% block content %}
+<section id="content">
+    <div class="container top">
+    	<div class="row">
+    		<div class="span12">
+    			<div class="post-view">
+    				<strong class="aligncenter dropcap color" color="red"> {% block content_title %}{{ entry.title }}{% endblock %} </strong><br><br>
+
+    				<div class="post-meta">
+    					<span class="meta-date"><i class="icon-clock-alt"></i>
+    						{{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }} 
+    					</span>
+              
+    				</div>
+    				<p >
+
+              <script type="text/javascript">var switchTo5x=true;</script>
+              <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+              <script type="text/javascript">stLight.options({publisher: "2a0e4904-51e4-4410-b655-f42fb9ab3d2b", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>{{ entry.html_content }}
+    				</p>
+
+              <span class='st_sharethis_large' displayText='ShareThis'></span>
+              <span class='st_facebook_large' displayText='Facebook'></span>
+              <span class='st_twitter_large' displayText='Tweet'></span>
+              <span class='st_linkedin_large' displayText='LinkedIn'></span>
+              <span class='st_pinterest_large' displayText='Pinterest'></span>
+              <span class='st_email_large' displayText='Email'></span>    			</div>
+    		</div>
+    	</div>
+    	<div class="post-tags">
+			<div class="fb-like" data-href="{{url_for('.detail', slug=entry.slug)}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+    	</div>
+    	<div class="row">
+    	<div class="fb comments span9">
+    		<div class="fb-comments" data-href="{{request.url }}"></div>
+    	</div>
+    	<div class="span3">
+              <h3><i class="icon-twitter-bird" height="300"></i>TWITTER FEEDS</h3>
+              <a class="twitter-timeline" height="300" href="https://twitter.com/bazaarfunda" data-widget-id="610375028115402752">Tweets by @bazaarfunda</a>
+
+        </div>
+    </div>
+    </div>
+</section>
+    	{%endblock%}
+<!-- {% block title %}{{ entry.title }}{% endblock %} -->
+
+
+
+{% block extra_header %}
+  {% if session.logged_in %}
+    <li><a href="{{ url_for('.edit', slug=entry.slug) }}">Edit entry</a></li>
+  {% endif %}
+{% endblock %}
