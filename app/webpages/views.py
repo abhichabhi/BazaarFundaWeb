@@ -140,8 +140,10 @@ def browse(category):
 		scoreSortedProductList = getScoreSortedProductID(finalProductList,category, keywords, weights)
 		session['product_list'] = scoreSortedProductList
 		utc_timestamp = datetime.datetime.utcnow()
-		
-		_sid = session['_sid']
+		try:
+			_sid = session['_sid']
+		except:
+			_sid = None
 
 		if _sid is not None:			
 			mongoUserVariables['listing_products'].save({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
