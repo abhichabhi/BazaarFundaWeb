@@ -85,8 +85,8 @@ app.config['DATABASE'] = DATABASE
 flask_db = FlaskDB(app)
 database = flask_db.database
 
-#Blog Views
-from app.blog.views import mod as blogModule
-from app.blog.views import Entry, FTSEntry
-database.create_tables([Entry, FTSEntry], safe=True)
-app.register_blueprint(blogModule)
+# #Blog Views
+# from app.blog.views import mod as blogModule
+# from app.blog.views import Entry, FTSEntry
+# database.create_tables([Entry, FTSEntry], safe=True)
+# app.register_blueprint(blogModule)
