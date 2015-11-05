@@ -132,7 +132,7 @@ def listingFormSubmit():
 	return "Listing form submitted successfully"
 
 @mod.route('/priceoverride/<product_id>', methods=['GET','PUT'])
-@login_required
+# @login_required
 def priceOverride(product_id):
 	if request.method == 'GET':	
 		return render_template('admin/priceOverride.html', product_id=product_id)
