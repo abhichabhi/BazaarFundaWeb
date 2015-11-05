@@ -140,23 +140,29 @@ def browse(category):
 		scoreSortedProductList = getScoreSortedProductID(finalProductList,category, keywords, weights)
 		session['product_list'] = scoreSortedProductList
 		utc_timestamp = datetime.datetime.utcnow()
+		session['product_list'] = []
 		try:
 			_sid = session['_sid']
+			print "_Sid is ", _sid
 		except:
+			print "_sid is None"
 			_sid = None
 
 		if _sid is not None:
 			try:
 				userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
+				mongoUserVariables['listing_products'].update_one({"_sid":_sid}, { "$set":{ "product_list":scoreSortedProductList, "date": utc_timestamp}})
 			except:
 				mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
-
-			mongoUserVariables['listing_products'].update_one({"_sid":_sid}, { "$set":{ "product_list":scoreSortedProductList, "date": utc_timestamp}})
+			
 		else:
 			uid = uuid.uuid4()
 			_sid = uid.hex
+			print "_sid generated", _sid
 			mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
 		session['_sid'] = _sid
+		print "_Sid in Session", session['_sid']
+		print session
 		userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
 		scoreSortedProductList =  userDbProducts[:20]
 	else:
