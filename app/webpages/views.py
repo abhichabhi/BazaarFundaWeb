@@ -146,7 +146,7 @@ def browse(category):
 			_sid = None
 
 		if _sid is not None:
-			mongoUserVariables['listing_products'].update_one({"_sid":_sid}, { "$set":{ "product_list":scoreSortedProductList, "date": utc_timestamp}, "$currentDate": {"lastModified": True}})
+			mongoUserVariables['listing_products'].update_one({"_sid":_sid}, { "$set":{ "product_list":scoreSortedProductList, "date": utc_timestamp}})
 		else:
 			uid = uuid.uuid4()
 			_sid = uid.hex
