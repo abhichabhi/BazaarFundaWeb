@@ -145,33 +145,26 @@ def browse(category):
 		except:
 			_sid = None
 
-		if _sid is not None:			
-			mongoUserVariables['listing_products'].save({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
+		if _sid is not None:
+			mongoUserVariables['listing_products'].update_one({"_sid":_sid}, { "$set":{ "product_list":scoreSortedProductList, "date": utc_timestamp}, "$currentDate": {"lastModified": True}})
 		else:
 			uid = uuid.uuid4()
 			_sid = uid.hex
 			mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
-			
-		
-		# mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
-		
 		session['_sid'] = _sid
-			
-		
-		scoreSortedProductList =  mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"][:20]
+		userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
+		scoreSortedProductList =  userDbProducts[:20]
 	else:
-		# print session[category_product_list], "with start"
 		_sid = session['_sid']
-		
-		scoreSortedProductList = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"][0:start+20]
+		userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
+		scoreSortedProductList = userDbProducts[0:start+20]
 	productList = []
 	for prod in scoreSortedProductList:
 		prodDetail = {}
-		prodDetail = getProductDetail(prod['product_id'])
-		# prodDetail['finalrating'] = prod['score']
+		prodDetail = getProductDetail(prod['product_id'])		
 		productList.append(prodDetail)
 	
-	totalProducts = len(session['product_list'])
+	totalProducts = len(userDbProducts)
 	if len(categoryFilterCheckedStatus) == 0:
 		filterFlag = 1
 	categoryFilter = categoryListingFilter[category]
