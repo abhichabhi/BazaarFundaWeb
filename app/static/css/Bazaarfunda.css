@@ -581,3 +581,7 @@ position:relative;
     background-color: #FAFAFA;
     border-radius: 0;
 }
+
+.product .product-tocart, .preview .product-tocart {
+	height:55px;
+}
