@@ -562,3 +562,15 @@ position:relative;
 .product.hover .product-image-wrapper img {
 	height:auto;
 }
+
+.flexslider.banners.listing {
+    padding: 1px 7px 0 7px;
+    border-bottom: 0px solid #1191db; 
+    border-radius: 6px 6px 0 0;
+    position: relative;
+}
+.banners_outer.listing {
+    border: 0px dashed #FAFAFA;
+    background-color: #FAFAFA;
+    border-radius: 0;
+}
