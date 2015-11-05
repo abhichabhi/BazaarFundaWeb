@@ -146,6 +146,11 @@ def browse(category):
 			_sid = None
 
 		if _sid is not None:
+			try:
+				userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
+			except:
+				mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
+
 			mongoUserVariables['listing_products'].update_one({"_sid":_sid}, { "$set":{ "product_list":scoreSortedProductList, "date": utc_timestamp}})
 		else:
 			uid = uuid.uuid4()
