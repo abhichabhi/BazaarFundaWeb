@@ -38,7 +38,7 @@
               </div>
             </div>
           </div>
-          <div class="span7">
+          <div class="span6">
             <div class="product-CSS">
               <div class="product_info">
                 <div class="product-name" style="margin-left:30px">
@@ -59,10 +59,10 @@
                   </div>
                 
               </div>
-                <div class="short-description">
-                <span class="row">
-                <div class="span3"><p>
-                  <ul class="styled-list circle">
+                <div class="short-description">                                                     
+                <span class="row">                                                      
+                <div class="span3 pdp" ><p> 
+                   <ul class="styled-list circle">             
                     {%for leftSpec in pdp_fileds['left']%} 
                     
                           {%if productDetails['specification']['specification'] [pdp_fileds['left'][leftSpec][0]] is defined %}
@@ -75,7 +75,7 @@
 
                   </ul>
                </p></div>
-               <div class="span3"><p>
+               <div class="span3 pdp"><p>
                   <ul class="styled-list circle">
                
                     {%for rSpec in pdp_fileds['right']%} 
@@ -90,7 +90,7 @@
            </p></div>
          </span>
                   
-                    <div class="row" style="margin-left:10px;">
+                    <div class="row" >
                       <div class="span3">
                   {%if productDetails[min_priceDict] == "Out of Stock"  %}
                     <h4><div style="color: #B40404">{{"Not Available in our search"}}</div></h4>
@@ -100,7 +100,7 @@
                     </h4> 
                   {%endif%}
                 </div>
-                <div class="span3">
+                <div class="span2 add_to_compare">
                   <button class="btn-mini border" style="background-color: ;" onclick="addToCompare('{{productDetails.master.product_id}}');"><i class="icon-chart-bar"></i>{{" "}}Add to Compare</button>
                   </div>
                 </div>
@@ -245,7 +245,7 @@
 
       <hr>
       <div class="row">
-        <div class="span9 chart">
+        <div class="span8 chart">
           <ul class="nav-tabs contentTab">
             <li ><a href="#tab1" >Specification</a></li>
             <!-- <li class="active"><a href="#tab2">User Experience</a></li> -->

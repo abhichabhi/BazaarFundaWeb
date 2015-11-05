@@ -4,7 +4,7 @@
   <meta id="category" data-name="{{category}}" />
   <section id="content">
     <div class="container top listing">
-      <div class="row">
+      <div class="row" style="position:absolute">
         <div class="span3 listing" id="column_left">
           <div class="row">
             <div class="span3 listing">
@@ -460,7 +460,7 @@
      -->
      <!-- Affiliate Vertical Right Banner -->
             <div class="span2 listing">
-              <div class="banners_outer">
+              <div class="banners_outer listing">
                 <div class="flexslider banners">                  
                   <ul class="slides">
                     {%for right_vertical_banner in listingStatic['right_vertical_aff']%}

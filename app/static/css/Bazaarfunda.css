@@ -89,9 +89,16 @@ width:110px;
 	width:180px;
 }
 
+.span3.pdp {
+	width:210px;
+}
+.span2.add_to_compare {
+	margin-left:0px;
+}
+
 .span2.listing  {
   width: 170px;
-  float: right;
+  float: left;
   
 }
 .span2.listing .product {
