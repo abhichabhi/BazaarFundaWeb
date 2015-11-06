@@ -113,7 +113,7 @@ color: #fff;
 }
 #nav>li:hover>a, #nav>li.hover>a {
 	background: none;
-	color:#000;
+	color:#ffbf27;
 }
 #nav>li>a:after {
 	position: absolute;
@@ -480,8 +480,8 @@ a.btn.icon-4x.rounded.icon-airplane-4, a.btn.icon-4x.rounded.icon-truck-2 {
 }
 /* arrow */
 .es-nav a.btn, .flex-direction-nav a, .flexslider.banners .flex-direction-nav a, .flexslider.small .flex-direction-nav a, .flexslider.vertical .flex-direction-nav a, .jcarousel-container a.jcarousel-next, .jcarousel-container a.jcarousel-prev {
-	background-color: #f5f5f5;
-	color: #8c8f93;
+	background-color: #3b5998;
+	color: #ffbf27;
 }
 .es-nav span.disable a.btn:hover, .jcarousel-container a.jcarousel-next-disabled:hover, .jcarousel-container a.jcarousel-prev-disabled:hover {
 	background-color: #f5f5f5;
