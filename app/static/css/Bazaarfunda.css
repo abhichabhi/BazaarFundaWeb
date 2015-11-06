@@ -109,8 +109,8 @@ width:110px;
 #column_right.span9.listing {
   float: left;
   position: relative;
-  min-width: 730px;
-  max-width:760px;
+  /*min-width: 730px;
+  max-width:760px;*/
   overflow: hidden;
   
 }
