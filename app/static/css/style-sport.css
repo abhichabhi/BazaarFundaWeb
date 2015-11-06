@@ -92,7 +92,7 @@ button:hover, .button:hover {
 }
 #nav > li > a {
 	font-family: 'Changa One', cursive;
-	color:#fff;
+	color:#3b5998;
 }
 #nav > li.menu_home_link > a [class^="icon-"], #nav > li.menu_home_link > a [class^="icon-"]:hover {
  color:#222a36 !important;
