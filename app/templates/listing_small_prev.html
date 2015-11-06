@@ -36,7 +36,7 @@
                     <div class="block-content">
                       <div class="inner-addon right-addon">
                           <i class="glyphicon icon-search-2 icon-small"></i>
-                          <input  name="{{filter.key|sjoin}}" type="text" id="{{filter.key|sjoin}}" class="widthf" value="Search by Model" onblur="if (this.value == '') {this.value = 'Search by Model';}" onfocus="if(this.value == 'Search by Model') {this.value = '';}" />
+                          <input  name="{{filter.key|sjoin}}" type="text" id="{{filter.key|sjoin}}" class="widthf" value="Search by {{filter.key|title}}" onblur="if (this.value == '') {this.value = 'Search by {{filter.key|title}}';}" onfocus="if(this.value == 'Search by {{filter.key|title}}') {this.value = '';}" />
                       </div>
                       <div class="listing-height {{filter.key}}">
                         <ul id="{{filter.key|sjoin}}_list" class="list-group">
@@ -126,7 +126,7 @@
                 <div class="product_outer carousel_items">
                   {# Compare Prices #}
               <div class="span2 product carousel_item">               
-                <div class="product-image-wrapper listing" style="color:red; height:180px">
+                <div class="product-image-wrapper listing {{category}}" style="color:red; height:180px">
                   <div class="label_sale_top_right">Sale {{deal_product['discount']}}%</div>
                   {# <div class="sale_discount img-rounded">-20%</div> #}
                   <a href='/pdp/{{deal_product['product']['master']['product_id']}}' >
@@ -191,7 +191,7 @@
                 <div class="product_outer carousel_items">
                   {# Compare Prices #}
               <div class="span2 product carousel_item">               
-                <div class="product-image-wrapper listing" style="color:red">
+                <div class="product-image-wrapper listing {{category}}" style="color:red">
                   
                   
                   <a href='/pdp/{{most_reviewed['master']['product_id']}}' >
@@ -331,7 +331,7 @@
 
 
               <div class="span2 product hover carousel_item">               
-                <div class="product-image-wrapper listing"  style="min-height:185px" >
+                <div class="product-image-wrapper listing {{category}}" >
                   
                   <a href='/pdp/{{product.master["product_id"]}}' >
                   <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{product.master["product_id"]}}.jpg">

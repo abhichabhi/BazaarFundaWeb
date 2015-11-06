@@ -566,9 +566,17 @@ position:relative;
 	opacity:.9;
 }
 
-.product.hover .product-image-wrapper img {
-	height:auto;
+.product .product-image-wrapper.listing.laptop {
+	min-height: 185px;																																																														 img {
+
 }
+
+.product .product-image-wrapper.listing.desktop {
+	min-height: 185px;																																																														 img {
+
+}
+
+
 
 .flexslider.banners.listing {
     padding: 1px 7px 0 7px;
@@ -584,4 +592,8 @@ position:relative;
 
 .product .product-tocart, .preview .product-tocart {
 	height:55px;
+}
+
+.block-content input {
+	font-size:x-small;
 }

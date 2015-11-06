@@ -832,7 +832,35 @@ a.small_icon_color i:hover, .middle_icon_color:hover, .promo_box:hover div {
 .preview.small:hover .big_image {
 	left: 1px;
 }
+
 .product .product-image-wrapper img {
+	opacity: 1;
+	height:100%;
+	max-height:180px
+	;
+	 position: absolute;
+	 top: 50%;
+	 left: 50%;
+	 transform: translate(-50%, -50%);
+	 -webkit-transform: translate(-50%, -50%); /* Safari and Chrome */
+	 -moz-transform: translate(-50%, -50%); /* Firefox */
+	 -ms-transform: translate(-50%, -50%); /* IE 9 */
+	 -o-transform: translate(-50%, -50%); /* Opera */
+}
+
+.product .product-image-wrapper.listing.laptop img {
+	height:auto;
+	color:red;																																																														 img {
+
+}
+
+.product .product-image-wrapper.listing.desktop img {
+	height:auto;
+	color:red;																																																														 img {
+
+}
+
+/*.product.hover .product-image-wrapper img {
 	opacity: 1;
 	height:100%;
 	
@@ -840,25 +868,13 @@ a.small_icon_color i:hover, .middle_icon_color:hover, .promo_box:hover div {
 	 top: 50%;
 	 left: 50%;
 	 transform: translate(-50%, -50%);
-	 -webkit-transform: translate(-50%, -50%); /* Safari and Chrome */
-	 -moz-transform: translate(-50%, -50%); /* Firefox */
-	 -ms-transform: translate(-50%, -50%); /* IE 9 */
-	 -o-transform: translate(-50%, -50%); /* Opera */
-}
-.product.hover .product-image-wrapper img {
-	opacity: 1;
-	height:auto;
-	
-	 position: absolute;
-	 top: 50%;
-	 left: 50%;
-	 transform: translate(-50%, -50%);
-	 -webkit-transform: translate(-50%, -50%); /* Safari and Chrome */
+	 -webkit-transform: translate(-50%, -50%); /* Safari and Chrome 
 	 -moz-transform: translate(-50%, -50%); /* Firefox */
 	 -ms-transform: translate(-50%, -50%); /* IE 9 */
 	 -o-transform: translate(-50%, -50%); /* Opera */
 	
-}
+}*/
+
 @media (max-width: 1200px) {
 .preview .big_image img, .product.hover .product-image-wrapper img {
  top: 0;
