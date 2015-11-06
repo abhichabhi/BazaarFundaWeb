@@ -96,10 +96,12 @@ width:110px;
 }
 
 .span2.listing  {
-  width: 170px;
+  width: 150px;
   float: left;
+  margin-left:2px;
   
 }
+
 .span2.listing .product {
   width: 140px;
   float: right;
