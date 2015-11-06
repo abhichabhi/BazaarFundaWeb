@@ -80,10 +80,9 @@ width:110px;
   width: 1200px;
   }
 
- #column_left.span3 {
-  float: left;
-  
-  margin-right:10px;
+ #column_left.span3.listing {
+  float: left;  
+  margin-right:0px;
 }
 .row .span3.listing {
 	width:180px;
@@ -110,7 +109,8 @@ width:110px;
 #column_right.span9.listing {
   float: left;
   position: relative;
-  min-width: 760px;
+  min-width: 730px;
+  max-width:760px;
   overflow: hidden;
   
 }
@@ -276,7 +276,7 @@ text-align:center;
 }
 
 .listing-height label{
-	font-size:10px;
+	font-size:13px;
 }
 .listing-height.price {
 	overflow-y: hidden;

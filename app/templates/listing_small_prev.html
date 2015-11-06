@@ -331,7 +331,7 @@
 
 
               <div class="span2 product hover carousel_item">               
-                <div class="product-image-wrapper listing" style="150px" >
+                <div class="product-image-wrapper listing"  style="min-height:185px" >
                   
                   <a href='/pdp/{{product.master["product_id"]}}' >
                   <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{product.master["product_id"]}}.jpg">
@@ -389,11 +389,15 @@
           </div>
         </div>
         <div class="span2 listing">
+
+            <!-- Recommend widget -->
           <div class="color-box aligncenter">
             <div class="animate scale animated"><a href="#" class="icon-vcard icon-5x btn rounded"></a></div>
             <h6 >BazaarFunda Recommendation</h6>
             <button class="btn-middle" data-toggle="modal" href="#{{category}}_Modal"><i class="icon-basket-1"></i> RECOMMEND ME</button>
           </div>
+
+            <!-- Recommend widget -->
       <!-- {# Compare Widget #} -->
     {%for comItem in listingStatic.compareitems%}
         <div class="product carousel_item prod-hover">
@@ -427,11 +431,10 @@
           </div>
       {%endfor%}
       <!-- {# Compare Widget #} -->
-    </div>
-    <!-- Google Ad Right
+
+      <!-- Google Ad Right
      -->
-     <div class="span2 listing">
-              <div class="banners_outer listing">
+     <div class="banners_outer listing">
                 <div class="flexslider banners listing">
                   <ul>
                       <li>
@@ -455,11 +458,11 @@
                   </ul> -->
                 </div>
               </div>
-            </div>
+     
             <!-- Google Ad Right
      -->
-     <!-- Affiliate Vertical Right Banner -->
-            <div class="span2 listing">
+      <!-- Affiliate Vertical Right Banner -->
+            
               <div class="banners_outer listing">
                 <div class="flexslider banners">                  
                   <ul class="slides">
@@ -472,10 +475,11 @@
                   </ul>
                 </div>
               </div>
-            </div>
+    
       <!-- Affiliate Vertical Right Banner -->
-      </div>
-
+    </div>
+    
+    
       
     
 

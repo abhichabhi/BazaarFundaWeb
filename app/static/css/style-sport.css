@@ -847,7 +847,7 @@ a.small_icon_color i:hover, .middle_icon_color:hover, .promo_box:hover div {
 }
 .product.hover .product-image-wrapper img {
 	opacity: 1;
-	height:100%;
+	height:auto;
 	
 	 position: absolute;
 	 top: 50%;
