@@ -46,7 +46,40 @@
   </section>
    <div class="line"></div>
 <section>
-    
+    <!-- Round Ketchup  -->
+    <div class="container">
+          <div class="row">
+            <div class="span12 home">
+
+              <ul class="ch-grid">
+              <li>
+                <div class="ch-item ch-img-1">
+                  <div class="ch-info">
+                    <a data-toggle="modal" href="#RecoModal"> <h3></h3></a>                    
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="ch-item ch-img-2">
+                  <div class="ch-info">
+                    <a href = "#top"> <h3></h3></a>
+                    
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="ch-item ch-img-3">
+                  <div class="ch-info">
+                    <a href = "/compare"> <h3></h3></a>
+                  </div>
+                </div>
+              </li>
+        </ul>
+
+      </div>
+    </div>
+    </div>
+    <!-- Round Ketchup -->
     <div class="container">
       <h3 class="padding">NEW PRODUCTS</h3>
       <div class="carousel es-carousel-wrapper style0">
@@ -136,8 +169,8 @@
                         </div>
                     
                   </div>
-                  <div class="skillbar clearfix " data-percent=80.5%>
-                    <div class="skillbar-title" style="width:80.5%"><span style="color: #FFFFFF">80.5/100</span></div>
+                  <div class="skillbar clearfix " data-percent={{newProd['finalrating']}}%>
+                    <div class="skillbar-title" style="width:{{newProd['finalrating']}}%"><span style="color: #FFFFFF">{{newProd['finalrating']}}/100</span></div>
                     <div class="skillbar-bar" style="background: #8b9dc3;"></div>
                     <div class="skill-bar-percent"></div>
                   </div>
@@ -161,39 +194,7 @@
   </section>
    <div class="line"></div>
   <section>
-    <div class="container">
-          <div class="row">
-            <div class="span12 home">
-
-              <ul class="ch-grid">
-              <li>
-                <div class="ch-item ch-img-1">
-                  <div class="ch-info">
-                    <a data-toggle="modal" href="#RecoModal"> <h3></h3></a>
-                    
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="ch-item ch-img-2">
-                  <div class="ch-info">
-                    <a href = "#top"> <h3></h3></a>
-                    
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="ch-item ch-img-3">
-                  <div class="ch-info">
-                    <a href = "/compare"> <h3></h3></a>
-                  </div>
-                </div>
-              </li>
-        </ul>
-
-      </div>
-    </div>
-    </div>
+    
   
   <div class="fullwidth-block">
       <div class="parallax-block parallax-block-2 parallax">
