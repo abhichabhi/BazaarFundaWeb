@@ -168,8 +168,13 @@ function start_recommendationSlider(category, thisLink,catAppend) {
 	all_key_details = all_cat_detailJS[category]['allKeyWordsIcon']
 	window.all_cat_detailJS = all_cat_detailJS
 	reco_slider_str = '#' + catAppend + 'reco_slide_3'
-	console.log(reco_slider_str, "in start_recommendationSlider")
-	jQuery(reco_slider_str).html('<h1>My New ' + category + ' is for</h1><h5>Pick one to start, you can select as many you want</h5>');
+	// console.log(reco_slider_str, "in start_recommendationSlider")
+	catr_str_reco = category
+	if (category.slice(-1) === 's') { 
+		catr_str_reco = category.slice(0, -1);
+	}
+
+	jQuery(reco_slider_str).html('<h1>My New ' + ((category.slice(-1) === 's') ? catr_str_reco = category.slice(0, -1) : category ) + ' is for</h1><h5>Just click according to your priorities with a maximum of 5 Top most priority should be clicked 1st</h5>');
 	iter_val = 1
 	for (var kye_iter in all_key_details) {
 

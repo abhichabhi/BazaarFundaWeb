@@ -258,7 +258,7 @@
           <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <h3>Recommendation Result</h3>
-            We are providing you the best {{category|title}} based on your input
+            We are providing you the best {{category|title}} based on your requirements.Higher the rank better it suits your choices. The scores that are displayed are based on all parameters taken together whereas ranking is based on the your parameter priorities.
           </div>
             <!-- Reco Alert -->
             {%endif%}
@@ -330,7 +330,8 @@
           <!-- {# Compare Prices #} -->
 
 
-              <div class="span2 product hover carousel_item">               
+              <div class="span2 product hover carousel_item">
+                <div class="label_new_top_left">Rank: {{loop.index}}</div>               
                 <div class="product-image-wrapper listing {{category}}" >
                   
                   <a href='/pdp/{{product.master["product_id"]}}' >
@@ -451,11 +452,7 @@
                       </script>
                     </li>
                   </ul>
-                  <!-- <ul class="slides">
-                    <li> <a href="product.html"><img src="/static/img/banner1.jpg" alt="" ></a> </li>
-                    <li> <a href="product.html"><img src="/static/img/banner2.jpg" alt="" ></a> </li>
-                    <li> <a href="product.html"><img src="/static/img/banner3.jpg" alt="" ></a> </li>
-                  </ul> -->
+                  
                 </div>
               <!-- </div> -->
      

@@ -1636,10 +1636,11 @@ margin: 0 0 10px 20px !important;
 	font-size:11px;
 	line-height:12px;
 	padding: 6px 0;
-	background-color:#9da9ad;
+	background-color:#610B0B;
 	text-align:center;
-	color:#fff;
-	text-transform:uppercase;
+	font-size: 120%;
+	color:#ffbf27;
+	/*text-transform:uppercase;*/
 	border-radius: 2px;
 }
 .label_new_top_right {
@@ -2914,7 +2915,7 @@ button.grey:hover, .button.grey:hover {
 	border:none;
 	border-radius: 3px;
 	background:#ffbf27;
-	color:#fff;
+	color:#424242;
 	text-transform:uppercase;
 	white-space:nowrap;
 	font: 10px/29px 'Oswald', sans-serif;
