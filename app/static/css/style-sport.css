@@ -91,7 +91,8 @@ button:hover, .button:hover {
 	background-color: #3F4756;
 }
 #nav > li > a {
-	font-family: 'Changa One', cursive;
+	font-family: 'Roboto', sans-serif;
+	font-weight:700;
 	color:#3b5998;
 }
 #nav > li.menu_home_link > a [class^="icon-"], #nav > li.menu_home_link > a [class^="icon-"]:hover {

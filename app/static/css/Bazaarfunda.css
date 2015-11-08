@@ -508,7 +508,9 @@ position:relative;
 	color:#3B0B0B;
 }
 .modal-dialog h5 {
-	color:#8A0808;
+	color:#0B0B61;
+	font-family: 'Roboto', sans-serif;
+	font-weight:400;
 }
 .modal-dialog h3 {
 	color:#8A0808;
@@ -517,7 +519,7 @@ position:relative;
 	border-radius: 0px;
 }
 .modal-header {
-	background-color: #8A0808
+	background-color: #8A0808;
 }
 
 .modal {
@@ -599,3 +601,4 @@ position:relative;
 .block-content input {
 	font-size:x-small;
 }
+

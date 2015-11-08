@@ -166,6 +166,7 @@ function start_recommendationSlider(category, thisLink,catAppend) {
 	path = '/restfull/categorydetails'
 	all_cat_detailJS = jQuery.parseJSON(httpGet(path));
 	all_key_details = all_cat_detailJS[category]['allKeyWordsIcon']
+	all_key_text = all_cat_detailJS[category]['allKeywordsRecoText']
 	window.all_cat_detailJS = all_cat_detailJS
 	reco_slider_str = '#' + catAppend + 'reco_slide_3'
 	// console.log(reco_slider_str, "in start_recommendationSlider")
@@ -178,7 +179,7 @@ function start_recommendationSlider(category, thisLink,catAppend) {
 	iter_val = 1
 	for (var kye_iter in all_key_details) {
 
-		jQuery(reco_slider_str).append('<div data = "' + kye_iter + '" id="mob_key_' +  ("0" + iter_val.toString()).slice(-2) + '" class="pop_box" onclick="is_selected(this)"><i class="fa ' + all_key_details[kye_iter] + ' fa-5x "></i><div class="product-name aligncenter" style="height:33px">' + kye_iter + '</div></div>&nbsp;&nbsp;');
+		jQuery(reco_slider_str).append('<div data = "' + kye_iter + '" id="mob_key_' +  ("0" + iter_val.toString()).slice(-2) + '" class="pop_box" onclick="is_selected(this)"><i class="fa ' + all_key_details[kye_iter] + ' fa-5x "></i><div class="product-name aligncenter" style="height:33px">' + all_key_text[kye_iter] + '</div></div>&nbsp;&nbsp;');
 	iter_val ++;
 		} 
 	jQuery(reco_slider_str).append("<br><span id='slide_3_back' class='btn back' onclick='reco_slider_prev(this, &#39;" + catAppend + "&#39;)'>BACK</span>");
