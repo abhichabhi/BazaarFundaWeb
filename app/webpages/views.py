@@ -140,7 +140,7 @@ def browse(category):
 		scoreSortedProductList = getScoreSortedProductID(finalProductList,category, keywords, weights)
 		session['product_list'] = scoreSortedProductList
 		utc_timestamp = datetime.datetime.utcnow()
-		session['product_list'] = []
+		
 		try:
 			_sid = session['_sid']
 			print "_Sid is ", _sid
@@ -154,6 +154,7 @@ def browse(category):
 				mongoUserVariables['listing_products'].update_one({"_sid":_sid}, { "$set":{ "product_list":scoreSortedProductList, "date": utc_timestamp}})
 			except:
 				mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
+
 			
 		else:
 			uid = uuid.uuid4()

@@ -337,7 +337,7 @@
                             <td style = "width:22.67%">
                               <div class="dropdown product{{i+1}}" style="width:100%">
                                 {% if pKey["Positive"]|length != 0 %}
-                                <h5 style="margin:10px; font-family: Arial;" class="aligncenter"><b>Pros</b></h5>
+                                <h5 style="margin:10px; font-family: Arial;" class="aligncenter"><b>What rocks!</b></h5>
                                 <ul class="fa-ul dropdown_content product{{i+1}}" style="z-index: 8; width:100%; align-items:left;">
                                               {%for pros in pKey["Positive"]%}
                                                 <li  class = "product{{i+1}}" style="width:90%;font-size:110%;"><i class="fa-li fa fa-thumbs-o-up" style="color:#044D03"></i>{{pros["Review"]}} ({{pros["Users"]}})</li>
@@ -346,7 +346,7 @@
                                  
                                     {%endif%}
                                     {% if pKey["Negative"]|length != 0 %}
-                                    <h5 style="margin:10px;font-family: Arial;" class="aligncenter"><b>Cons</b></h5>
+                                    <h5 style="margin:10px;font-family: Arial;" class="aligncenter"><b>What sucks!</b></h5>
                                     <ul class="fa-ul dropdown_content product{{i+1}}" style="z-index: 8; width:100%; align-items:left; ">
                                               {%for pros in pKey["Negative"]%}
                                                 <li class = "product{{i+1}}" style="width:90%; font-size:110%; "><i class="fa-li fa fa-thumbs-down" style="color:#dd4b39"></i>{{pros["Review"]}} ({{pros["Users"]}})</li>
