@@ -533,7 +533,11 @@ position:relative;
 	opacity:1;
 }
 
-
+.alert {
+	color:#0B0B61;
+	font-family: 'Roboto', sans-serif;
+	font-weight:400;
+}
 
 .modal-body  .btn:hover {
 	background-color: #610B0B;
