@@ -9,7 +9,7 @@
           <div class="row">
             <div class="span9 offset2">
               <form class="form-wrapper-search cf" action="javascript:search();">
-                  <input id="allProductSearch" type="text" placeholder="Search entire store and ..." required>
+                  <input id="allProductSearch" type="text" placeholder="Search entire store and compare prices" required>
                   <button type="submit" onclick="search();">Search</button>
               </form>
               {#Inser A Search#}
@@ -26,26 +26,6 @@
   
   <!-- {#CONTENT#} -->
   <section>   
-    <div class="container">
-      <h3 class="padding">Categories</h3>
-      <ul class="grid cs-style-4">
-        {%for cat in allCategories%}
-        <li>
-          
-          <figure>
-            <div><a href="/browse/{{cat}}"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_{{cat}}.png" alt="img05"></a></div>
-            <figcaption>              
-              <a class="navigation" data-toggle="modal" href="#{{cat}}_Modal">Recommend</a>           
-            </figcaption>
-          </figure>
-
-        </li>
-        {%endfor%}
-      </ul>
-    </div>
-  </section>
-   <div class="line"></div>
-<section>
     <!-- Round Ketchup  -->
     <div class="container">
           <div class="row">
@@ -80,6 +60,29 @@
     </div>
     </div>
     <!-- Round Ketchup -->
+    
+  </section>
+   <div class="line"></div>
+<section>
+  <!-- allcategories square -->
+    <div class="container">
+      <h3 class="padding">Categories</h3>
+      <ul class="grid cs-style-4">
+        {%for cat in allCategories%}
+        <li>
+          
+          <figure>
+            <div><a href="/browse/{{cat}}"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_{{cat}}.png" alt="img05"></a></div>
+            <figcaption>              
+              <a class="navigation" data-toggle="modal" href="#{{cat}}_Modal">Recommend</a>           
+            </figcaption>
+          </figure>
+
+        </li>
+        {%endfor%}
+      </ul>
+    </div>
+    <!-- allcategories square -->
     <div class="container">
       <h3 class="padding">NEW PRODUCTS</h3>
       <div class="carousel es-carousel-wrapper style0">
