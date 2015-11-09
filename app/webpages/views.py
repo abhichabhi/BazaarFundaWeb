@@ -247,11 +247,6 @@ def productSearchAutoComplete():
 		category = "all"
 	return getProductAutoCompleteList(category)
 	
-	# if category:
-	# 	return getProductAutoCompleteList(category)
-	# else:
-	# 	return getProductAutoCompleteList()
-
 @app.errorhandler(404)
 def not_found(error):
 	g.cartDetails = [getProductDetail(product_id) for product_id in getCartDetails()]
@@ -259,8 +254,7 @@ def not_found(error):
 	allCategoriesDict = {}
 	for doc in allCategoryCursor:
 		allCategoriesDict[doc['type']] = doc	
-	g.all_cat_details = allCategoriesDict
-	
+	g.all_cat_details = allCategoriesDict	
 	title = "Bazaarfunda: Oops!! You landed on no man's land."
     	return render_template("404.html", cartDetails=g.cartDetails, title = title, all_cat_details = g.all_cat_details)
 
