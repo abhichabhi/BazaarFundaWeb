@@ -175,7 +175,7 @@ function start_recommendationSlider(category, thisLink,catAppend) {
 		catr_str_reco = category.slice(0, -1);
 	}
 
-	jQuery(reco_slider_str).html('<h1>My New ' + ((category.slice(-1) === 's') ? catr_str_reco = category.slice(0, -1) : category ) + ' is for</h1><h5>Just click according to your priorities with a maximum of 5 Top most priority should be clicked 1st</h5>');
+	jQuery(reco_slider_str).html('<h1>My New ' + ((category.slice(-1) === 's') ? catr_str_reco = category.slice(0, -1) : category ) + ' is for</h1><h5>Just click according to your priorities with a maximum of 5.<br> Top most priority should be clicked 1st</h5>');
 	iter_val = 1
 	for (var kye_iter in all_key_details) {
 
