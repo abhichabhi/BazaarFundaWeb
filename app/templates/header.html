@@ -92,7 +92,7 @@
 <script src="{{ url_for('static', filename='js/jquery.circliful.js')}}"></script>
 <script src="{{ url_for('static', filename='js/jquery.circliful.min.js')}}"></script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/Reco.js"></script> 
-<!-- <script src="/static/js/Reco.js"></script> -->
+<!-- <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/Reco.js"></script> -->
 
 <script>
 $( document ).ready(function() {
@@ -247,11 +247,8 @@ so just answer few questions and we will suggest the best product according to y
                                 <a class="aligncenter"  href="#" style="color: #B40404">{{"Price Not Available"}}</a>
                                 {% else %}
                                 <div class="product-price">₹&nbsp{{items.min_priceDict['price']}}</div>
-
-                            {%endif%} 
-                      
-                    </div>
-                    <!-- <div class="alignright"> <a href="#"><i class="icon-edit-1"></i></a> <a href="#"><i class="icon-trash-3"></i></a> </div> -->
+                            {%endif%}                       
+                    </div>                   
                   </div>
                   {%endfor%}
                   <div class="wrapper">  <a href="/compare" class="button">Proceed to Compare</a> </div>
@@ -267,42 +264,7 @@ so just answer few questions and we will suggest the best product according to y
     </div>
     {# Header Container #}
     <div class="container" style="display:none">
-      <!-- <div class="wrapper_w">
-        <div id="logo"> <a href="index.html" class="logo_inner"><img src="/static/img/logo-1.png" alt=""></a> </div>
-        <div class="pull-right padding-1" id="cart">
-          <div class="shoppingcart">
-            <div class="fadelink"><span class="pull-right"> <a href="shopping-cart.html" class="btn"><i class="icon-basket icon-large"></i></a> </span><span class="badge">3</span>
-              <div class="shopping_cart_mini hidden-phone hidden-tablet">
-                <div class="inner-wrapper">Products in Compare Bucket
-                  <div class="item"> <a href="#" class="product-image"><img src="/static/img/sport/product-image-minicart.jpg" alt=""></a>
-                    <div class="product-detailes"> <a href="#" class="product-name">Mauris et ligula quis </a>
-                      <div class="product-price">1 x $400.00</div>
-                    </div>
-                    <div class="alignright"> <a href="#"><i class="icon-edit-1"></i></a> <a href="#"><i class="icon-trash-3"></i></a> </div>
-                  </div>
-                  <div class="item"> <a href="#" class="product-image"><img src="/static/img/sport/product-image-minicart.jpg" alt=""></a>
-                    <div class="product-detailes"> <a href="#" class="product-name">Mauris et ligula quis </a>
-                      <div class="product-price">1 x $400.00</div>
-                    </div>
-                    <div class="alignright"> <a href="#"><i class="icon-edit-1"></i></a> <a href="#"><i class="icon-trash-3"></i></a> </div>
-                  </div>
-                  <div class="wrapper"> <a href="shopping-cart.html" class="button">View shopping cart</a> <a href="checkout.html" class="button">Proceed to Checkout</a> </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="pull-right padding-1">
-          <div class="form-search-wrapper">
-            <div id="search">
-              <form class="form-search" id="form-search">
-                <input type="text" class="search-query" value="search entire store here..." onblur="if (this.value == '') {this.value = 'search entire store here...';}" onfocus="if(this.value == 'search entire store here...') {this.value = '';}">
-                <button type="submit" class="btn" onClick="document.getElementById('form-search').submit()"><i class="icon-search icon-large"></i></button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div> -->
+      
       <div class="row">
         <div class="span12">
           <nav>
@@ -343,13 +305,9 @@ so just answer few questions and we will suggest the best product according to y
                   </li>
                 </ul>
               </li>
-              <li class="dropdown"> <a href="/compare">Comparisons</a>
-               
-              </li>
-              
+              <li class="dropdown"> <a href="/compare">Comparisons</a>               
+              </li>              
               </ul>
-             
-             
           </nav>
         </div>
       </div>
@@ -380,5 +338,26 @@ so just answer few questions and we will suggest the best product according to y
 </script>
 </div>
 <!-- Google Analytics -->
+<!-- URL Hit Modal PopUp -->
+<script type="text/javascript">
+    $(window).load(function(){
+      if ('{{recoCategory}}'=='all') {
+        $('#RecoModal').modal('show');
+      }
+      else {
+        $('#{{recoCategory}}_Modal').modal('show');
+      }
+
+      // if ('{{recoCategory}}'=='mobiles') {
+        
+      // }
+
+      // if ('{{recoCategory}}'=='tablets') {
+      //   $('#tablets_Modal').modal('show');
+      // }
+        
+    });
+</script>
+<!-- URL Hit Modal PopUp -->
 </body>
 </html>

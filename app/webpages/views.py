@@ -48,10 +48,12 @@ def before_request():
 	for doc in allCategoryCursor:
 		allCategoriesDict[doc['type']] = doc	
 	g.all_cat_details = allCategoriesDict
+	g.recoCategory = request.args.get('recoCategory')
 
 
 @mod.route('/',methods=['GET'], strict_slashes=False)
 def home():
+	
 	title = "Bazaarfunda: Discover Products that suits your needs. Compare products and prices"
 	allCategories = mongoCategoryDetails.find()
 	allCategories = [cat['type'] for cat in allCategories]
@@ -60,7 +62,8 @@ def home():
 	allMediaPublication = getHomePageDict()['MediaPublication']
 	category = "all"
 	return render_template("landingpage.html", allCategories=allCategories, allRecentProducts=allRecentProducts,
-		category=category,cartDetails=g.cartDetails, all_cat_details = g.all_cat_details,allMediaPublication=allMediaPublication,title=title)
+		category=category,cartDetails=g.cartDetails, all_cat_details = g.all_cat_details,
+		allMediaPublication=allMediaPublication,title=title,recoCategory=g.recoCategory)
 
 @mod.route('/compare',methods=['GET'], strict_slashes=False)
 def compare():
@@ -80,7 +83,7 @@ def compare():
 	else:
 		title = "Bazaarfunda: Add Products to compare"
 	return render_template("compare.html", cartDetails=g.cartDetails,
-	 categoryDetails=categoryDetails, category=category, all_cat_details = g.all_cat_details, title = title)
+	 categoryDetails=categoryDetails, category=category, all_cat_details = g.all_cat_details, title = title, recoCategory=g.recoCategory)
 
 
 @mod.route('/pdp/<product_id>/<slug>', methods=['GET'], strict_slashes=False)
@@ -101,7 +104,7 @@ def productDetail(product_id, slug=None):
 	title = "Bazaarfunda: Check the user experience of " + productMasterDetails['product_name'][:30] + ".. and compare Prices"
 	return render_template("product_detail.html", productMasterDetails = productMasterDetails, 
 		productDetails=productDetails, allKeyWordsIcon=allKeyWordsIcon, pdp_fileds=pdp_fileds, cartDetails=g.cartDetails,
-		category=category, all_cat_details = g.all_cat_details, title = title)
+		category=category, all_cat_details = g.all_cat_details, title = title, recoCategory=g.recoCategory)
 
 @mod.route('/browse/<category>/', methods=['GET'], strict_slashes=False)
 def browse(category):
@@ -190,7 +193,7 @@ def browse(category):
 	 categoryFilterCheckedStatus=categoryFilterCheckedStatus, listingStatic=listingStatic,
 	 filterFlag=filterFlag, category=category, cartDetails=g.cartDetails,
 	 productList=productList, totalProducts=totalProducts, start=start,
-	  all_cat_details = g.all_cat_details, reco_bool=reco_bool, title = title)
+	  all_cat_details = g.all_cat_details, reco_bool=reco_bool, recoCategory=g.recoCategory, title = title)
 
 @mod.route('/search', methods=['GET'], strict_slashes=False)
 def search():
@@ -236,16 +239,19 @@ def search():
 		title = title + " in " + category
 	return render_template("search.html",allCategories=allCategories, query=queryText,
 	 productList=productList, start=start,totalProducts=totalProducts,
-	 category=category, cartDetails=g.cartDetails, all_cat_details = g.all_cat_details,title=title)
+	 category=category, cartDetails=g.cartDetails, all_cat_details = g.all_cat_details, recoCategory=g.recoCategory, title=title)
 
 
 @mod.route('/product-search', methods=['GET'], strict_slashes=False)
 @jsonResponse
 def productSearchAutoComplete():
 	category = getArgAsList(request, 'category')[0]
+	qu = getArgAsList(request, 'qu')[0]
 	if category:
 		category = "all"
-	return getProductAutoCompleteList(category)
+	if len(qu) < 3:
+		return []
+	return getProductAutoCompleteList(category, qu)
 	
 @app.errorhandler(404)
 def not_found(error):

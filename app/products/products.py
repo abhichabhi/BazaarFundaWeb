@@ -93,7 +93,7 @@ def getProductDetail(product_id):
 	product['master'] = getProductMasterInfo(product_id)
 	return product
 
-def getProductAutoCompleteList(category):
+def getProductAutoCompleteList(category, qu):
 	
 	if category is not "all":
 		
@@ -104,10 +104,11 @@ def getProductAutoCompleteList(category):
 	productList = []
 	for products in allProducts:
 		producDict = {}
-		producDict['name'] = products['product_name']
-		producDict['type'] = products['category']
-		producDict['icon'] = "https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/" + products['product_id'] + ".jpg"
- 		productList.append(producDict)
+		if qu in products['product_name']:
+			producDict['name'] = products['product_name']
+			producDict['type'] = products['category']
+			producDict['icon'] = "https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/" + products['product_id'] + ".jpg"
+	 		productList.append(producDict)
  	return productList
 
 def getProductReco(product_id):
