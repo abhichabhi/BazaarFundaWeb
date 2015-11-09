@@ -32,6 +32,7 @@ def profile():
         twitter_conn=social.twitter.get_connection(),
         facebook_conn=social.facebook.get_connection(),
         foursquare_conn=social.foursquare.get_connection())
+
 @mod.route('/hello2', methods=['GET'])
 def hello2():
 	return "hello2"
@@ -250,6 +251,32 @@ def productSearchAutoComplete():
 	# 	return getProductAutoCompleteList(category)
 	# else:
 	# 	return getProductAutoCompleteList()
+
+@app.errorhandler(404)
+def not_found(error):
+	g.cartDetails = [getProductDetail(product_id) for product_id in getCartDetails()]
+	allCategoryCursor = mongoCategoryDetails.find()
+	allCategoriesDict = {}
+	for doc in allCategoryCursor:
+		allCategoriesDict[doc['type']] = doc	
+	g.all_cat_details = allCategoriesDict
+	
+	title = "Bazaarfunda: Oops!! You landed on no man's land."
+    	return render_template("404.html", cartDetails=g.cartDetails, title = title, all_cat_details = g.all_cat_details)
+
+@app.errorhandler(500)
+def internal_error(error):
+	g.cartDetails = [getProductDetail(product_id) for product_id in getCartDetails()]
+	allCategoryCursor = mongoCategoryDetails.find()
+	allCategoriesDict = {}
+	for doc in allCategoryCursor:
+		allCategoriesDict[doc['type']] = doc	
+	g.all_cat_details = allCategoriesDict
+    	title = "Bazaarfunda: Oops!! You landed on no man's land."
+    	# return render_template('404.html'), 404
+    	return render_template("404.html", cartDetails=g.cartDetails, title = title, all_cat_details = g.all_cat_details)
+    	# return jsonify(status = "Page Not Found"), 404
+
 
 # This method provides the category filter that are checked to be shown on the left sode of the listing page
 def getCategoryFilterCheckedStatus():
