@@ -69,8 +69,9 @@ if (category == "") {
 }
 
 var options = {
-  url: "/product-search?category=" + category,
-
+  url: function(phrase) {
+    return "/product-search?category=" + category + "&qu=" + phrase
+  },
     list: {
       onClickEvent: function() {
       search();
