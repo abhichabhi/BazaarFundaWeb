@@ -5,6 +5,7 @@ jQuery(document).ready(function($){
    $("img").error(function(){
         $(this).attr('src', 'https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/No-Image-Available.jpg');
     });
+
 	/*ComparePrices PopUp*/
 	$("#compare_price").on("show", function () {
       $("body").addClass("modal-open");
@@ -66,6 +67,7 @@ if (category == "") {
   console.log(category);
   category = "all";
 }
+
 var options = {
   url: "/product-search?category=" + category,
 
@@ -90,7 +92,11 @@ var options = {
 };
 
 var main_search_options = {
-  url: "/product-search?category=" + category,
+  
+  url: function(phrase) {
+    return "/product-search?category=" + category + "&qu=" + phrase
+  },
+  requestDelay: 1000,
   cssClasses: "main_search",
     list: {
       onClickEvent: function() {
@@ -182,7 +188,6 @@ function loadModels(category, brand) {
             });
 }
 
-
 /*
 Compare Page Auto Completes
 */
@@ -208,6 +213,7 @@ function coupleCompare(id1,id2) {
   window.location = $compareURL
 
 }
+
 function addToCompare(productId) {
   console.log(productId)
 

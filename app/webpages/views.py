@@ -249,9 +249,11 @@ def productSearchAutoComplete():
 	qu = getArgAsList(request, 'qu')[0]
 	if category:
 		category = "all"
-	if len(qu) < 3:
+	print len(qu), qu
+	if len(qu) < 4:
 		return []
-	return getProductAutoCompleteList(category, qu)
+	else:
+		return getProductAutoCompleteList(category, qu)
 	
 @app.errorhandler(404)
 def not_found(error):
