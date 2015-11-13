@@ -82,6 +82,24 @@
                                 {%endfor%}
                                 <input type="text" name="most_reviewed" id="textfield3" class="fullwidth" value="new">
 
+                                <p><b>Custom Feilds</b></p>                                 
+                                {%for custom_list in custom_product_list%}                                
+                                <input type="text" name="custom_list_name" id="textfield3" class="fullwidth" value=
+                                "{{custom_list}}"
+                                <br>
+                                {%for prod_id in custom_product_list[custom_list]%}                                
+                                <input type="text" name="custom_list_product_{{custom_list}}" id="textfield3" class="fullwidth" value={{prod_id}}>
+                                {%endfor%}
+                                New ProductID : <input type="text" name="custom_list_product_{{custom_list}}" id="textfield3" class="fullwidth" value="">
+                                <br>                             
+                                {%endfor%}
+                                <br>
+                                New Custom List Name : <input type="text" name="new_custom_name" id="textfield3" class="fullwidth" value="new">
+                                <br>
+                                New Product: <input type="text" name="new_custom_product" id="textfield3" class="fullwidth" value="new">
+
+
+
         			<p><b>Compare Items: </b></p>
         			{%for items in compareitems%}
         			<p>ID1 :&nbsp;&nbsp; &nbsp; &nbsp; <input type="text" name="compareItemsIDLink" id="hotbrandsLocation" class="fullwidth" value={{items['link']}}></p>

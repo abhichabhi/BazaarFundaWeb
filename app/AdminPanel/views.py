@@ -104,26 +104,54 @@ def listingForm():
 		categoryListing = listing[category]		
 	except:
 		categoryListing = listing['dummy']
-
-	compareitems = categoryListing['compareitems']
-	hotbrands = categoryListing['hotbrands']
-	economicbrands = categoryListing['economicbrands']
-	topbanner = categoryListing['topbanner']
-	right_vertical = categoryListing['right_vertical_aff']
-	killerDeals = categoryListing['killer']
-	most_reviewed = categoryListing['most_reviewed']
+	try:
+		compareitems = categoryListing['compareitems']
+	except:
+		compareitems = []
+	try:
+		hotbrands = categoryListing['hotbrands']
+	except:
+		hotbrands = []
+	try:
+		economicbrands = categoryListing['economicbrands']
+	except:
+		economicbrands = []
+	try:
+		topbanner = categoryListing['topbanner']
+	except:
+		topbanner = []
+	try:
+		right_vertical = categoryListing['right_vertical_aff']
+	except:
+		right_vertical = []
+	try:
+		killerDeals = categoryListing['killer']
+	except:
+		killerDeals = []
+	try:
+		most_reviewed = categoryListing['most_reviewed']
+	except:
+		most_reviewed = []
+	try:
+		custom_product_list = categoryListing['custome_item_list']
+	except:
+		custom_product_list = []
+	print custom_product_list
 	
 	return render_template('admin/listing.html', title="Listing banner : " + category,
 		category=category,categoryList=categoryList, compareitems=compareitems,
 		 hotbrands=hotbrands,economicbrands=economicbrands,
-		topbanner=topbanner,killerDeals=killerDeals,most_reviewed=most_reviewed, right_vertical=right_vertical)
+		topbanner=topbanner,killerDeals=killerDeals,most_reviewed=most_reviewed, right_vertical=right_vertical, custom_product_list=custom_product_list)
 
 @mod.route('/banner/listing/submit', methods=['GET','PUT'])
 def listingFormSubmit():
+
 	if request.method == 'PUT':
 		respData =json.loads(request.data)
 		category = respData['category']
 		data = respData['data']
+		print data['custome_item_list']
+		# data['custome_item_list'] = {}
 		print data
 		print category
 	listing = mongo.listing.find_one()
