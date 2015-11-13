@@ -179,47 +179,48 @@
               
             </ul>
           </div>
-        <!-- MOst Reviewd Products -->
+        <!-- Custom Listing Section -->
+        {%if listingStatic.custome_item_list%}
+        {%for custom_section in listingStatic.custome_item_list%}
         <div class="line"></div>
-           {# Economical Crousel #}
-           {# Most Discounted Products #}
-           <h3 class="padding">Most Reviewed {{category|title}}</h3>
+           
+           <h3 class="padding">{{custom_section}}</h3>
           <div class="carousel es-carousel-wrapper style1">
             <div class="es-carousel">
               <div class="row small_with_description">
-                {%for most_reviewed in listingStatic['most_reviewed']%}
+                {%for custom_section_product in listingStatic['custome_item_list'][custom_section]%}
                 <div class="product_outer carousel_items">
                   {# Compare Prices #}
               <div class="span2 product carousel_item">               
                 <div class="product-image-wrapper listing {{category}}" style="color:red">
                   
                   
-                  <a href='/pdp/{{most_reviewed['master']['product_id']}}' >
-                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{most_reviewed['master']['product_id']}}.jpg">
+                  <a href='/pdp/{{custom_section_product['master']['product_id']}}' >
+                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{custom_section_product['master']['product_id']}}.jpg">
                 </a> 
                 </div>
                 <div class="wrapper-hover">
-                  <div class="product-name aligncenter" style="height:33px"><a href='/pdp/{{most_reviewed['master']['product_id']}}'>{{most_reviewed['master']['product_name'][:20]}}...</a></div>
+                  <div class="product-name aligncenter" style="height:33px"><a href='/pdp/{{custom_section_product['master']['product_id']}}'>{{custom_section_product['master']['product_name'][:20]}}...</a></div>
                   <div class="wrapper"><span class="sort-rating hidden">4</span>
                     
                         <div class="product-price aligncenter" style = "padding-bottom:10px">
                           
-                             {%if most_reviewed.min_priceDict['price'] is not defined or most_reviewed.min_priceDict['price'] == 0%}
+                             {%if custom_section_product.min_priceDict['price'] is not defined or custom_section_product.min_priceDict['price'] == 0%}
                               <a class="aligncenter price-not-available"  href="#">{{"Price Not Available"}}</a>
                               {% else %}
-                              <a class="aligncenter price-available"  href="{{most_reviewed.min_priceDict['productUrl']}}">₹&nbsp{{most_reviewed.min_priceDict['price']}}</a>
+                              <a class="aligncenter price-available"  href="{{custom_section_product.min_priceDict['productUrl']}}">₹&nbsp{{custom_section_product.min_priceDict['price']}}</a>
                             {%endif%} 
                         </div>
                     
                   </div>
-                  <div class="skillbar clearfix " data-percent={{most_reviewed['finalrating']}}%>
-                    <div class="skillbar-title" style="width:{{most_reviewed['finalrating']}}%;"><span style="color: #FFFFFF">{{most_reviewed['finalrating']}}/100</span></div>
+                  <div class="skillbar clearfix " data-percent={{custom_section_product['finalrating']}}%>
+                    <div class="skillbar-title" style="width:{{custom_section_product['finalrating']}}%;"><span style="color: #FFFFFF">{{custom_section_product['finalrating']}}/100</span></div>
                     <div class="skillbar-bar" style="background: #8b9dc3;"></div>
                     <div class="skill-bar-percent"></div>
                   </div>
                     <div class="add-to-links">
                       <ul>
-                        <li> <a href="#" class="small_icon_color" onclick="addToCompareFromListing('{{most_reviewed['master']['product_id']}}');"><i class="icon-chart-bar"></i>Add to Compare</a> </li>
+                        <li> <a href="#" class="small_icon_color" onclick="addToCompareFromListing('{{custom_section_product['master']['product_id']}}');"><i class="icon-chart-bar"></i>Add to Compare</a> </li>
                       </ul>
                     </div>
                 </div>
@@ -233,7 +234,9 @@
           </div>
           {# Most Discounted products #}
         </div>
-        <!-- Most Reviewed -->
+        {%endfor%}
+        {%endif%}
+        <!-- Custom Listing Section -->
       </div>
     </div>
         {%endif%}

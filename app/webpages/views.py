@@ -163,11 +163,11 @@ def browse(category):
 		else:
 			uid = uuid.uuid4()
 			_sid = uid.hex
-			print "_sid generated", _sid
+			
 			mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
 		session['_sid'] = _sid
-		print "_Sid in Session", session['_sid']
-		print session
+		
+		
 		userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
 		scoreSortedProductList =  userDbProducts[:20]
 	else:
@@ -313,8 +313,13 @@ def getListingStatic(category):
 	for idx, killerItems in enumerate(listingStatic['killer']):
 		listingStatic['killer'][idx]['product'] = getProductDetail(killerItems['link'])
 		listingStatic['killer'][idx]['discount'] = killerItems['location']
+	try:
 
-	listingStatic['most_reviewed'] = [getProductDetail(pid) for pid in listingStatic['most_reviewed']]
+		for custom_section in listingStatic['custome_item_list']:
+			listingStatic['custome_item_list'][custom_section] = [getProductDetail(pid) for pid in listingStatic['custome_item_list'][custom_section]]
+		listingStatic['most_reviewed'] = [getProductDetail(pid) for pid in listingStatic['most_reviewed']]
+	except:
+		pass
 
 	return listingStatic
 

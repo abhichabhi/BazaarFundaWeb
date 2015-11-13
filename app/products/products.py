@@ -236,4 +236,3 @@ def getProductScore(product_id, category,user_keywords,weights):
  	user_overall_score = round(user_overall_score,2)
  	# print user_key_score
  	return {'product_id':product_id, 'score': user_key_score, "overall_score": user_overall_score}
-	 	
