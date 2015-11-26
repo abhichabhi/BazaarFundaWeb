@@ -203,7 +203,7 @@ def search():
 	allCategories = [cat['type'] for cat in allCategories]
 	category = "all"
 	queryText = request.args.get('q')
-	app.logger.info("Query Text: " + queryText)
+
 	category_product_list = 'product_list'
 	try:
 		start = int(request.args.get('start'))
@@ -216,6 +216,7 @@ def search():
 		productNameIndex = open_dir(whoosh_dir)
 		
 		query = QueryParser("productname", schema=productNameIndex.schema).parse(queryText)
+		app.logger.info("Query Text: " + query)
 		productSearchList = []
 		with productNameIndex.searcher() as searcher:
 			results = searcher.search(query, limit=None)
