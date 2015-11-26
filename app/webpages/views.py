@@ -91,8 +91,7 @@ def compare():
 @mod.route('/pdp/<product_id>/<slug>', methods=['GET'], strict_slashes=False)
 @mod.route('/pdp/<product_id>', defaults={'slug': None}, methods=['GET'], strict_slashes=False)
 def productDetail(product_id, slug=None):
-	app.logger.info("Product Detail")
-	app.logger.info( product_id)
+	app.logger.info("Product Detail Page: " + product_id)
 	productMasterDetails = getProductMasterInfo(product_id)
 	if not slug:
 		slug = productMasterDetails['surl']
@@ -112,10 +111,11 @@ def productDetail(product_id, slug=None):
 
 @mod.route('/browse/<category>/', methods=['GET'], strict_slashes=False)
 def browse(category):
-	
+	app.logger.info("Listing Page: "+ category)
 	category_product_list = category
 	filterFlag = 0	
 	categoryFilterCheckedStatus = getCategoryFilterCheckedStatus()
+	app.logger.info(categoryFilterCheckedStatus)
 	listingStatic = getListingStatic(category)
 	urlDict = urlToDict()
 	millis = lambda: int(round(time.time() * 1000))
@@ -151,9 +151,9 @@ def browse(category):
 		
 		try:
 			_sid = session['_sid']
-			print "_Sid is ", _sid
+			app.logger.info("_Sid is " + str(_sid))
 		except:
-			print "_sid is None"
+			app.logger.info( "_sid is None")
 			_sid = None
 
 		if _sid is not None:
@@ -198,10 +198,12 @@ def browse(category):
 
 @mod.route('/search', methods=['GET'], strict_slashes=False)
 def search():
+
 	allCategories = mongoCategoryDetails.find()
 	allCategories = [cat['type'] for cat in allCategories]
 	category = "all"
 	queryText = request.args.get('q')
+	app.logger.info("Query Text: " + queryText)
 	category_product_list = 'product_list'
 	try:
 		start = int(request.args.get('start'))
