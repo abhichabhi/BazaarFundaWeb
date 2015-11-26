@@ -70,6 +70,8 @@ def compare():
 	cartDetails=g.cartDetails
 	category = None
 	categoryDetails = None
+	app.logger.info('comparing')
+	app.logger.info([cart['master']['product_id'] for cart in cartDetails])
 	for items in cartDetails:
 		if items['master']:
 			category = items['master']['category']
@@ -89,6 +91,8 @@ def compare():
 @mod.route('/pdp/<product_id>/<slug>', methods=['GET'], strict_slashes=False)
 @mod.route('/pdp/<product_id>', defaults={'slug': None}, methods=['GET'], strict_slashes=False)
 def productDetail(product_id, slug=None):
+	app.logger.info("Product Detail")
+	app.logger.info( product_id)
 	productMasterDetails = getProductMasterInfo(product_id)
 	if not slug:
 		slug = productMasterDetails['surl']

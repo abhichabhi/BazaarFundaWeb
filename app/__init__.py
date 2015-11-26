@@ -4,12 +4,20 @@ from pymongo import MongoClient
 from util import install_secret_key
 import os
 from playhouse.flask_utils import FlaskDB
-
+import logging
+from logging.handlers import RotatingFileHandler
+from logging.handlers import TimedRotatingFileHandler
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 ADMIN_PASSWORD = 'secret'
 SITE_WIDTH = 800
 app = Flask(__name__)
 app.config.from_object(__name__)
+formatter = logging.Formatter(
+        "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
+handler = RotatingFileHandler('/var/log/apache2/bazaarfunda.log', maxBytes=10000, backupCount=1)
+handler.setLevel(logging.INFO)
+handler.setFormatter(formatter)
+app.logger.addHandler(handler)
 
 ''' To check if the route is working '''
 
