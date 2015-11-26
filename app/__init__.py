@@ -18,7 +18,7 @@ handler = RotatingFileHandler('/var/log/apache2/bazaarfunda.log', maxBytes=10000
 handler.setLevel(logging.INFO)
 handler.setFormatter(formatter)
 app.logger.addHandler(handler)
-
+app.logger.info("Initiating app")
 ''' To check if the route is working '''
 
 @app.route('/hello',methods=['GET'])
