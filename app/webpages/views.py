@@ -216,7 +216,7 @@ def search():
 		productNameIndex = open_dir(whoosh_dir)
 		
 		query = QueryParser("productname", schema=productNameIndex.schema).parse(queryText)
-		app.logger.info("Query Text: " + query)
+
 		productSearchList = []
 		with productNameIndex.searcher() as searcher:
 			results = searcher.search(query, limit=None)
@@ -237,6 +237,7 @@ def search():
 		if category:
 			productList = [prod for prod in productList if getProductMasterInfo(prod)['category'] == category]		
 		productList = session[category_product_list][0:start+20]
+	app.logger.info("Query Text: " + str(queryText))
 	productList = [getProductDetail(prod) for prod in productList]
 	title = "Bazaarfunda: Searching for " + queryText
 	if category:
