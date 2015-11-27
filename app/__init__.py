@@ -7,6 +7,7 @@ from playhouse.flask_utils import FlaskDB
 import logging
 from logging.handlers import RotatingFileHandler
 from logging.handlers import TimedRotatingFileHandler
+
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 ADMIN_PASSWORD = 'secret'
 SITE_WIDTH = 800
@@ -15,8 +16,9 @@ app.config.from_object(__name__)
 formatter = logging.Formatter(
         "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
 handler = RotatingFileHandler('/var/log/apache2/bazaarfunda.log', maxBytes=10000, backupCount=1)
-handler.setLevel(logging.INFO)
+handler.setLevel(logging.DEBUG)
 handler.setFormatter(formatter)
+app.logger.setLevel(logging.DEBUG)
 app.logger.addHandler(handler)
 app.logger.info("Initiating app")
 ''' To check if the route is working '''
@@ -91,6 +93,11 @@ app.register_blueprint(cartModule)
 from app.restfull.views import mod as restModule
 
 app.register_blueprint(restModule)
+
+
+# User Views
+from app.users.views import mod as usersModule
+app.register_blueprint(usersModule)
 
 #Blog ke chochde
 # The `database` is the actual peewee database, as opposed to flask_db which is
