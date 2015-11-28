@@ -430,17 +430,18 @@ function emailMeWhenAvailable(id) {
   // priceReg = /^[0-9]*$/;
   subscribeURL = "/users/subscribePrice?" + "email=" + email + "&productId=" + id + "&priceCutOff=" + priceCutOff
   subscribeURL = window.location.origin + subscribeURL
-  console.log(subscribeURL)
+  
   jQuery.ajax({
          url: subscribeURL,
          success: function(result) {
                       if (result == false) {
-                        // console.log("**We already have this request from you.")
-                        // $("#submitsuccess").text("**We already have this request from you. You can place numerous price alerts.").css({"display":"block", "font-size":"150%","color":"#610B0B"})
+                        console.log("**We already have this request from you.")
+                        $("#submitsuccess_" + productId).text("**We already have this request from you. You can place numerous price alerts.").css({"display":"block", "font-size":"150%","color":"#610B0B"})
                         return false;
                       }
                       else {
-                        // $("#submitsuccess").text("**Allright!! You will hear from us. You can place numerous price alerts.").css({"display":"block", "font-size":"150%","color":"#610B0B"})
+                        console.log("**We don't have this request from you")
+                        $("#submitsuccess_" + productId).text("**Allright!! You will hear from us. You can place numerous price alerts.").css({"display":"block", "font-size":"150%","color":"#610B0B"})
                         return true;
                       }
                   },

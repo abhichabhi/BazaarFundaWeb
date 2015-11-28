@@ -12,6 +12,7 @@ from app.decorators import mongoJsonify, jsonResponse
 import logging
 from app.util import getArgAsList
 from logging.handlers import RotatingFileHandler
+import datetime
 
 mod = Blueprint('users', __name__, url_prefix='/users')
 
@@ -27,11 +28,13 @@ def subscribePrice():
   existEntry = priceSubscribers.find_one({'email':email,'priceCutOff':priceCutOff,'status':'A'})
   app.logger.info(existEntry)
   if not existEntry:
+    update_time = datetime.datetime.now().strftime("%y-%m-%d-%H-%M")
     priceSubscribers.insert({
     "email" : email,
     "productId" : productId,
     "priceCutOff" : priceCutOff,
-    "status" : 'A'
+    "status" : 'A',
+    "date": update_time
   })
     return True
   else:
