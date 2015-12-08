@@ -447,6 +447,7 @@ function emailMeWhenAvailable(id) {
                   },
          async:   false
     });  
+   $("#compare_price_" + productId).hide();
 // $("#submitsuccess").textContent.replace("**Allright You will hear from us").css({"display":"block", "font-size":"50%","color":"#610B0B"})
   return true;
 }

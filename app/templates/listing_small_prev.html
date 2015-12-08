@@ -324,6 +324,9 @@
                     <input type="email" class="register-input" placeholder="Your Email Address" id= "{{product.master.product_id}}_email">
                     <input type="submit" value="Submit" class="register-button">
                   </form>
+                  <!-- <br> -->
+                <div id="submitsuccess_{{product.master.product_id}}">
+                </div>
                 
               {# </div> #}
               {# Price Alert #}
@@ -353,7 +356,7 @@
                               <a class="aligncenter price-available"  href="{{product.min_priceDict['productUrl']}}">₹&nbsp{{product.min_priceDict['price']}}</a>
                             {%endif%} 
                         </div>
-                    
+
                   </div>
                   <div class="skillbar clearfix " data-percent={{product['finalrating']}}%>
                     <div class="skillbar-title" style=" width:{{product['finalrating']}}%;"><span style="color: #FFFFFF">{{product['finalrating']}}</span></div>

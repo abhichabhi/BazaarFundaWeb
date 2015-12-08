@@ -145,7 +145,8 @@
                     <input type="email" class="register-input" placeholder="Your Email Address" id= "{{newProd.master.product_id}}_email">
                     <input type="submit" value="Submit" class="register-button">
                   </form>
-                
+                <div id="submitsuccess_{{newProd.master.product_id}}">
+                    </div>
               {# </div> #}
               {# Price Alert #}
                     </div>
@@ -167,7 +168,7 @@
                              {%if newProd.min_priceDict is not defined or newProd.min_priceDict['price'] is not defined  %}
                                 <a class="aligncenter"  href="#" style="color: #B40404">{{"Price Not Available"}}</a>
                                 {% else %}
-                                <a class="aligncenter"  href="lowest website link">Lowest Price&nbsp;₹&nbsp{{newProd.min_priceDict['price']}}</a>
+                                <a class="aligncenter"  href="{{newProd.min_priceDict['productUrl']}}">Lowest Price&nbsp;₹&nbsp{{newProd.min_priceDict['price']}}</a>
                             {%endif%} 
                         </div>
                     
