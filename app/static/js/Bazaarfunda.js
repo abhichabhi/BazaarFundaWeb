@@ -230,13 +230,15 @@ function addToCompare(productId) {
       if (data.status == 200) {
           $( "span.badge" ).empty();
           $( "span.badge" ).append(data.productId.length);
-        location.href = $compareURL;
+          window.open($compareURL,'_blank');
+        // location.href = $compareURL;
       }
 
       else if (data.status == 256) {
         $( "span.badge" ).empty();
         $( "span.badge" ).append(data.productId.length);
-        location.href = $compareURL;
+        // location.href = $compareURL;
+        window.open($compareURL,'_blank');
       }
 
       else if (data.status == 512) {
