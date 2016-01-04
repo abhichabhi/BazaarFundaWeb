@@ -24,6 +24,15 @@ app.config['SOCIAL_FACEBOOK'] = {
     'consumer_secret': '1f8fb8b82f3e84030274a6e9a368b91b'
 }
 
+@app.template_filter('space_to_underscore')
+def space_to_underscore(str):
+    return str.replace(" ", "_")
+
+@app.template_filter('underscore_to_space')
+def underscore_to_space(str):
+    return str.replace(" ", "_")
+
+
 @mod.route('/profile')
 def profile():
     return render_template(
@@ -50,18 +59,27 @@ def before_request():
 	g.all_cat_details = allCategoriesDict
 	g.recoCategory = request.args.get('recoCategory')
 
+	allCategories = mongoCategoryDetails.find()
+	allCat = []
+	for cat in allCategories:
+		try:
+			if not cat['parent']:
+				allCat.append(cat['type'])
+		except:
+			allCat.append(cat['type'])
+	g.allCategories = allCat
+
 
 @mod.route('/',methods=['GET'], strict_slashes=False)
-def home():
-	
+def home():	
 	title = "Bazaarfunda: Discover Products that suits your needs. Compare products and prices"
-	allCategories = mongoCategoryDetails.find()
-	allCategories = [cat['type'] for cat in allCategories]
+	
+	# allCategories = [cat['type'] for cat in allCategories]
 	allRecentProducts = getHomePageDict()['NewProducts']
 	allRecentProducts = [getProductDetail(product_id) for product_id in allRecentProducts]
 	allMediaPublication = getHomePageDict()['MediaPublication']
 	category = "all"
-	return render_template("landingpage.html", allCategories=allCategories, allRecentProducts=allRecentProducts,
+	return render_template("landingpage.html", allCategories=g.allCategories, allRecentProducts=allRecentProducts,
 		category=category,cartDetails=g.cartDetails, all_cat_details = g.all_cat_details,
 		allMediaPublication=allMediaPublication,title=title,recoCategory=g.recoCategory)
 
@@ -85,7 +103,9 @@ def compare():
 	else:
 		title = "Bazaarfunda: Add Products to compare"
 	return render_template("compare.html", cartDetails=g.cartDetails,
-	 categoryDetails=categoryDetails, category=category, all_cat_details = g.all_cat_details, title = title, recoCategory=g.recoCategory)
+	 categoryDetails=categoryDetails, category=category,
+	  all_cat_details = g.all_cat_details, title = title,
+	   recoCategory=g.recoCategory, allCategories=g.allCategories)
 
 
 @mod.route('/pdp/<product_id>/<slug>', methods=['GET'], strict_slashes=False)
@@ -107,7 +127,8 @@ def productDetail(product_id, slug=None):
 	title = "Bazaarfunda: Check the user experience of " + productMasterDetails['product_name'][:30] + ".. and compare Prices"
 	return render_template("product_detail.html", productMasterDetails = productMasterDetails, 
 		productDetails=productDetails, allKeyWordsIcon=allKeyWordsIcon, pdp_fileds=pdp_fileds, cartDetails=g.cartDetails,
-		category=category, all_cat_details = g.all_cat_details, title = title, recoCategory=g.recoCategory)
+		category=category, all_cat_details = g.all_cat_details, title = title,
+		allCategories=g.allCategories, recoCategory=g.recoCategory)
 
 @mod.route('/browse/<category>/', methods=['GET'], strict_slashes=False)
 def browse(category):
@@ -184,7 +205,12 @@ def browse(category):
 	totalProducts = len(userDbProducts)
 	if len(categoryFilterCheckedStatus) == 0:
 		filterFlag = 1
-	categoryFilter = categoryListingFilter[category]
+
+	try:
+		categoryFilter = categoryListingFilter[category]
+	except:
+		categoryFilter = {}
+
 	title = "Bazaarfunda: "
 	if 'keywords' in urlDict:
 		title = title + "Best Recommended " + category + " acording to your needs"
@@ -194,13 +220,11 @@ def browse(category):
 	 categoryFilterCheckedStatus=categoryFilterCheckedStatus, listingStatic=listingStatic,
 	 filterFlag=filterFlag, category=category, cartDetails=g.cartDetails,
 	 productList=productList, totalProducts=totalProducts, start=start,
-	  all_cat_details = g.all_cat_details, reco_bool=reco_bool, recoCategory=g.recoCategory, title = title)
+	  all_cat_details = g.all_cat_details, reco_bool=reco_bool, recoCategory=g.recoCategory, title = title, allCategories=g.allCategories)
 
 @mod.route('/search', methods=['GET'], strict_slashes=False)
 def search():
 
-	allCategories = mongoCategoryDetails.find()
-	allCategories = [cat['type'] for cat in allCategories]
 	category = "all"
 	queryText = request.args.get('q')
 
@@ -242,7 +266,7 @@ def search():
 	title = "Bazaarfunda: Searching for " + queryText
 	if category:
 		title = title + " in " + category
-	return render_template("search.html",allCategories=allCategories, query=queryText,
+	return render_template("search.html",allCategories=g.allCategories, query=queryText,
 	 productList=productList, start=start,totalProducts=totalProducts,
 	 category=category, cartDetails=g.cartDetails, all_cat_details = g.all_cat_details, recoCategory=g.recoCategory, title=title)
 
@@ -311,17 +335,33 @@ def getCategoryFilterCheckedStatus():
 # This method provides the banner and hot and top brands wagera static details for the listing page
 def getListingStatic(category):
 	listingStatic = getListingPageCategoryDict(category,'listing')
-	for idx, compItems in enumerate(listingStatic['compareitems']):
-		listingStatic['compareitems'][idx]['linkName'] = getProductMasterInfo(compItems['link'])['product_name']
-		listingStatic['compareitems'][idx]['locationName'] = getProductMasterInfo(compItems['location'])['product_name']
-
-	for idx, killerItems in enumerate(listingStatic['killer']):
-		listingStatic['killer'][idx]['product'] = getProductDetail(killerItems['link'])
-		listingStatic['killer'][idx]['discount'] = killerItems['location']
+	try:		
+		for idx, compItems in enumerate(listingStatic['compareitems']):
+			listingStatic['compareitems'][idx]['linkName'] = getProductMasterInfo(compItems['link'])['product_name']
+			listingStatic['compareitems'][idx]['locationName'] = getProductMasterInfo(compItems['location'])['product_name']
+	except:
+		listingStatic['compareitems'] = []
 	try:
+		for idx, killerItems in enumerate(listingStatic['killer']):
+			listingStatic['killer'][idx]['product'] = getProductDetail(killerItems['link'])
+			listingStatic['killer'][idx]['discount'] = killerItems['location']
+	except:
+		listingStatic['killer'] = []
 
+	try:
 		for custom_section in listingStatic['custome_item_list']:
-			listingStatic['custome_item_list'][custom_section] = [getProductDetail(pid) for pid in listingStatic['custome_item_list'][custom_section]]
+			listingStatic['custome_item_list'][custom_section] = [getProductDetail(pid) for pid in listingStatic['custome_item_list'][custom_section]]		
+	except:
+		pass
+
+	try:
+		#TODO : Split the link and the location
+		for custom_section in listingStatic['custome_link_list']:
+			print custom_section
+	except:
+		pass
+
+	try:
 		listingStatic['most_reviewed'] = [getProductDetail(pid) for pid in listingStatic['most_reviewed']]
 	except:
 		pass
