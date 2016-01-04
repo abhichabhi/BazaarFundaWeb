@@ -77,7 +77,8 @@ function updateListingBanner(frmVariable) {
 	responseJson['killer'] = killerList
 	responseJson['most_reviewed'] = most_rev
 	responseJson['right_vertical_aff'] = right_vertical
-	responseJson['custome_item_list'] = getCustomItemsList(frmVariable)
+	responseJson['custome_item_list'] = getCustomItemsList(frmVariable, 'custom_product')
+	responseJson['custom_link_list'] = getCustomItemsList(frmVariable, 'custom_link')
 	dataJSON = {}
 	dataJSON['data'] = responseJson
 	dataJSON['category'] = category
@@ -112,15 +113,16 @@ function priceOverride(frmVariable, product_id) {
 	
 }
 
-function getCustomItemsList(frmVariable) {
+function getCustomItemsList(frmVariable, custome_list) {
 	custome_item_list = {}
 	for(var i=0;i<frmVariable.elements.length;i++){
-		if (frmVariable.elements[i].name == 'custom_list_name'){
+		if (frmVariable.elements[i].name == custome_list + '_name'){
 			if (frmVariable.elements[i].value != "new" && frmVariable.elements[i].value != "") {
 				custom_list_name_val = frmVariable.elements[i].value
 				custome_item_list[custom_list_name_val] = new Array()
 				for(var j=0;j<frmVariable.elements.length;j++){
-					if (frmVariable.elements[j].name == 'custom_list_product_' + custom_list_name_val){
+					console.log(custome_list + "_" + custom_list_name_val)
+					if (frmVariable.elements[j].name == custome_list + "_" + custom_list_name_val){
 						if (frmVariable.elements[j].value != "new" && frmVariable.elements[j].value != "") {
 							custome_item_list[custom_list_name_val].push(frmVariable.elements[j].value)
 						}				
@@ -128,14 +130,16 @@ function getCustomItemsList(frmVariable) {
 				}
 			}
 		}
-		if (frmVariable.elements[i].name == 'new_custom_name'){
+		if (frmVariable.elements[i].name == 'new_' + custome_list + '_name'){
 			
 			if (frmVariable.elements[i].value != "new" && frmVariable.elements[i].value != "") {
-				console.log(frmVariable.elements[i].value)
+				console.log(frmVariable.elements[i].value, "###")
 				custome_item_list[frmVariable.elements[i].value] = new Array()
 				for(var j=0;j<frmVariable.elements.length;j++){
-					if (frmVariable.elements[j].name == "new_custom_product"){
+					if (frmVariable.elements[j].name == 'new_' + custome_list + '_entry'){
+
 						if (frmVariable.elements[j].value != "new" && frmVariable.elements[j].value != "") {
+							console.log(frmVariable.elements[j].value, "###")
 							custome_item_list[frmVariable.elements[i].value].push(frmVariable.elements[j].value)
 						}				
 					}

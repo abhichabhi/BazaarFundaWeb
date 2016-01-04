@@ -115,16 +115,18 @@
       <div class="row">
         <div class="span9">
 
-          <div class="line"></div>
-           {# Economical Crousel #}
-           {# Most Discounted Products #}
+          
+          <!-- Killer Deals -->
+           {%if listingStatic['killer']%}
+
+           <div class="line"></div>
            <h3 class="padding">Killer Deals</h3>
           <div class="carousel es-carousel-wrapper style1">
             <div class="es-carousel">
               <div class="row small_with_description">
                 {%for deal_product in listingStatic['killer']%}
                 <div class="product_outer carousel_items">
-                  {# Compare Prices #}
+
               <div class="span2 product carousel_item">               
                 <div class="product-image-wrapper listing {{category}}" style="color:red; height:180px">
                   <div class="label_sale_top_right">Sale {{deal_product['discount']}}%</div>
@@ -168,6 +170,9 @@
           </div>
           {# Most Discounted products #}
         </div>
+        {%endif%}
+
+        {%if listingStatic.hotbrands%}
         <!-- {# HotBrand Crousel #} -->    
         <div class="line"></div>      
           <h3 class="padding">Shop By Brands</h3>
@@ -179,6 +184,8 @@
               
             </ul>
           </div>
+        {%endif%}
+
         <!-- Custom Listing Section -->
         {%if listingStatic.custome_item_list%}
         {%for custom_section in listingStatic.custome_item_list%}
@@ -244,17 +251,25 @@
       <div class="content_top">
         <div class="wrapper_w">
           <div class="pull-left">
-            <div class="breadcrumbs"><a href="/">Home</a> <span>&#8250;</span> <a href="/browse/{{category}}">{{category|title}}</a> <span>&#8250;</span></div>
+            <div class="breadcrumbs"><a href="/">Home</a>
+
+              {%for parent in all_cat_details[category].parent %}           
+              <span>&#8250;</span> <a href="/browse/{{parent}}">{{parent|title}}</a>
+              {%endfor%}
+              <span>&#8250;</span> <a href="/browse/{{category}}">{{category|title}}</a>
+              <span>&#8250;</span>
+            </div>
           </div>
         </div>
       </div>
-          
+          {%if productList%}
           <div class="listing_header_row2">
             <div class="pull-left">Items <strong>1</strong> to <strong>{{ start+20 if start+20 < totalProducts else totalProducts }}</strong> of <strong>{{totalProducts}}</strong> {{category|title}} </div>
             <div class="pull-right">
               <!-- <div class="num"><a href="#">1</a> <a href="#">2</a> <a href="#" class="small_icon"><i class="icon-right-thin"></i></a></div> -->
             </div>
           </div>
+          {%endif%}
           
           {%if reco_bool == 1%}
           <!-- Reco Alert -->
@@ -265,6 +280,7 @@
           </div>
             <!-- Reco Alert -->
             {%endif%}
+
           <div class="span9 product-listing product-grid">
             <div class="row small_with_description isotope-outer">
               {# One ProductBlock #}
@@ -378,6 +394,7 @@
             </div>
           </div>
 
+            {%if productList%}
           <div class="span9 listing_header_row1">
             <div class=" aligncenter hidden-phone">
               {%if totalProducts > start + 20%}
@@ -394,6 +411,7 @@
               <!-- <div class="num"><a href="#">1</a> <a href="#">2</a> <a href="#" class="small_icon"><i class="icon-right-thin"></i></a></div> -->
             </div>
           </div>
+          {%endif%}
         </div>
         <div class="span2 listing">
 
@@ -401,7 +419,7 @@
           <div class="color-box aligncenter">
             <div class="animate scale animated"><a href="#" class="icon-vcard icon-5x btn rounded"></a></div>
             <h6 >BazaarFunda Recommendation</h6>
-            <button class="btn-middle" data-toggle="modal" href="#{{category}}_Modal"><i class="icon-basket-1"></i> RECOMMEND ME</button>
+            <button class="btn-middle" data-toggle="modal" href="#{{category|space_to_underscore  }}_Modal"><i class="icon-basket-1"></i> RECOMMEND ME</button>
           </div>
 
             <!-- Recommend widget -->

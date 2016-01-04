@@ -91,7 +91,8 @@
 <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/jquery.jcarousel.min.js"></script> 
 <script src="{{ url_for('static', filename='js/jquery.circliful.js')}}"></script>
 <script src="{{ url_for('static', filename='js/jquery.circliful.min.js')}}"></script>
-<script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/Reco.js"></script> 
+<!-- <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/Reco.js"></script>  -->
+<script src="{{ url_for('static', filename='js/Reco.js')}}"></script>
 <!-- <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/Reco.js"></script> -->
 
 <script>
@@ -123,15 +124,15 @@ $( document ).ready(function() {
 <div id="wrap">
   <!-- Reco PopUp -->
   {%for catType in all_cat_details%}
-    <div class="modal modal-lg fade" id="{{catType}}_Modal">
+    <div class="modal modal-lg fade" id="{{catType|space_to_underscore}}_Modal">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                   <h5 class="modal-title"></h5>
                 </div>
-                <div class="modal-body no_scroll" >
-                  <div id="{{catType}}reco_slide_2" class="pos_relative align_center">
+                <div class="modal-body no_scroll">
+                  <div id="{{catType|space_to_underscore}}reco_slide_2" class="pos_relative align_center">
                     
                       <br><br><br><br>
                       <h1>LET US FIND THE BEST PRODUCT FOR YOU</h1>
@@ -139,23 +140,27 @@ $( document ).ready(function() {
                       <h5>With many products to choose from it must be very difficult and confusing for you, 
 so just answer few questions and we will suggest the best product according to your requirements</h5>
                       </font>
-                      
-                      <a id = "{{catType}}slide_2_next" class="btn" onclick="start_recommendationSlider('{{catType}}', this, '{{catType}}');">Get Started</a>
+                      {%if all_cat_details[catType].children%}
+                      <a id = "{{catType|space_to_underscore}}slide_2_next" class="btn" onclick ="reco_slider_children('{{catType}}', this, '{{catType|space_to_underscore}}');">Get Started</a>
+
+                      {%else%}
+                      <a id = "{{catType|space_to_underscore}}slide_2_next" class="btn" onclick="start_recommendationSlider('{{catType}}', this, '{{catType|space_to_underscore}}');">Get Started</a>
+                      {%endif%}
                       <br><br><br><br>
                   </div>
 
-          <div id="{{catType}}reco_slide_3" class="hide pos_relative align_center">
+          <div id="{{catType|space_to_underscore}}reco_slide_3" class="hide pos_relative align_center">
             <h1>Reco SLIDE 3</h1>
-            <span id="{{catType}}slide_3_back" class= "btn back" onclick="reco_slider_prev(this, '{{catType}}')">BACK</span>
+            <span id="{{catType|space_to_underscore}}slide_3_back" class= "btn back" onclick="reco_slider_prev(this, '{{catType|space_to_underscore}}')">BACK</span>
             
-            <span id="{{catType}}slide_3_next" class= "btn forward" onclick="reco_slider_next(this, '{{catType}}')">NEXT</span>
+            <span id="{{catType|space_to_underscore}}slide_3_next" class= " " onclick="reco_slider_next(this, '{{catType|space_to_underscore}}')">NEXT</span>
           </div>
 
-          <div id="{{catType}}reco_slide_4" class="hide pos_relative align_center">
+          <div id="{{catType|space_to_underscore}}reco_slide_4" class="hide pos_relative align_center">
             <h1>Reco SLIDE 4</h1>
-            <span id="{{catType}}slide_4_back" class="btn back" onclick="reco_slider_prev(this, '{{catType}}')">BACK</span>
+            <span id="{{catType|space_to_underscore}}slide_4_back" class="btn back" onclick="reco_slider_prev(this, '{{catType|space_to_underscore}}')">BACK</span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span id="{{catType}}slide_4_next" class="btn forward" onclick="reco_slider_next(this)">Next</span>
+            <span id="{{catType|space_to_underscore}}slide_4_next" class="btn forward" onclick="reco_slider_next(this)">Next</span>
           </div>
         </div>
                
@@ -178,8 +183,7 @@ so just answer few questions and we will suggest the best product according to y
                       <font face="">
                       <h5>With many products to choose from it must be very difficult and confusing for you, 
 so just answer few questions and we will suggest the best product according to your requirements</h5>
-                      </font>
-                      
+                      </font>                      
                       <a id = "slide_1_next" class="btn" onclick="reco_slider_next(this)">Get Started</a>
                       <br><br><br><br>
                   </div>
@@ -187,13 +191,20 @@ so just answer few questions and we will suggest the best product according to y
           <div id="reco_slide_2" class="hide pos_relative align_center">
               <br><br>
               <h1>Choose Product Categories</h1>
-              {%for cat_type in all_cat_details%}
-              <div id="reco_{{cat_type}}" class="pop_box" onclick="start_recommendationSlider('{{cat_type}}', this,'');"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_{{cat_type}}.png" alt="img05"></i></div>&nbsp;&nbsp;
+              {%for cat_type in allCategories%}
+              {%if all_cat_details[cat_type].children%}
+                <div id="reco_{{cat_type|space_to_underscore}}" class="pop_box" onclick="reco_slider_children('{{cat_type}}', this,'');"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_{{cat_type}}.png" alt="{{cat_type|space_to_underscore}}"></img></div>
+              {%else%}
+                <div id="reco_{{cat_type|space_to_underscore}}" class="pop_box" onclick="start_recommendationSlider('{{cat_type}}', this,'');"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_{{cat_type}}.png" alt="{{cat_type|space_to_underscore}}"></img></div>
+              {%endif%}
+              &nbsp;&nbsp;              
               {%endfor%}
               <br><br>
             <span id="slide_2_back" class="btn back" onclick="reco_slider_prev(this)">BACK</span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            
           </div>
+
+
 
           <div id="reco_slide_3" class="hide pos_relative align_center">
             <h1>Reco SLIDE 3</h1>
@@ -209,7 +220,7 @@ so just answer few questions and we will suggest the best product according to y
             <span id="slide_4_next" onclick="reco_slider_next(this)">Next</span>
           </div>
         </div>
-               <!-- <div class="modal-footer"> <a href="#" class="btn">CHOOSE</a> </div>-->
+               
         </div>
       </div>
     </div>
@@ -270,12 +281,14 @@ so just answer few questions and we will suggest the best product according to y
           <nav>
             <ul class="nav nav-list">
               <li class="nav-header"> <a href="#level0" title="" data-toggle="collapse" class="collapsed"><i class="icon-th"></i>&nbsp;&nbsp;MENU<i class="icon-up pull-right"></i><i class="icon-down pull-right"></i> </a>
-                <ul class="collapse in" id="level0" >
+                <ul class="collapse in" id="level0">
                   <li> <a href="index.html">HOME </a></li>
-                  <li> <a href="#">CATEGORY </a> <a class="icon-collapse collapsed" href="#level1" title="" data-toggle="collapse" ><i class="icon-up pull-right"></i><i class="icon-down pull-right"></i></a>
+                  <li> <a href="#"> CATEGORY </a> <a class="icon-collapse collapsed" href="#level1" title="" data-toggle="collapse" ><i class="icon-up pull-right"></i><i class="icon-down pull-right"></i></a>
                     <ul class="collapse in" id="level1">
                       {%for catType in all_cat_details%}
-                      <li class="level1"> <a href="index.html"> <span>{{catType}}</span> </a> </li>
+                      <li class="level1"> <a href="index.html"> <span>{{catType}}</span> </a> 
+
+                      </li>
                       {%endfor%}
                       </ul>
                   </li>
@@ -299,7 +312,15 @@ so just answer few questions and we will suggest the best product according to y
                       <li class="list_column">
                         <ul class="list_in_column">
                           {%for catType in all_cat_details%}
-                            <li class="level1"> <a href="/browse/{{catType}}"> <span>{{catType|title}}</span> </a> </li>
+
+                            <li class="level1"> <a href="/browse/{{catType}}"> <span>{{catType|title}}</span> </a>
+                              <ul>
+                               
+                              {%for subCat in all_cat_details[catType].children%}
+                                <li class="level2"> <a href="/browse/{{subCat}}"> <span>{{subCat|title}}</span> </a></li>
+                              {%endfor%}
+                            </ul>
+                             </li>
                             {%endfor%}
                           </ul>
                       </li>

@@ -76,27 +76,44 @@
 
                                 <p>Discount Percent: <input type="text" name="killerLocationNew" id="killerLocation" class="fullwidth" value="new"></p>
 
-                                <p><b>MOst Reviewed</b></p>
+                                <p><b>Most Reviewed</b></p>
                                 {%for reviewed in most_reviewed%}
                                 <input type="text" name="most_reviewed" id="textfield3" class="fullwidth" value={{reviewed}}>
                                 {%endfor%}
                                 <input type="text" name="most_reviewed" id="textfield3" class="fullwidth" value="new">
 
-                                <p><b>Custom Feilds</b></p>                                 
-                                {%for custom_list in custom_product_list%}                                
-                                <input type="text" name="custom_list_name" id="textfield3" class="fullwidth" value=
-                                "{{custom_list}}"
+                                <p><b>Custom Feilds: Insert ProductID </b></p>                                 
+                                {%for custom_product in custom_product_list%}                                
+                                <input type="text" name="custom_product_name" id="textfield3" class="fullwidth" value=
+                                "{{custom_product}}"
                                 <br>
-                                {%for prod_id in custom_product_list[custom_list]%}                                
-                                <input type="text" name="custom_list_product_{{custom_list}}" id="textfield3" class="fullwidth" value={{prod_id}}>
+                                {%for prod_id in custom_product_list[custom_product]%}                                
+                                <input type="text" name="custom_product_{{custom_product}}" id="textfield3" class="fullwidth" value={{prod_id}}>
                                 {%endfor%}
-                                New ProductID : <input type="text" name="custom_list_product_{{custom_list}}" id="textfield3" class="fullwidth" value="">
+                                New ProductID : <input type="text" name="custom_product_{{custom_product}}" id="textfield3" class="fullwidth" value="">
                                 <br>                             
                                 {%endfor%}
                                 <br>
-                                New Custom List Name : <input type="text" name="new_custom_name" id="textfield3" class="fullwidth" value="new">
+                                New Custom List Name : <input type="text" name="new_custom_product_name" id="textfield3" class="fullwidth" value="new">
                                 <br>
-                                New Product: <input type="text" name="new_custom_product" id="textfield3" class="fullwidth" value="new">
+                                New Product: <input type="text" name="new_custom_product_entry" id="textfield3" class="fullwidth" value="new">
+
+
+                                <p><b>Custom Item Feilds: Inser Link and Location</b></p>                                 
+                                {%for custom_link in custom_link_list%}                                
+                                <input type="text" name="custom_link_name" id="textfield3" class="fullwidth" value=
+                                "{{custom_link}}"
+                                <br>
+                                {%for prod_id in custom_link_list[custom_link]%}                                
+                                <input type="text" name="custom_link_{{custom_link}}" id="textfield3" class="fullwidth" value={{prod_id}}>
+                                {%endfor%}
+                                New Item Link : <input type="text" name="custom_link_{{custom_link}}" id="textfield3" class="fullwidth" value="">
+                                <br>                             
+                                {%endfor%}
+                                <br>
+                                New Item Name : <input type="text" name="new_custom_link_name" id="textfield3" class="fullwidth" value="new">
+                                <br>
+                                New Item Link and Location: <input type="text" name="new_custom_link_entry" id="textfield3" class="fullwidth" value="new">
 
 
 

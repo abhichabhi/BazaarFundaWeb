@@ -4,7 +4,7 @@ from bson.objectid import ObjectId
 from pymongo import ASCENDING
 from bson import json_util
 import json
-from app import mongoAdminDB as mongo
+from app import mongoAdminDB as mongo, mongoCategoryDetails
 import functools
 from app import app, mongoProductOverridePrice
 from app.decorators import mongoJsonify, jsonResponse
@@ -97,13 +97,15 @@ def listingForm():
 		category = 'new'
 	print category
 
-	listing = mongo.listing.find_one()
-	categoryList = [cat for cat in listing]
-	categoryList.pop()
+
+	listing = mongoCategoryDetails.find()
+	categoryList = [li['type']  for li in listing]
+	admin_properties = mongo.listing.find_one()
 	try:
-		categoryListing = listing[category]		
+		categoryListing = admin_properties[category]		
 	except:
-		categoryListing = listing['dummy']
+		pass
+		# categoryListing = listing['dummy']
 	try:
 		compareitems = categoryListing['compareitems']
 	except:
@@ -136,21 +138,26 @@ def listingForm():
 		custom_product_list = categoryListing['custome_item_list']
 	except:
 		custom_product_list = []
-	print custom_product_list
+
+	try:
+		custom_link_list = categoryListing['custom_link_list']
+	except:
+		custom_link_list = []
+	print custom_link_list
 	
 	return render_template('admin/listing.html', title="Listing banner : " + category,
 		category=category,categoryList=categoryList, compareitems=compareitems,
 		 hotbrands=hotbrands,economicbrands=economicbrands,
-		topbanner=topbanner,killerDeals=killerDeals,most_reviewed=most_reviewed, right_vertical=right_vertical, custom_product_list=custom_product_list)
+		topbanner=topbanner,killerDeals=killerDeals,most_reviewed=most_reviewed, right_vertical=right_vertical, custom_product_list=custom_product_list, custom_link_list=custom_link_list)
 
 @mod.route('/banner/listing/submit', methods=['GET','PUT'])
 def listingFormSubmit():
 
 	if request.method == 'PUT':
 		respData =json.loads(request.data)
-		category = respData['category']
+		category = respData['category'].replace('%20',' ')
 		data = respData['data']
-		print data['custome_item_list']
+		print data['custome_item_list'], category
 		# data['custome_item_list'] = {}
 		print data
 		print category
@@ -187,7 +194,10 @@ def getListingPageCategoryDict(category,page):
 		category = 'tablet'
 	if category == 'mobiles':
 		category = 'mobile'
-	return mongo[page].find_one()[category]
+	try:
+		return mongo[page].find_one()[category]
+	except:
+		return {}
 
 def getHomePageDict():
 	return mongo.home.find_one()

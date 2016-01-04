@@ -1,15 +1,10 @@
 
-
-//declaring global variable
 var click=0;
 var count=1;
 var flag=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var category;
 var all_cat_detailJS = {}
-
-//--end of declaration
-//used in is_selected()
-//jQuery('#the-element').click(function () { /* perform action here */ });
+HttpAjax('/restfull/categorydetails');
 
 jQuery(document).ready(function($){ 
 	$('.price_checkbox').click(function(){
@@ -17,20 +12,113 @@ jQuery(document).ready(function($){
 	});
 });
 
-function reco_slider_next(thislink, catAppend)
-{	
-	var max=4;		
+
+function remove_flag()
+{
+for(i=1;i<=40;i++)
+flag[i]=0;
+count=1;
+}
+
+function reco_slider_children(category, thisLink, catAppend) {
+	var name = thisLink.id
+	//the current children id
+	//alert(name);
+	var current = jQuery("#" + name).parent().attr("id");	//the parent div id
+	jQuery("#"+current).html('<br><br> <h1>Choose Product Categories</h1>')
+	console.log(name, current)
+	children = all_cat_detailJS[category]['children']
+	category_parent = all_cat_detailJS[category]['parent'][0]
+	console.log(thisLink)
+	cat_Str = ""
+	for (child of children) {
+		childDetails = all_cat_detailJS[child]
+		child_of_child = all_cat_detailJS[child]['children']
+		console.log(child_of_child)
+		if (child_of_child.length > 0) {
+			jQuery("#"+current).append('<div id=' + '"reco_' + child.replace(" ", "_") + '" class="pop_box" onclick="reco_slider_children(&#39;' + child + '&#39;,this,&#39;' + catAppend +'&#39;);">' + 
+				'<img src=https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_' + child + '.png alt="' + child + '"></div>');
+		
+		}
+
+		else {
+			if (catAppend) {
+
+				jQuery("#"+current).append('<div id=' + '"reco_' + child.replace(" ", "_") + '" class="pop_box" onclick="start_recommendationSlider(&#39;' + child + '&#39;,this,&#39;' + catAppend.replace(' ', '_') +'&#39;);">' + 
+				'<img src=https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_' + child + '.png alt="' + child + '"></div>');
+			}
+			else {
+				jQuery("#"+current).append('<div id=' + '"reco_' + child.replace(" ", "_") + '" class="pop_box" onclick="start_recommendationSlider(&#39;' + child + '&#39;,this,&#39;&#39;);">' + 
+				'<img src=https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_' + child + '.png alt="' + child + '"></div>');
+			}	
+		
+		}
+	}
+
+	if (catAppend != category.replace(' ','_')) {
+		if (category_parent) {
+		jQuery("#"+current).append('<br><span id="slide_2_back" class="btn back" onclick="reco_slider_children(&#39;' + category_parent + '&#39;,this,&#39;' + catAppend.replace(' ', '_') + '&#39;)">BACK</span>');
+		}
+		else {		
+			jQuery("#"+current).append('<br><span id="slide_2_back" class="btn back" onclick="reco_slider_AllParentCat(&#39;' + category_parent + '&#39;,this,&#39;' + catAppend.replace(' ', '_') + '&#39;)">BACK</span>');
+		}
+	}
+	
+      
+}
+
+function reco_slider_AllParentCat(category, thisLink, catAppend) {
+	console.log(thisLink)
+	var name = thisLink.id
+	//the current children id
+	//alert(name);
+
+	var current = jQuery("#" + name).parent().attr("id");	//the parent div id
+	
+	jQuery("#"+current).html('<br><br> <h1>Choose Product Categories</h1>')
+	for (cat in all_cat_detailJS) { 
+		cat_parent = all_cat_detailJS[cat]['parent']
+		if (typeof cat_parent === 'undefined') {
+				if (all_cat_detailJS[cat]['children']) {
+					jQuery("#"+current).append('<div id="reco_' + cat.replace(" ", "_") + '" class="pop_box" onclick="reco_slider_children(&#39;' + cat + '&#39;,this,&#39;&#39;' + "" +');">' + 
+						'<img src=https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_' + cat + '.png alt="' + cat + '"></div>');
+				}
+				else {
+					jQuery("#"+current).append('<div id="reco_' + cat.replace(" ", "_") + '" class="pop_box" onclick="start_recommendationSlider(&#39;' + cat + '&#39;,this,&#39;&#39;' + catAppend +');">' + 
+						'<img src=https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_' + cat + '.png alt="' + cat + '"></div>');
+				}
+		}
+		else {
+			if (cat_parent.length == 0) {
+				if (all_cat_detailJS[cat]['children']) {
+					jQuery("#"+current).append('<div id="reco_' + cat.replace(" ", "_") + '" class="pop_box" onclick="reco_slider_children(&#39;' + cat + '&#39;,this,&#39;&#39;' + "" +');">' + 
+						'<img src=https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_' + cat + '.png alt="' + cat + '"></div>');
+				}
+				else {
+					jQuery("#"+current).append('<div id="reco_' + cat.replace(" ", "_") + '" class="pop_box" onclick="start_recommendationSlider(&#39;' + cat + '&#39;,this,&#39;&#39;' + catAppend +');">' + 
+						'<img src=https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/home_' + cat + '.png alt="' + cat + '"></div>');
+				}
+				}
+		}
+	}
+	if (catAppend !='') {
+		console.log(catAppend)
+		jQuery("#"+current).append('&nbsp;&nbsp; <br><br><span id="slide_2_back" class="btn back" onclick="reco_slider_prev(this,&#39;' + catAppend.replace(' ','_') + '&#39;)">BACK</span>')
+	}
+
+}
+
+function reco_slider_next(thislink, catAppend) {	
+	var max = 4;		
 	if (catAppend) {
 		var str= catAppend + "reco_slide_";	
-	}			
+	}
+
 	else {
-		var str="reco_slide_";	
-	}				//depend on no of slide
-						//id name to concat
-	//alert(thislink);	
+		var str="reco_slide_";
+	}
 	var name=thislink.id
-						//the current children id
-	//alert(name);
+
 	var current=jQuery("#"+name).parent().attr("id");	//the parent div id
 	
 	//alert(current);
@@ -40,15 +128,14 @@ function reco_slider_next(thislink, catAppend)
 	else
 		inr = Number(inr)+1;					//increment by 1													
 	var next = str.concat(inr);	
-	console.log(next, "next");				//concat to get id of next div
+
 	jQuery("#"+current).animate({left: '-1000px'},"slow").hide(50);	//animating sequences 1
 	jQuery("#"+next).animate({left: '1000px'},"slow");				//2
 	jQuery("#"+next).show(50).animate({left: '0px'},"slow");		//3
 }
 
-function reco_slider_prev(thislink, catAppend)
-{
-
+function reco_slider_prev(thislink, catAppend) {
+	console.log(thislink)
 	var max=4;									//depend on no of slide
 	if (catAppend) {
 		var str= catAppend + "reco_slide_";	
@@ -58,15 +145,20 @@ function reco_slider_prev(thislink, catAppend)
 	}				//depend on no of slide				//id name to concat
 	console.log(str, catAppend)
 	//alert(thislink);	
-	var name=thislink.id						//the current children id
+	var name = thislink.id						//the current children id
 	//alert(name);
-	var current=jQuery("#"+name).parent().attr("id");	//the current id
+	var current = jQuery("#"+name).parent().attr("id");	//the current id
 	//alert(current);
 	var inr = current.slice(-1);				//getting id number
 	if(inr==1)
 		inr=max;								//boundary maintaining cycle
 	else
 		inr = Number(inr)-1;					//decrement by 1
+	if (catAppend) {
+		if (inr == 1 ) {
+			inr = 2
+		}
+	}
 		
 	var next = str.concat(inr);					//concat to get id of next div
 	jQuery("#"+current).animate({left: '1000px'},"slow").hide(50);	//animating sequences 1
@@ -77,7 +169,9 @@ function reco_slider_prev(thislink, catAppend)
 
 function is_selected(thislink)
 {	
+	var d = new Date();
 	console.log("in is_selected")
+	console.log(d.getMilliseconds())
 	var max=5;
 	var str_class="show";
 	var str_id="mob_key_"
@@ -154,22 +248,22 @@ function is_selected(thislink)
 	else {
 		alert("Max Preference Selected")
 	}
+	console.log(d.getMilliseconds())
 }
 
-function start_recommendationSlider(category, thisLink,catAppend) {
+function start_recommendationSlider(category, thisLink, catAppend) {
 	if (category == 'all' ) {
 		category = catAppend
 	}
-	// console.log("In reco Slider", category, catAppend)
+	
 	window.category = category
 	reco_slider_next(thisLink, catAppend);
-	path = '/restfull/categorydetails'
-	all_cat_detailJS = jQuery.parseJSON(httpGet(path));
-	all_key_details = all_cat_detailJS[category]['allKeyWordsIcon']
-	all_key_text = all_cat_detailJS[category]['allKeywordsRecoText']
-	window.all_cat_detailJS = all_cat_detailJS
+	
+	all_key_details = window.all_cat_detailJS[category]['allKeyWordsIcon']
+	all_key_text = window.all_cat_detailJS[category]['allKeywordsRecoText']
 	reco_slider_str = '#' + catAppend + 'reco_slide_3'
-	// console.log(reco_slider_str, "in start_recommendationSlider")
+	
+
 	catr_str_reco = category
 	if (category.slice(-1) === 's') { 
 		catr_str_reco = category.slice(0, -1);
@@ -178,11 +272,10 @@ function start_recommendationSlider(category, thisLink,catAppend) {
 	jQuery(reco_slider_str).html('<h1>My New ' + ((category.slice(-1) === 's') ? catr_str_reco = category.slice(0, -1) : category ) + ' is for</h1><h5>Just click according to your priorities with a maximum of 5.<br> Top most priority should be clicked 1st</h5>');
 	iter_val = 1
 	for (var kye_iter in all_key_details) {
-
 		jQuery(reco_slider_str).append('<div data = "' + kye_iter + '" id="mob_key_' +  ("0" + iter_val.toString()).slice(-2) + '" class="pop_box" onclick="is_selected(this)"><i class="fa ' + all_key_details[kye_iter] + ' fa-5x "></i><div class="product-name aligncenter" style="height:33px">' + all_key_text[kye_iter] + '</div></div>&nbsp;&nbsp;');
 	iter_val ++;
 		} 
-	jQuery(reco_slider_str).append("<br><span id='slide_3_back' class='btn back' onclick='reco_slider_prev(this, &#39;" + catAppend + "&#39;)'>BACK</span>");
+	jQuery(reco_slider_str).append("<br><span id='slide_3_back' class='btn back' onclick='reco_slider_prev(this, &#39;" + catAppend + "&#39;); remove_flag()'>BACK</span>");
 	jQuery(reco_slider_str).append("<span id='reco_pref_done' class= 'btn forward' onclick='Done(this, &#39;" + catAppend + "&#39;);'>DONE</span>");
                     
 }
@@ -210,10 +303,16 @@ function Done(thisLink, catAppend) {
 	str+='<center><h5>Select Price Range</h5>';
 	str+='<div class="inner-addon right-addon"><i class="glyphicon icon-search-2 icon-small"></i><input name="filter_search_price" type="text" id="filter_search_price" /></div>';
 	str+='<div class="listing-height"><ul id="filter_price">';
-	for (price = all_cat_detailJS[category]['priceRange'][0]; price <= all_cat_detailJS[category]['priceRange'][1];  price = price + all_cat_detailJS[category]['price_interval'] )
-	{		
+	try {
+		for (price = all_cat_detailJS[category]['priceRange'][0]; price <= all_cat_detailJS[category]['priceRange'][1];  price = price + all_cat_detailJS[category]['price_interval'] )
+		{		
 		str+=' <li ><input type="checkbox" onclick = "check_checkbox(this);" class="price_checkbox" id = "' + price + '" + valuei="'+price+'" + valuej="'+ (price +all_cat_detailJS[category]['price_interval']).toString() +'"   /><label for="' + price + '"> RS ' + price.toString() + " - Rs " + (price +all_cat_detailJS[category]['price_interval']).toString()  + '</label></li>';
+		}
 	}
+	catch(err) {
+		console.log(err)
+	}
+	
 	str+='</ul></div></div></center></div>';
 	str+='<div class="span4">';
 	str+='<center><h5>Select Brand</h5>';
@@ -307,3 +406,18 @@ function recommend()
 	window.location = listingURl		
 }
 
+function HttpAjax(path) {
+	console.log("In That Ajax")
+    var result;
+    var host = window.location.origin
+  	theUrl = host + path
+
+    $.ajax({
+        url: theUrl,
+        success: function(response) {
+            window.all_cat_detailJS = response;
+            console.log(window.all_cat_detailJS)
+            // return response; // <- I tried that one as well
+        }
+    });
+}
