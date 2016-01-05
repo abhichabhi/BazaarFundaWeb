@@ -108,7 +108,8 @@ function reco_slider_AllParentCat(category, thisLink, catAppend) {
 
 }
 
-function reco_slider_next(thislink, catAppend) {	
+function reco_slider_next(thislink, catAppend) {
+		
 	var max = 4;		
 	if (catAppend) {
 		var str= catAppend + "reco_slide_";	
@@ -170,8 +171,9 @@ function reco_slider_prev(thislink, catAppend) {
 function is_selected(thislink)
 {	
 	var d = new Date();
-	console.log("in is_selected")
-	console.log(d.getMilliseconds())
+	var t0 = performance.now();
+	//console.log("in is_selected")
+	//console.log(d.getMilliseconds())
 	var max=5;
 	var str_class="show";
 	var str_id="mob_key_"
@@ -202,7 +204,9 @@ function is_selected(thislink)
 		add_class=str_class.concat(count);
 		// console.log(add_class, id)
 		jQuery("#"+id).addClass(add_class);
-		count++;	
+		count++;
+		var t3 = performance.now();
+		console.log("Call to is selected ADD took " + (t3 - t0) + " milliseconds.")	
 		
 	}
 
@@ -244,12 +248,17 @@ function is_selected(thislink)
 		//alert(flag[index]);
 		count--;
 		//alert(count);
+		var t2 = performance.now();
+		console.log("Call to is selected REMOVE took " + (t2 - t0) + " milliseconds.")
 	}
 	else {
 		alert("Max Preference Selected")
 	}
-	console.log(d.getMilliseconds())
+	var t1 = performance.now();
+	console.log("Call to is selected END took " + (t1 - t0) + " milliseconds.")
+	//console.log(d.getMilliseconds())
 }
+
 
 function start_recommendationSlider(category, thisLink, catAppend) {
 	if (category == 'all' ) {
@@ -421,3 +430,27 @@ function HttpAjax(path) {
         }
     });
 }
+
+// preload images
+
+function preloadImages(array) {
+    if (!preloadImages.list) {
+        preloadImages.list = [];
+    }
+    var list = preloadImages.list;
+    for (var i = 0; i < array.length; i++) {
+        var img = new Image();
+        img.onload = function() {
+            var index = list.indexOf(this);
+            if (index !== -1) {
+                // remove image from the array once it's loaded
+                // for memory consumption reasons
+                list.splice(index, 1);
+            }
+        }
+        list.push(img);
+        img.src = array[i];
+    }
+}
+
+preloadImages(["static/css/Count/count_1.png", "static/css/Count/count_2.png", "static/css/Count/count_3.png","static/css/Count/count_4.png","static/css/Count/count_5.png"]);
