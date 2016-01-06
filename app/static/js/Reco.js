@@ -108,9 +108,23 @@ function reco_slider_AllParentCat(category, thisLink, catAppend) {
 
 }
 
-function reco_slider_next(thislink, catAppend) {
-		
-	var max = 4;		
+function reco_slider_next(thislink, catAppend) 
+{
+	var max=4;
+	var data=reco_slider_init(thislink,catAppend);
+	var inr=data[0];
+	var current=data[1];
+	var str=data[2];							//getting id number (last)	
+	if(inr == max)
+		inr=1;									//boundary check maintaining cycle
+	else
+		inr = Number(inr)+1;					//increment by 1													
+	var next = str.concat(inr);
+	animate(current,next,-1000);	
+}
+
+function reco_slider_init(thislink,catAppend)
+{		
 	if (catAppend) {
 		var str= catAppend + "reco_slide_";	
 	}
@@ -123,34 +137,17 @@ function reco_slider_next(thislink, catAppend) {
 	var current=jQuery("#"+name).parent().attr("id");	//the parent div id
 	
 	//alert(current);
-	var inr = current.slice(-1);				//getting id number (last)	
-	if(inr == max)
-		inr=1;									//boundary check maintaining cycle
-	else
-		inr = Number(inr)+1;					//increment by 1													
-	var next = str.concat(inr);	
-
-	jQuery("#"+current).animate({left: '-1000px'},"slow").hide(50);	//animating sequences 1
-	jQuery("#"+next).animate({left: '1000px'},"slow");				//2
-	jQuery("#"+next).show(50).animate({left: '0px'},"slow");		//3
+	var inr = current.slice(-1);
+	return [inr,current,str];
 }
 
-function reco_slider_prev(thislink, catAppend) {
-	console.log(thislink)
-	var max=4;									//depend on no of slide
-	if (catAppend) {
-		var str= catAppend + "reco_slide_";	
-	}			
-	else {
-		var str="reco_slide_";	
-	}				//depend on no of slide				//id name to concat
-	console.log(str, catAppend)
-	//alert(thislink);	
-	var name = thislink.id						//the current children id
-	//alert(name);
-	var current = jQuery("#"+name).parent().attr("id");	//the current id
-	//alert(current);
-	var inr = current.slice(-1);				//getting id number
+function reco_slider_prev(thislink, catAppend) 
+{
+	var max=4;
+	var data=reco_slider_init(thislink,catAppend);
+	var inr=data[0];
+	var current=data[1];
+	var str=data[2];							//getting id number
 	if(inr==1)
 		inr=max;								//boundary maintaining cycle
 	else
@@ -161,10 +158,15 @@ function reco_slider_prev(thislink, catAppend) {
 		}
 	}
 		
-	var next = str.concat(inr);					//concat to get id of next div
-	jQuery("#"+current).animate({left: '1000px'},"slow").hide(50);	//animating sequences 1
-	jQuery("#"+next).animate({left: '-1000px'},"slow");				//2
-	jQuery("#"+next).show(50).animate({left: '0px'},"slow");		//3
+	var next = str.concat(inr);
+	animate(current,next,1000);					
+}
+
+function animate(current,next,value)
+{
+	jQuery("#"+current).animate({left: value},"slow").hide(50);	//animating sequences 1
+	jQuery("#"+next).animate({left: -1*value},"slow");			//2
+	jQuery("#"+next).show(50).animate({left: '0px'},"slow");	//3
 }
 
 
