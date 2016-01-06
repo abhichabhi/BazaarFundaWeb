@@ -8,15 +8,15 @@ from app import mongoAdminDB as mongo, mongoCategoryDetails
 import functools
 from app import app, mongoProductOverridePrice
 from app.decorators import mongoJsonify, jsonResponse
-
 from app.util import getArgAsList
+from bson import json_util
+
 mod = Blueprint('banners', __name__, url_prefix='/admin')
 def get_locale():
 	try:
 		language = getArgAsList(request, 'lang')[0]
 	except:
 		language = 'hi'
-	print request.accept_languages.best_match(LANGUAGES.keys())
 	return language
 
 @mod.route('/login/', methods=['GET', 'POST'])
@@ -54,6 +54,54 @@ def login_required(fn):
 @login_required
 def AdminIndex():
 	return render_template('admin/AdminIndex.html')
+
+@mod.route('/category/catType', methods=['GET'])
+def catType():
+	try:
+		category= getArgAsList(request, 'category')[0]
+	except:
+		category = 'new'
+
+	listing = mongoCategoryDetails.find()
+	categoryList = [li['type']  for li in listing]
+
+	catTypeCursor =  mongoCategoryDetails.find()
+	catType = [cat for cat in catTypeCursor]
+
+	if category != 'new':
+		listingJSON = mongoCategoryDetails.find_one({'type':category})
+	else:
+		listingJSON = ""
+	listingJSON = json.dumps(listingJSON)
+
+	return render_template('admin/catType.html', catType=catType,
+	 categoryList=categoryList, listingJSON=listingJSON,category=category)
+
+@mod.route('/category/catType/submit', methods=['PUT'])
+def catTypeSubmit():
+	if request.method == 'PUT':
+		respData =  request.get_json(silent=True)
+		# respData =json.loads(request.json)
+		for data in respData:
+			category =  data
+			catJSON = respData[category]
+		print catJSON
+		catJSON = json.loads(catJSON)
+		try:
+			catJSON['type']
+			print "type present"
+			try:
+				listingJSON = mongoCategoryDetails.find_one({'_id':catJSON['_id'], 'type': catJSON['type']})
+				mongoCategoryDetails.save(catJSON)
+				return "Saved new document"
+			except:
+				
+				mongoCategoryDetails.save(insert)
+				return "new document"
+		except:			
+			mongoCategoryDetails.delete_one({'_id':catJSON['_id']})
+			return "Type not present, so delete this entry of category"
+	return "Submitted Successfully"
 
 @mod.route('/banner/home/', methods=['GET'])
 @login_required
@@ -201,3 +249,22 @@ def getListingPageCategoryDict(category,page):
 
 def getHomePageDict():
 	return mongo.home.find_one()
+
+# def mongoSaveDocument(document,collection, client, identifier, versionControl=False):
+# 	# print identifier
+# 	collectionOriginal = client[collection]
+# 	if versionControl==True:
+# 		versioned_collection = collection + "v_1_0"
+# 		collection_1_0 = client[versioned_collection]
+# 		collection_1_0.remove()
+# 		for record in collectionOriginal.find():
+# 			collection_1_0.insert(record)
+#     	    mongoSaveDocument(document,collection, client, identifier, False)
+#     else:
+# 		collectionOriginal = client[collection]
+# 		priceDoc = collectionOriginal.find_one({identifier:document[identifier]})
+# 		if priceDoc:
+# 			document["_id"] = priceDoc["_id"]
+# 			collectionOriginal.save(document)
+# 		else:
+# 			collectionOriginal.insert(document)   
