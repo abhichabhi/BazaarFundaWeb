@@ -35,14 +35,37 @@ function updateHomeBanner(frmVariable) {
 	console.log(httpGet($url))
 
 }
+function updateCategoryListing(frmVariable) {
+	
+	category = location.search.split('category=')[1]?location.search.split('category=')[1]:"0";
+	categoryJSON = ""
+	for(var i=0;i<frmVariable.elements.length;i++) {
+		if (frmVariable.elements[i].name == 'newCategory') {
+			category = frmVariable.elements[i].value
+			break;
+		}
+		if (frmVariable.elements[i].name == 'catText') {
+			categoryJSON = frmVariable.elements[i].value
+		}
+	}
+	// categoryJSON = JSON.stringify(categoryJSON)
+	// console.log(categoryJSON)
+	categoryLoad = {}
 
+	categoryLoad[category] = categoryJSON
+	console.log(JSON.stringify(categoryLoad))
+	$domain = location.host
+	$url = "http://"  + $domain + "/admin/category/catType/submit"
+	httpAjaxPost($url, JSON.stringify(categoryLoad))
+	// console.log(JSON.stringify(categoryLoad))
+}
 function updateListingBanner(frmVariable) { 
 	TBannerLinkList = new Array();
 	tBannerLinkIndex = 0
 	TBannerLocList = new Array();
 	tBannerLocIndex = 0
 	category = location.search.split('category=')[1]?location.search.split('category=')[1]:"0";
-	var killer_prods=new Array();
+	var killer_prods = new Array();
 	var arrIndex=0;
 	var most_rev=new Array();
 	var arrIndex_rev=0;
@@ -216,6 +239,7 @@ function httpAjaxPost(urlAddress, jsonData) {
             headers: {
 		        "Content-Type": "application/json"
 		    },
+		    dataType: 'json',
             data: jsonData,
             success: function() { alert('Entry Successfully'); }
         });

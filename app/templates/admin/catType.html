@@ -1,0 +1,53 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{{title}}</title>
+<link rel="stylesheet" type="text/css" href="/static/css/view.css" media="all">
+<script type="text/javascript" src="/static/js/view.js"></script>
+<script type="text/javascript" src="/static/js/AdminPanelJS.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body id="main_body" >
+	<form id="catType" name="catType" class="appnitro"  method="post" action="">
+<b>Choose category : </b>
+					<select name="category" onChange="window.location.href=this.value">
+						{%for cat in categoryList%}
+						{%if category == cat%}
+							<option value="/admin/category/catType?category={{cat}}" selected>{{cat}}</option>
+						{%else%}
+							<option value="/admin/category/catType?category={{cat}}">{{cat}}</option>
+							{%endif%}
+						{%endfor%}
+						<option value="/admin/category/catType?category=new">new</option>
+					</select>
+					{%if category == 'new'%}
+					<p><b>Enter Category</b></p>
+        			<input type="text" name="newCategory" id="newCategory" class="fullwidth" value="new category">
+        			{%endif%}
+
+	<h4> Category Type JSON</h4>
+	<h6> Insert the JSON here and click submit at Bottom</h6>
+	<textarea name="catText" id="catText" cols="100" style="width:100%; height:100%">
+	{{listingJSON}}
+	</textarea>
+	<input type="button" href="#" class="button button-2x" onClick="return updateCategoryListing(this.form)" value="Submit"></input>
+</form>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+<script>
+
+jQuery(document).ready(function($){  
+  // $(".product-image-wrapper").css({'max-height':'80px','color':'red'});
+   prettyPrint();
+    });
+
+
+function prettyPrint() {
+	
+    var ugly = document.getElementById('catText').value;
+    var obj = JSON.parse(ugly);
+    var pretty = JSON.stringify(obj, undefined, 4);
+    document.getElementById('catText').value = pretty;
+}
+</script>
+
+	</body>
+</html>
