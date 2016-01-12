@@ -147,7 +147,12 @@ def listingForm():
 
 
 	listing = mongoCategoryDetails.find()
-	categoryList = [li['type']  for li in listing]
+	categoryList = [li['type'][:-1] if li['type'].endswith('s') else li['type']  for li in listing]
+	print categoryList
+	# for cat in categoryList:
+	# 	if cat.endswith('s'):
+	# 		cat = cat[:-1]
+
 	admin_properties = mongo.listing.find_one()
 	try:
 		categoryListing = admin_properties[category]		
@@ -200,7 +205,6 @@ def listingForm():
 
 @mod.route('/banner/listing/submit', methods=['GET','PUT'])
 def listingFormSubmit():
-
 	if request.method == 'PUT':
 		respData =json.loads(request.data)
 		category = respData['category'].replace('%20',' ')
