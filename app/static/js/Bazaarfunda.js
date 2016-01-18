@@ -16,7 +16,7 @@ jQuery(document).ready(function($){
     /*ComparePrices PopUp*/
 
      var category = $('#category').attr('data-name'); 
-      if (category == 'None') { 
+      if (category == 'None') {
                 bind_Category();
       }
       else {

@@ -19,12 +19,15 @@ def getProductSpecification(product_id):
 
 def getProductPrice(product_id):
 	product_price =  mongoProductPrice.find_one({'product_id':product_id})
+
 	try:
 		priceList = product_price['priceList']
 	except:
 		priceList = []
 	min_priceDict = {}
+	priceList_tmp = []
 	override_Price = mongoProductOverridePrice.find_one({'product_id':product_id})
+	price_counter = 0
 	if priceList:
 		min_price = 100000000		
 		for price in priceList :
@@ -37,9 +40,13 @@ def getProductPrice(product_id):
 					override_website_price = None
 				if override_website_price:
 					price['price'] = override_website_price
+			if price['stock'] == 0 or price['price'] == 0:
+				continue
 			if price['price'] < min_price and price['price'] != 0:
 				min_price = price['price']
 				min_priceDict = price
+			priceList_tmp.append(price)
+	product_price['priceList'] = priceList_tmp
 	return product_price, min_priceDict
 
 def getProductReviews(product_id):
@@ -174,11 +181,11 @@ def getFilteredProductSpecification(requestQuery, category):
 
 def getFilteredProductPriceRange(pRange, category):
 	productIdRegex = '^' + category[0].capitalize()
-	
 	# 'priceList.price':{'$gt':pRange[0],'$lt':pRange[1]},
 	if pRange:
-		pProducts = mongoProductPrice.find({'priceList.price':{'$gt':pRange[0],'$lt':pRange[1]},'product_id': {'$regex':productIdRegex}})
+		pProducts = mongoProductPrice.find({'priceList.price':{'$gt':pRange[0],'$lt':pRange[1]}, 'product_id': {'$regex':productIdRegex}, 'priceList.stock':1})
 	else:
+		print "Caught Exception"
 		pProducts = mongoProductPrice.find({'product_id': {'$regex':productIdRegex}})
 	pProducts = [prod['product_id'] for prod in pProducts]
 	return pProducts

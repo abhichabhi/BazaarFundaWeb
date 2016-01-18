@@ -132,7 +132,7 @@ def productDetail(product_id, slug=None):
 
 @mod.route('/browse/<category>/', methods=['GET'], strict_slashes=False)
 def browse(category):
-	app.logger.info("Listing Page: "+ category)
+	app.logger.info("Listing Page: " + category)
 	category_product_list = category
 	filterFlag = 0	
 	categoryFilterCheckedStatus = getCategoryFilterCheckedStatus()
@@ -141,15 +141,108 @@ def browse(category):
 	urlDict = urlToDict()
 	millis = lambda: int(round(time.time() * 1000))
 	reco_bool = 0
+	print request.args
 	try:
 		start = int(request.args.get('start'))
 	except:
 		start = None 
 		scoreSortedProductList = []
 
-	if not start:		
-		session['product_list'] = None
+	if not start:
+		start = 0
+	# if not start:		
+	# 	session['product_list'] = None
 		
+	# 	start = 0	
+	# 	specProductIdList = getFilteredProductSpecification(request.args, category)
+	# 	try:
+	# 		priceRange = categoryFilterCheckedStatus['price']
+	# 	except:
+	# 		priceRange = None
+	# 	keywords = []
+	# 	weights = []
+	# 	if 'keywords' in urlDict:
+	# 		keywords = urlDict['keywords']
+	# 	if 'weights' in urlDict:			
+	# 		weights = urlDict['weights']
+	# 	if 'reco' in urlDict:
+	# 		reco_bool = 1
+	# 	priceProductIdList = getFilteredProductPriceRange(priceRange, category)		
+	# 	finalProductList = list(set(priceProductIdList) & set(specProductIdList))		
+	# 	scoreSortedProductList = getScoreSortedProductID(finalProductList,category, keywords, weights)
+	# 	session['product_list'] = scoreSortedProductList
+	# 	utc_timestamp = datetime.datetime.utcnow()
+		
+	# 	try:
+	# 		_sid = session['_sid']
+	# 		app.logger.info("_Sid is " + str(_sid))
+	# 	except:
+	# 		app.logger.info( "_sid is None")
+	# 		_sid = None
+
+	# 	if _sid is not None:
+	# 		try:
+	# 			userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
+	# 			mongoUserVariables['listing_products'].update_one({"_sid":_sid}, { "$set":{ "product_list":scoreSortedProductList, "date": utc_timestamp}})
+	# 		except:
+	# 			mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
+	
+	# 	else:
+	# 		uid = uuid.uuid4()
+	# 		_sid = uid.hex
+			
+	# 		mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
+	# 	session['_sid'] = _sid
+	# 	userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
+	# 	scoreSortedProductList =  userDbProducts[:20]
+	# else:
+	# 	_sid = session['_sid']
+	# 	userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
+	# 	scoreSortedProductList = userDbProducts[0:start+20]
+	# productList = []
+	# for prod in scoreSortedProductList:
+	# 	prodDetail = {}
+	# 	prodDetail = getProductDetail(prod['product_id'])		
+	# 	productList.append(prodDetail)
+	
+	# totalProducts = len(userDbProducts)
+	if len(categoryFilterCheckedStatus) == 0:
+		filterFlag = 1
+
+	try:
+		categoryFilter = categoryListingFilter[category]
+	except:
+		categoryFilter = {}
+
+	title = "Bazaarfunda: "
+	if 'keywords' in urlDict:
+		title = title + "Best Recommended " + category + " acording to your needs"
+	else:
+		title = title + "Get the best " + category + " according to other customers"
+	return render_template("listing_small_prev.html", categoryFilter=categoryFilter,
+	 categoryFilterCheckedStatus=categoryFilterCheckedStatus, listingStatic=listingStatic,
+	 filterFlag=filterFlag, category=category, cartDetails=g.cartDetails, start=start,
+	  all_cat_details = g.all_cat_details, reco_bool=reco_bool, recoCategory=g.recoCategory, title = title, allCategories=g.allCategories)
+
+
+@mod.route('/listing/<category>/', methods=['GET'], strict_slashes=False)
+@jsonResponse
+def listing(category):
+	# http://code.runnable.com/UrPpZCypQUV_AAAP/how-to-store-sessions-in-a-database-in-flask-for-python
+	responseDict = {}
+	category_product_list = category
+	filterFlag = 0	
+	categoryFilterCheckedStatus = getCategoryFilterCheckedStatus()
+	urlDict = urlToDict()
+	millis = lambda: int(round(time.time() * 1000))
+	try:
+		start = int(request.args.get('start'))
+	except:
+		start = None 
+		scoreSortedProductList = []
+
+	if not start or start == 0:
+		session['category'] = category
 		start = 0	
 		specProductIdList = getFilteredProductSpecification(request.args, category)
 		try:
@@ -162,12 +255,9 @@ def browse(category):
 			keywords = urlDict['keywords']
 		if 'weights' in urlDict:			
 			weights = urlDict['weights']
-		if 'reco' in urlDict:
-			reco_bool = 1
 		priceProductIdList = getFilteredProductPriceRange(priceRange, category)		
 		finalProductList = list(set(priceProductIdList) & set(specProductIdList))		
 		scoreSortedProductList = getScoreSortedProductID(finalProductList,category, keywords, weights)
-		session['product_list'] = scoreSortedProductList
 		utc_timestamp = datetime.datetime.utcnow()
 		
 		try:
@@ -186,45 +276,47 @@ def browse(category):
 	
 		else:
 			uid = uuid.uuid4()
-			_sid = uid.hex
-			
+			_sid = uid.hex		
 			mongoUserVariables['listing_products'].insert({"_sid":_sid, "product_list":scoreSortedProductList, "date": utc_timestamp})
-		session['_sid'] = _sid
+			session['_sid'] = _sid
+		print "Sid is =>", _sid, session['_sid']
 		userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
 		scoreSortedProductList =  userDbProducts[:20]
 	else:
-		_sid = session['_sid']
+		# try:
+		# 	if session['category'] != category:
+		# 		session['category'] = category
+		# 		return redirect("/browse/" + category, code=302)
+		# except:
+		# 	return redirect("/browse/" + category, code=302)
+		try:
+			_sid = session['_sid']
+		except:
+			app.logger.error("Issue in storing session Sev-2")
+			responseDict['status'] = {'code':400,'desc':'Session Issue'}
+			# return redirect("/browse/" + category, code=302)
 		userDbProducts = mongoUserVariables['listing_products'].find_one({"_sid":_sid})["product_list"]
-		scoreSortedProductList = userDbProducts[0:start+20]
+		scoreSortedProductList = userDbProducts[:start+20]
 	productList = []
 	for prod in scoreSortedProductList:
 		prodDetail = {}
-		prodDetail = getProductDetail(prod['product_id'])		
-		productList.append(prodDetail)
+		prodDetail = getProductDetail(prod['product_id'])
+		
+		if len(prodDetail['priceList']['priceList']) != 0 and prodDetail['min_priceDict']:
+
+			productList.append(prodDetail)
 	
 	totalProducts = len(userDbProducts)
-	if len(categoryFilterCheckedStatus) == 0:
-		filterFlag = 1
+	responseDict['start'] = start
+	responseDict['status'] = {'code':200}
+	responseDict['productList'] = productList
+	responseDict['category'] = category
+	responseDict['totalProducts'] = totalProducts
+	return responseDict
 
-	try:
-		categoryFilter = categoryListingFilter[category]
-	except:
-		categoryFilter = {}
-
-	title = "Bazaarfunda: "
-	if 'keywords' in urlDict:
-		title = title + "Best Recommended " + category + " acording to your needs"
-	else:
-		title = title + "Get the best " + category + " according to other customers"
-	return render_template("listing_small_prev.html", categoryFilter=categoryFilter,
-	 categoryFilterCheckedStatus=categoryFilterCheckedStatus, listingStatic=listingStatic,
-	 filterFlag=filterFlag, category=category, cartDetails=g.cartDetails,
-	 productList=productList, totalProducts=totalProducts, start=start,
-	  all_cat_details = g.all_cat_details, reco_bool=reco_bool, recoCategory=g.recoCategory, title = title, allCategories=g.allCategories)
 
 @mod.route('/search', methods=['GET'], strict_slashes=False)
 def search():
-
 	category = "all"
 	queryText = request.args.get('q')
 

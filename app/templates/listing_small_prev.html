@@ -100,7 +100,8 @@
         <!-- {# Big search Block #} -->
         <div class="span9 listing" id="column_right">
           {%if filterFlag == 1 and reco_bool !=1%}
-          <section class="slider">
+
+          <section class="slider" >
             <div class="flexslider small">
               <ul class="slides">
                 {%for banners in listingStatic.topbanner%}
@@ -276,142 +277,28 @@
           <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <h3>Recommendation Result</h3>
-            We are providing you the best {{category|title}} based on your requirements.Higher the rank better it suits your choices. The scores that are displayed are based on all parameters taken together whereas ranking is based on the your parameter priorities.
+            We are providing you the best {{category|title}} based on your requirements. Higher the rank better it suits your choices. The scores that are displayed are based on all parameters taken together whereas ranking is based on the your parameter priorities.
           </div>
             <!-- Reco Alert -->
-            {%endif%}
+          {%endif%}
 
-          <div class="span9 product-listing product-grid">
-            <div class="row small_with_description isotope-outer">
-              {# One ProductBlock #}
+          <!--####################################################   TheProduct List Goes here####################### -->
 
-              {%for product in productList%}
-              {%if product.master%}
-               <!-- {#Compare Prices PoUp #} -->
-              <div class="modal fade price" id="compare_price_{{product.master.product_id}}">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title"><center>Compare Prices for {{product.master.product_name[:40]}}...</center></h4>
-                      </div>
-                      <div class="modal-body">
-            <table class="table">
-            <colgroup>
-            <col class="colfixw25">
-            <col class="colfixw25">
-            <col class="colfixw20">
-            <col class="colfixw10">
-            <col class="colfixw20">
-            </colgroup>
-                  <thead>
-                    <tr>                      
-                      <td scope="col" class="aligncenter backgrey font_table_fix">Seller</td>
-                      <td scope="col" class="aligncenter backgrey font_table_fix">Discount</td>
-                      <td scope="col" class="aligncenter backgrey font_table_fix">Price</td>
-              <td scope="col" class="aligncenter backgrey font_table_fix">Buy Option</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      {% for price in product.priceList.priceList %}
-                      {%if price["price"] !=  0%}
-                          <tr>
-                              <!-- {#<td class="aligncenter 0_margin"><h5>Xiaomi</td>#} -->
-                              <td class="aligncenter 0_margin"><img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/logo/{{price['website']}}.jpg"  alt="filpkart" height="25px" width="100px"> </td>
-                             
-                                  <td class="aligncenter 0_margin"><h5>{{price['discount']}} %</h5></td>
-                              
-                              <td class="aligncenter 0_margin"><h5>{{price["price"]}}</h5></td>
-                              <td class="aligncenter 0_margin"><a href={{price['productUrl']}} target="_blank" class="btn btn-mini">BUY</a></td>
-                          </tr>
-                           {%endif%} 
-                       {%endfor%} 
+            <div class="span9 product-listing product-grid">
+              <div class="row small_with_description isotope-outer">
 
-
-                  </tbody>
-                </table>
+              <!-- Display Products -->
               </div>
-              {# Price Alert #}
-              {# <div class="modal-body"> #}
-                <h3 class="register-title">Set Price Alert</h3>
-                  <form class="register" onsubmit="emailMeWhenAvailable('{{product.master.product_id}}');">
-                    
-                    <input type="text" class="register-input" placeholder="Your Desired Price" id= "{{product.master.product_id}}_price">
-                    <input type="email" class="register-input" placeholder="Your Email Address" id= "{{product.master.product_id}}_email">
-                    <input type="submit" value="Submit" class="register-button">
-                  </form>
-                  <!-- <br> -->
-                <div id="submitsuccess_{{product.master.product_id}}">
-                </div>
-                
-              {# </div> #}
-              {# Price Alert #}
-                    </div>
-                  </div>
-          </div>
-          <!-- {# Compare Prices #} -->
-
-
-              <div class="span2 product hover carousel_item">
-                <div class="label_new_top_left">Rank: {{loop.index}}</div>               
-                <div class="product-image-wrapper listing {{category}}" >
-                  
-                  <a href='/pdp/{{product.master["product_id"]}}' >
-                  <img src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/ProductImage/{{product.master["product_id"]}}.jpg">
-                </a> 
-                </div>
-                <div class="wrapper-hover">
-                  <div class="product-name aligncenter" style="height:33px"><a href="/pdp/{{product.master['product_id']}}">{{product.master['product_name'][:30]}}...</a></div>
-                  <div class="wrapper"><span class="sort-rating hidden">4</span>
-                    {#<div class="product-tocart"> <a href="shopping-cart.html"><i class="icon-basket"></i></a> </div>#}
-                        <div class="product-price aligncenter" style = "padding-bottom:10px">
-                          <!-- <a class="aligncenter"  href="lowest websiteurl">₹&nbsp{{product.min_priceDict['price']}}</a> -->
-                             {%if product.min_priceDict['price'] is not defined or product.min_priceDict['price'] == 0%}
-                              <a class="aligncenter price-not-available"  href="#">{{"Price Not Available"}}</a>
-                              {% else %}
-                              <a class="aligncenter price-available"  href="{{product.min_priceDict['productUrl']}}">₹&nbsp{{product.min_priceDict['price']}}</a>
-                            {%endif%} 
-                        </div>
-
-                  </div>
-                  <div class="skillbar clearfix " data-percent={{product['finalrating']}}%>
-                    <div class="skillbar-title" style=" width:{{product['finalrating']}}%;"><span style="color: #FFFFFF">{{product['finalrating']}}</span></div>
-                    <div class="skillbar-bar" style="background: #8b9dc3;"></div>
-                    <div class="skill-bar-percent"></div>
-                  </div>
-                    <div class="add-to-links">
-                      <ul>
-                        <li style = "padding-bottom:10px;"><a href="#compare_price{{i}}_all" class="small_icon_color" data-toggle="modal"><i class="icon-shop"></i></a><a class="small_icon_color" data-toggle="modal" onclick="location.href='#';" href="#compare_price_{{product.master.product_id}}">Compare Prices</a></li>
-                        <li> <a href="#" class="small_icon_color" onclick="addToCompare('{{product.master['product_id']}}');"><i class="icon-chart-bar"></i>Add to Compare</a> </li>
-                      </ul>
-                    </div>
-                </div>
-
-              </div>
-              {%endif%}
-              {%endfor%}
-              {# One ProductBlock #}
             </div>
-          </div>
+          <!--####################################################   TheProduct List Goes here####################### -->
 
-            {%if productList%}
+          <!-- Load More Button -->
           <div class="span9 listing_header_row1">
             <div class=" aligncenter hidden-phone">
-              {%if totalProducts > start + 20%}
-              <button class="btn-middle aligncenter" onclick="listingLoadMore({{start}});"><i class="icon-th-list"></i> Load More</button>
-              {%else%} 
-              <button class="btn-middle aligncenter"><i class="icon-th-list"></i>Thats all we have got !! </button>
-              {%endif%}
+                <button class="btn-middle aligncenter listingLoadProducts" onclick=""><i class="icon-th-list"></i>Load More</button>
             </div>
           </div>
-          <div class="line1"></div>
-          <div class="listing_header_row2">
-            <div class="pull-left">Items <strong>1</strong> to <strong>{{ start+20 if start+20 < totalProducts else totalProducts }}</strong> of <strong>{{totalProducts}}</strong> {{category|title}}</div>
-            <div class="pull-right">
-              <!-- <div class="num"><a href="#">1</a> <a href="#">2</a> <a href="#" class="small_icon"><i class="icon-right-thin"></i></a></div> -->
-            </div>
-          </div>
-          {%endif%}
+          <!-- Load More Button -->
         </div>
         <div class="span2 listing">
 

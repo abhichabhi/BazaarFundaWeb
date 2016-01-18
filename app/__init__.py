@@ -8,10 +8,12 @@ import logging
 from logging.handlers import RotatingFileHandler
 from logging.handlers import TimedRotatingFileHandler
 
+
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 ADMIN_PASSWORD = 'secret'
 SITE_WIDTH = 800
 app = Flask(__name__)
+
 app.config.from_object(__name__)
 formatter = logging.Formatter(
         "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
@@ -20,12 +22,9 @@ handler.setLevel(logging.DEBUG)
 handler.setFormatter(formatter)
 app.logger.setLevel(logging.DEBUG)
 app.logger.addHandler(handler)
-app.logger.info("Initiating app")
+
 ''' To check if the route is working '''
 
-@app.route('/hello',methods=['GET'])
-def hello():
-    return "Hello"
 
 if not app.config['DEBUG']:
     install_secret_key(app)
@@ -107,8 +106,3 @@ app.config['DATABASE'] = DATABASE
 flask_db = FlaskDB(app)
 database = flask_db.database
 
-# #Blog Views
-# from app.blog.views import mod as blogModule
-# from app.blog.views import Entry, FTSEntry
-# database.create_tables([Entry, FTSEntry], safe=True)
-# app.register_blueprint(blogModule)

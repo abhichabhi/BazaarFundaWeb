@@ -89,10 +89,13 @@
 <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/jquery.parallax.js"></script> 
 <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/jquery.inview.js"></script> 
 <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/jquery.jcarousel.min.js"></script> 
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="{{ url_for('static', filename='js/jquery.circliful.js')}}"></script>
 <script src="{{ url_for('static', filename='js/jquery.circliful.min.js')}}"></script>
 <!-- <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/Reco.js"></script>  -->
 <script src="{{ url_for('static', filename='js/Reco.js')}}"></script>
+<script src="{{ url_for('static', filename='js/listing.js')}}"></script>
 <!-- <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/Reco.js"></script> -->
 
 <script>
@@ -101,12 +104,13 @@ $( document ).ready(function() {
         $('div[id^=myStat]').circliful();
         
     });
-</script>
 
+</script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/scripts.js"></script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/doubletaptogo.js"></script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/navigation.js"></script> 
 <script src="https://s3-ap-southeast-1.amazonaws.com/bazaarfunda/Website/static/js/jquery.fastLiveFilter.js"></script>
+
 <!--FaceBook Script-->
 <script>
 (function(d, s, id) {
